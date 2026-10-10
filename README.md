@@ -1,2 +1,3 @@
 ﻿# Multilingual-AI-Powered-Agricultural-Assistant
- [![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/noobplayer77777/multilingual-ai-powered-agricultural-assistant?utm_source=readme&utm_medium=badge)
+ <img width="6737" height="8048" alt="diagram (2)" src="https://github.com/user-attachments/assets/dc751e7e-b1f2-48e6-b264-772e9beb1c13" />
+
