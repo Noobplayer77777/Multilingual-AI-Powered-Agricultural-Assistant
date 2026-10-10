@@ -31,11 +31,22 @@ CREATE TABLE sources (
     url VARCHAR(1024)
 );
 
--- Note: The vector/chunk table schema will be finalized in Phase 2
--- once the embedding model and dimension size are selected.
--- Example for future reference:
--- CREATE TABLE document_chunks (
---     id SERIAL PRIMARY KEY,
---     content TEXT NOT NULL,
---     embedding VECTOR(768) -- Dimension size depends on the model
--- );
+-- Knowledge Base Tables
+CREATE TABLE documents (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    source_organization VARCHAR(255) NOT NULL,
+    url VARCHAR(1024),
+    retrieved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Note: The vector dimension size is omitted here as it will be 
+-- finalized once the embedding model is selected.
+CREATE TABLE document_chunks (
+    id SERIAL PRIMARY KEY,
+    document_id INT REFERENCES documents(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    chunk_index INT NOT NULL,
+    embedding VECTOR
+);
