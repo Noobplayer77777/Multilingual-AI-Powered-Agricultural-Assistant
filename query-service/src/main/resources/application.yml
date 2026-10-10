@@ -20,6 +20,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   thymeleaf:
     cache: false
+    prefix: file:src/main/resources/templates/
 
 advisory-service:
   url: ${ADVISORY_URL:http://localhost:8082}
