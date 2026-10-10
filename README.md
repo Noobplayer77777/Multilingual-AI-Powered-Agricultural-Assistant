@@ -1,3 +1,2 @@
 ﻿# Multilingual-AI-Powered-Agricultural-Assistant
-
-[![Architecture diagram of noobplayer77777/multilingual-ai-powered-agricultural-assistant](https://gitdiagram.com/noobplayer77777/multilingual-ai-powered-agricultural-assistant/diagram.png)](https://gitdiagram.com/noobplayer77777/multilingual-ai-powered-agricultural-assistant?utm_source=readme&utm_medium=picture)
+ [![Architecture diagram](https://gitdiagram.com/diagram-badge.svg)](https://gitdiagram.com/noobplayer77777/multilingual-ai-powered-agricultural-assistant?utm_source=readme&utm_medium=badge)
