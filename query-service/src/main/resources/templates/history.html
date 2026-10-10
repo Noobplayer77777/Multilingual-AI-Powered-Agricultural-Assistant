@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query History - Agricultural Assistant</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .nav-links { text-align: center; margin-bottom: 20px; }
+        .nav-links a { color: #2980b9; text-decoration: none; font-weight: bold; }
+        .nav-links a:hover { text-decoration: underline; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #27ae60; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="/">&larr; Back to Chat</a>
+        </div>
+        <h1>Query History</h1>
+        
+        <div th:if="${queries.empty}">
+            <p style="text-align: center;">No queries found in history.</p>
+        </div>
+        
+        <table th:unless="${queries.empty}">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Question</th>
+                    <th>Language</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="query : ${queries}">
+                    <td th:text="${#temporals.format(query.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${query.question}"></td>
+                    <td th:text="${query.language}"></td>
+                    <td th:text="${query.location != null ? query.location : '-'}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -6,3 +6,20 @@ management:
     web:
       exposure:
         include: health
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:agridb}
+    username: ${DB_USER:agriuser}
+    password: ${DB_PASSWORD:agripass}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  thymeleaf:
+    cache: false
+
+advisory-service:
+  url: ${ADVISORY_URL:http://localhost:8082}
