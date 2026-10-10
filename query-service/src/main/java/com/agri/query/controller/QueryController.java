@@ -2,15 +2,17 @@ package com.agri.query.controller;
 
 import com.agri.query.dto.QueryRequest;
 import com.agri.query.dto.QueryResponse;
-import com.agri.query.entity.QueryEntity;
+import com.agri.query.exception.AdvisoryServiceUnavailableException;
 import com.agri.query.service.QueryProcessingService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class QueryController {
@@ -40,14 +42,18 @@ public class QueryController {
         try {
             QueryResponse response = queryProcessingService.processQuery(request);
             return ResponseEntity.ok(response);
+        } catch (AdvisoryServiceUnavailableException e) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(Map.of("error", "Advisory service is unavailable: " + e.getMessage(), "status", 503));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "An error occurred: " + e.getMessage(), "status", 500));
         }
     }
 
     @GetMapping("/api/history")
     @ResponseBody
-    public ResponseEntity<List<QueryEntity>> getHistoryApi() {
+    public ResponseEntity<List<QueryResponse>> getHistoryApi() {
         return ResponseEntity.ok(queryProcessingService.getHistory());
     }
 }

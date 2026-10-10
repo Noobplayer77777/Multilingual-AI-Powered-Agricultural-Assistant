@@ -33,14 +33,8 @@ public class HttpRetrievalClient implements RetrievalClient {
                     .collectList()
                     .block();
         } catch (Exception e) {
-            // Fallback to dummy data if Member C's service is not running yet
-            System.err.println("Failed to connect to Member C's retrieval service at " + retrievalUrl + ". Using mock context.");
-            ContextItem dummyContext = new ContextItem();
-            dummyContext.setText("Sample context regarding " + request.getCrop() + " in " + request.getLocation());
-            dummyContext.setSourceName("Development Retrieval Interface");
-            dummyContext.setType("DOCUMENT");
-            dummyContext.setSourceUrl("http://localhost:8083/docs/mock");
-            return Collections.singletonList(dummyContext);
+            System.err.println("Warning: Unable to connect to retrieval service at " + retrievalUrl + ": " + e.getMessage() + ". Proceeding with empty context.");
+            return Collections.emptyList();
         }
     }
 }

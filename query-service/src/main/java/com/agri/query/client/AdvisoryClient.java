@@ -2,12 +2,10 @@ package com.agri.query.client;
 
 import com.agri.query.dto.QueryRequest;
 import com.agri.query.dto.QueryResponse;
-import com.agri.query.dto.Source;
+import com.agri.query.exception.AdvisoryServiceUnavailableException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-
-import java.util.Collections;
 
 @Service
 public class AdvisoryClient {
@@ -22,24 +20,18 @@ public class AdvisoryClient {
 
     public QueryResponse getAdvisory(QueryRequest request) {
         try {
-            return restClient.post()
+            QueryResponse response = restClient.post()
                     .uri(advisoryUrl + "/advise")
                     .body(request)
                     .retrieve()
                     .body(QueryResponse.class);
+
+            if (response == null || response.getAnswer() == null) {
+                throw new AdvisoryServiceUnavailableException("Advisory service returned an empty response.");
+            }
+            return response;
         } catch (Exception e) {
-            // Fallback gracefully as required
-            QueryResponse fallback = new QueryResponse();
-            fallback.setAnswer("The advisory service is currently unavailable. Please try again later.");
-            fallback.setLanguage(request.getLanguage() != null ? request.getLanguage() : "en");
-            
-            Source errorSource = new Source();
-            errorSource.setName("System Fallback");
-            errorSource.setType("INTERNAL");
-            errorSource.setUrl("");
-            fallback.setSources(Collections.singletonList(errorSource));
-            
-            return fallback;
+            throw new AdvisoryServiceUnavailableException("Advisory service is unavailable at " + advisoryUrl + ": " + e.getMessage(), e);
         }
     }
 }

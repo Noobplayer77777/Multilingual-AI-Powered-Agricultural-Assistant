@@ -1,51 +1,405 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Query History - Agricultural Assistant</title>
+    <title>Query History — Kisan AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; text-align: center; }
-        .nav-links { text-align: center; margin-bottom: 20px; }
-        .nav-links a { color: #2980b9; text-decoration: none; font-weight: bold; }
-        .nav-links a:hover { text-decoration: underline; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #27ae60; color: white; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
+        :root {
+            --primary-900: #064e3b;
+            --primary-800: #065f46;
+            --primary-700: #047857;
+            --primary-600: #059669;
+            --primary-500: #10b981;
+            --primary-100: #d1fae5;
+            --primary-50: #ecfdf5;
+            --earth-900: #1c1917;
+            --earth-800: #292524;
+            --earth-700: #44403c;
+            --earth-600: #57534e;
+            --earth-300: #d6d3d1;
+            --earth-200: #e7e5e4;
+            --earth-100: #f5f5f4;
+            --earth-50: #fafaf9;
+            --accent-amber: #d97706;
+            --accent-amber-light: #fef3c7;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-card: 0 8px 20px -4px rgba(6, 78, 59, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Public Sans', 'Noto Sans Tamil', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(180deg, #f0fdf4 0%, #fafaf9 300px, #f5f5f4 100%);
+            color: var(--earth-800);
+            min-height: 100vh;
+            padding: 32px 16px;
+            line-height: 1.6;
+        }
+
+        .app-shell {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(6, 78, 59, 0.12);
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--primary-900);
+        }
+
+        .brand-logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary-700), var(--primary-900));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 22px;
+        }
+
+        .brand-title-group h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--primary-900);
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            font-size: 0.82rem;
+            color: var(--earth-600);
+            font-weight: 500;
+        }
+
+        .back-chat-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            background-color: var(--primary-800);
+            color: #ffffff;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 700;
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 2px 6px rgba(6, 78, 59, 0.2);
+        }
+
+        .back-chat-btn:hover {
+            background-color: var(--primary-700);
+            transform: translateY(-1px);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border: 1px solid var(--earth-200);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--earth-600);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-900);
+        }
+
+        /* Filter Controls */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 240px;
+            padding: 10px 14px;
+            border: 1.5px solid var(--earth-200);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: #ffffff;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-600);
+        }
+
+        /* History Cards List */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .history-card {
+            background: #ffffff;
+            border: 1px solid var(--earth-200);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.15s ease;
+        }
+
+        .history-card:hover {
+            border-color: var(--primary-500);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--earth-100);
+        }
+
+        .badges-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .pill-lang {
+            background-color: var(--primary-100);
+            color: var(--primary-900);
+        }
+
+        .pill-loc {
+            background-color: var(--earth-100);
+            color: var(--earth-700);
+        }
+
+        .pill-season {
+            background-color: var(--accent-amber-light);
+            color: #92400e;
+        }
+
+        .timestamp {
+            font-size: 0.8rem;
+            color: var(--earth-600);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .query-question {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--earth-900);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .query-answer {
+            font-size: 0.95rem;
+            color: var(--earth-800);
+            line-height: 1.6;
+            background-color: var(--earth-50);
+            padding: 16px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--earth-200);
+            white-space: pre-wrap;
+            margin-bottom: 14px;
+        }
+
+        .sources-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--earth-600);
+            margin-bottom: 8px;
+        }
+
+        .sources-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .source-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: #ffffff;
+            border: 1px solid var(--earth-200);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            color: var(--earth-700);
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .source-chip:hover {
+            border-color: var(--primary-600);
+            color: var(--primary-900);
+            background-color: var(--primary-50);
+        }
+
+        .empty-history {
+            background: #ffffff;
+            border: 1.5px dashed var(--earth-300);
+            border-radius: var(--radius-lg);
+            padding: 48px 24px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .empty-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--earth-800);
+            margin-bottom: 8px;
+        }
+
+        .empty-text {
+            font-size: 0.92rem;
+            color: var(--earth-600);
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="nav-links">
-            <a href="/">&larr; Back to Chat</a>
+    <div class="app-shell">
+        <!-- Header -->
+        <header class="header-bar">
+            <a href="/" class="brand-badge">
+                <div class="brand-logo-icon">🌱</div>
+                <div class="brand-title-group">
+                    <h1>KISAN AI</h1>
+                    <div class="brand-subtitle">Archived Farmer Queries &amp; Recommendations</div>
+                </div>
+            </a>
+            <a href="/" class="back-chat-btn">
+                <span>&larr;</span> Back to Assistant
+            </a>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Queries</div>
+                <div class="stat-value" th:text="${queries != null ? queries.size() : 0}">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Storage Backend</div>
+                <div class="stat-value" style="font-size: 1.15rem; margin-top: 4px;">PostgreSQL / pgvector</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Supported Languages</div>
+                <div class="stat-value" style="font-size: 1.15rem; margin-top: 4px;">English &bull; தமிழ் &bull; हिंदी</div>
+            </div>
         </div>
-        <h1>Query History</h1>
-        
-        <div th:if="${queries.empty}">
-            <p style="text-align: center;">No queries found in history.</p>
+
+        <!-- Empty State -->
+        <div class="empty-history" th:if="${queries == null or queries.empty}">
+            <div class="empty-icon">🌾</div>
+            <h2 class="empty-title">No Queries Recorded Yet</h2>
+            <p class="empty-text">Submitted agricultural questions and grounded recommendations will appear here automatically.</p>
+            <a href="/" class="back-chat-btn">Ask Your First Question &rarr;</a>
         </div>
-        
-        <table th:unless="${queries.empty}">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Question</th>
-                    <th>Language</th>
-                    <th>Location</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="query : ${queries}">
-                    <td th:text="${#temporals.format(query.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${query.question}"></td>
-                    <td th:text="${query.language}"></td>
-                    <td th:text="${query.location != null ? query.location : '-'}"></td>
-                </tr>
-            </tbody>
-        </table>
+
+        <!-- Queries List -->
+        <div class="history-list" th:unless="${queries == null or queries.empty}">
+            <div class="history-card" th:each="query : ${queries}">
+                <div class="card-header">
+                    <div class="badges-group">
+                        <span class="pill pill-lang" th:text="'LANG: ' + ${query.language != null ? query.language.toUpperCase() : 'EN'}"></span>
+                        <span class="pill pill-loc" th:if="${query.location != null and !query.location.isEmpty()}" th:text="'📍 ' + ${query.location}"></span>
+                        <span class="pill pill-season" th:if="${query.season != null and !query.season.isEmpty()}" th:text="'🗓️ ' + ${query.season}"></span>
+                    </div>
+                    <div class="timestamp" th:text="${query.createdAt != null ? #temporals.format(query.createdAt, 'yyyy-MM-dd HH:mm') : 'Recent'}"></div>
+                </div>
+
+                <h3 class="query-question" th:text="${query.question}"></h3>
+
+                <div class="query-answer" th:if="${query.answer != null and !query.answer.isEmpty()}" th:text="${query.answer}"></div>
+
+                <div th:if="${query.sources != null and !query.sources.empty}">
+                    <div class="sources-label">Sources &amp; Evidence:</div>
+                    <div class="sources-chips">
+                        <span th:each="source : ${query.sources}">
+                            <a th:if="${source.url != null and !source.url.isEmpty() and source.url.startsWith('http')}"
+                               th:href="${source.url}" target="_blank" rel="noopener noreferrer" class="source-chip">
+                                <span th:text="${source.type == 'API' ? '⚡ ' : '📖 '}"></span>
+                                <span th:text="${source.name}"></span>
+                                <span>↗</span>
+                            </a>
+                            <span th:unless="${source.url != null and !source.url.isEmpty() and source.url.startsWith('http')}" class="source-chip">
+                                <span th:text="${source.type == 'API' ? '⚡ ' : '📖 '}"></span>
+                                <span th:text="${source.name}"></span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

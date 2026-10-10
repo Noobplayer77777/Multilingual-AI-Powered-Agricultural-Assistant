@@ -36,14 +36,15 @@ public class OllamaLlmProvider implements LlmProvider {
                     .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(Map.class)
+                    .timeout(java.time.Duration.ofSeconds(60))
                     .block();
             
             if (response != null && response.containsKey("response")) {
                 return (String) response.get("response");
             }
-            return "Unable to generate a grounded response at this time.";
+            throw new IllegalStateException("Ollama returned an empty response.");
         } catch (Exception e) {
-            return "Error calling Ollama provider: " + e.getMessage();
+            throw new IllegalStateException("AI provider execution failed: " + e.getMessage(), e);
         }
     }
 }

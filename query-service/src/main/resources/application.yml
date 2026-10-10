@@ -18,9 +18,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
   thymeleaf:
     cache: false
-    prefix: file:src/main/resources/templates/
+    prefix: classpath:/templates/
+    suffix: .html
 
 advisory-service:
   url: ${ADVISORY_URL:http://localhost:8082}

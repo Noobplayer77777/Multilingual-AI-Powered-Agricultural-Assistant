@@ -8,7 +8,7 @@ management:
         include: health
 
 ai:
-  provider: ${AI_PROVIDER:stub}
+  provider: ${AI_PROVIDER:ollama}
 
 gemini:
   api:
