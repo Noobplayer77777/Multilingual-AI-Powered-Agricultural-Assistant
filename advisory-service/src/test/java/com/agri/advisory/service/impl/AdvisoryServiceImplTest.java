@@ -70,4 +70,32 @@ public class AdvisoryServiceImplTest {
         assertEquals("ta", response.getLanguage());
         assertEquals(0, response.getSources().size());
     }
+
+    @Test
+    public void testGenerateAdvisory_WithWeatherContext() {
+        AdvisoryRequest request = new AdvisoryRequest();
+        request.setQuestion("Should I harvest today?");
+        request.setLocation("Thanjavur");
+        request.setLanguage("en");
+
+        com.agri.advisory.service.WeatherServiceClient weatherClient = Mockito.mock(com.agri.advisory.service.WeatherServiceClient.class);
+        ContextItem weatherItem = new ContextItem();
+        weatherItem.setText("Weather: 35C Sunny");
+        weatherItem.setSourceName("WeatherAPI.com");
+        weatherItem.setType("API");
+        weatherItem.setSourceUrl("https://www.weatherapi.com/");
+
+        when(retrievalClient.retrieveContext(any())).thenReturn(Collections.emptyList());
+        when(weatherClient.getWeatherContext("Thanjavur")).thenReturn(java.util.Optional.of(weatherItem));
+        when(llmProvider.generateResponse(anyString(), anyString())).thenReturn("Grounded harvest recommendation");
+
+        AdvisoryServiceImpl serviceWithWeather = new AdvisoryServiceImpl(retrievalClient, llmProvider, weatherClient);
+        AdvisoryResponse response = serviceWithWeather.generateAdvisory(request);
+
+        assertNotNull(response);
+        assertEquals("Grounded harvest recommendation", response.getAnswer());
+        assertEquals(1, response.getSources().size());
+        assertEquals("WeatherAPI.com", response.getSources().get(0).getName());
+        assertEquals("API", response.getSources().get(0).getType());
+    }
 }

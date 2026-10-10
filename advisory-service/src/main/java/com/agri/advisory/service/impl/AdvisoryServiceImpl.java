@@ -7,6 +7,8 @@ import com.agri.advisory.dto.Source;
 import com.agri.advisory.service.AdvisoryService;
 import com.agri.advisory.service.LlmProvider;
 import com.agri.advisory.service.RetrievalClient;
+import com.agri.advisory.service.WeatherServiceClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,17 +19,34 @@ public class AdvisoryServiceImpl implements AdvisoryService {
 
     private final RetrievalClient retrievalClient;
     private final LlmProvider llmProvider;
+    private final WeatherServiceClient weatherServiceClient;
 
     public AdvisoryServiceImpl(RetrievalClient retrievalClient, LlmProvider llmProvider) {
+        this(retrievalClient, llmProvider, null);
+    }
+
+    @Autowired
+    public AdvisoryServiceImpl(RetrievalClient retrievalClient,
+                               LlmProvider llmProvider,
+                               @Autowired(required = false) WeatherServiceClient weatherServiceClient) {
         this.retrievalClient = retrievalClient;
         this.llmProvider = llmProvider;
+        this.weatherServiceClient = weatherServiceClient;
     }
 
     @Override
     public AdvisoryResponse generateAdvisory(AdvisoryRequest request) {
         // 1. Accept request and metadata
         // 2. Request relevant context
-        List<ContextItem> contextItems = retrievalClient.retrieveContext(request);
+        List<ContextItem> contextItems = new ArrayList<>();
+        List<ContextItem> retrieved = retrievalClient.retrieveContext(request);
+        if (retrieved != null) {
+            contextItems.addAll(retrieved);
+        }
+
+        if (weatherServiceClient != null && request.getLocation() != null && !request.getLocation().isBlank()) {
+            weatherServiceClient.getWeatherContext(request.getLocation()).ifPresent(contextItems::add);
+        }
         
         // 3. Assemble a prompt
         StringBuilder promptBuilder = new StringBuilder();

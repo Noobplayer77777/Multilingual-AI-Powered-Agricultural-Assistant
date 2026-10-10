@@ -88,4 +88,4 @@ components:
           example: "DOCUMENT"
         url:
           type: string
-          example: "https://example.org/agricultural-guide"
+          example: "https://agriwelfare.gov.in/en/Guide"
