@@ -6,3 +6,15 @@ management:
     web:
       exposure:
         include: health
+
+ai:
+  provider: ${AI_PROVIDER:stub}
+
+gemini:
+  api:
+    key: ${GEMINI_API_KEY:}
+  model: ${GEMINI_MODEL:gemini-1.5-flash}
+
+retrieval:
+  service:
+    url: ${RETRIEVAL_SERVICE_URL:http://localhost:8083}

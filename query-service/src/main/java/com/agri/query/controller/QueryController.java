@@ -41,7 +41,7 @@ public class QueryController {
             QueryResponse response = queryProcessingService.processQuery(request);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(java.util.Map.of("message", "An error occurred: " + e.getMessage()));
         }
     }
 

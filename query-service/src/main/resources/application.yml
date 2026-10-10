@@ -10,8 +10,8 @@ management:
 spring:
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:agridb}
-    username: ${DB_USER:agriuser}
-    password: ${DB_PASSWORD:agripass}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Getthe1cr}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -20,7 +20,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   thymeleaf:
     cache: false
-    prefix: file:src/main/resources/templates/
+    prefix: classpath:/templates/
 
 advisory-service:
   url: ${ADVISORY_URL:http://localhost:8082}

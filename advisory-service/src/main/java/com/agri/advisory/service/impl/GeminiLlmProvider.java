@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.net.URI;
 import java.time.Duration;
 import java.util.Map;
 import java.util.List;
@@ -21,7 +22,7 @@ public class GeminiLlmProvider implements LlmProvider {
     public GeminiLlmProvider(WebClient.Builder webClientBuilder,
                              @Value("${gemini.api.key:}") String apiKey,
                              @Value("${gemini.model:gemini-1.5-flash}") String model) {
-        this.webClient = webClientBuilder.baseUrl("https://generativelanguage.googleapis.com/v1beta/models/").build();
+        this.webClient = webClientBuilder.build();
         this.apiKey = apiKey;
         this.model = model;
     }
@@ -32,7 +33,7 @@ public class GeminiLlmProvider implements LlmProvider {
             throw new IllegalStateException("Gemini API key is not configured.");
         }
 
-        String uri = this.model + ":generateContent?key=" + this.apiKey;
+        String uriString = "https://generativelanguage.googleapis.com/v1beta/models/" + this.model + ":generateContent?key=" + this.apiKey;
         
         Map<String, Object> requestBody = Map.of(
             "contents", List.of(
@@ -44,7 +45,7 @@ public class GeminiLlmProvider implements LlmProvider {
 
         try {
             Map<String, Object> response = webClient.post()
-                    .uri(uri)
+                    .uri(URI.create(uriString))
                     .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(Map.class)
