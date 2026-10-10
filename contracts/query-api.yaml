@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: Query Service API
+  description: API for handling farmer queries and retrieving history.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+paths:
+  /api/query:
+    post:
+      summary: Submit a new agricultural query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Successful advisory response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /api/history:
+    get:
+      summary: Retrieve query history
+      responses:
+        '200':
+          description: A list of past queries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueryResponse'
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          example: "What crop should I grow?"
+        language:
+          type: string
+          example: "en"
+        location:
+          type: string
+          example: "Thanjavur"
+        season:
+          type: string
+          example: "Kharif"
+        category:
+          type: string
+          example: "CROP_RECOMMENDATION"
+        crop:
+          type: string
+          nullable: true
+          example: null
+    QueryResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+          example: "This is a placeholder advisory response."
+        language:
+          type: string
+          example: "en"
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Example Agricultural Guide"
+        type:
+          type: string
+          example: "DOCUMENT"
+        url:
+          type: string
+          example: "https://example.org/agricultural-guide"

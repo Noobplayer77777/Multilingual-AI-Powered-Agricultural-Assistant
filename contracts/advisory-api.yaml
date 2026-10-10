@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Advisory Service API
+  description: API for generating advisory responses based on structured requests and context.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8082
+paths:
+  /advise:
+    post:
+      summary: Generate an advisory response
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdvisoryRequest'
+      responses:
+        '200':
+          description: Successful advisory response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdvisoryResponse'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    AdvisoryRequest:
+      type: object
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          example: "What crop should I grow?"
+        language:
+          type: string
+          example: "en"
+        category:
+          type: string
+          example: "CROP_RECOMMENDATION"
+        crop:
+          type: string
+          nullable: true
+          example: null
+        location:
+          type: string
+          example: "Thanjavur"
+        season:
+          type: string
+          example: "Kharif"
+    AdvisoryResponse:
+      type: object
+      properties:
+        answer:
+          type: string
+          example: "This is a placeholder advisory response."
+        language:
+          type: string
+          example: "en"
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Example Agricultural Guide"
+        type:
+          type: string
+          example: "DOCUMENT"
+        url:
+          type: string
+          example: "https://example.org/agricultural-guide"

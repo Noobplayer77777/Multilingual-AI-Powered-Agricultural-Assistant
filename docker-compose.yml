@@ -1,0 +1,21 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: agricultural_assistant_db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-agridb}
+      POSTGRES_USER: ${DB_USER:-agriuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-agripass}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-agriuser} -d ${DB_NAME:-agridb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
