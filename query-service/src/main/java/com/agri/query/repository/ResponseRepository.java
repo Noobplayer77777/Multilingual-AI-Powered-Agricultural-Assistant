@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ResponseRepository extends JpaRepository<ResponseEntityData, Long> {
+public interface ResponseRepository extends JpaRepository<ResponseEntityData, Integer> {
 }

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SourceRepository extends JpaRepository<SourceEntity, Long> {
-    List<SourceEntity> findByResponseId(Long responseId);
+public interface SourceRepository extends JpaRepository<SourceEntity, Integer> {
+    List<SourceEntity> findByResponseId(Integer responseId);
 }
