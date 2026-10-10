@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class ResponseEntityData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "query_id")
@@ -20,8 +20,8 @@ public class ResponseEntityData {
     private LocalDateTime createdAt;
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
     public QueryEntity getQuery() { return query; }
     public void setQuery(QueryEntity query) { this.query = query; }
     public String getAnswer() { return answer; }
