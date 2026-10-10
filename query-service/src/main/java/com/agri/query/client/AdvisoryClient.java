@@ -4,8 +4,11 @@ import com.agri.query.dto.QueryRequest;
 import com.agri.query.dto.QueryResponse;
 import com.agri.query.exception.AdvisoryServiceUnavailableException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.time.Duration;
 
 @Service
 public class AdvisoryClient {
@@ -14,7 +17,13 @@ public class AdvisoryClient {
     private final String advisoryUrl;
 
     public AdvisoryClient(RestClient.Builder restClientBuilder, @Value("${advisory-service.url}") String advisoryUrl) {
-        this.restClient = restClientBuilder.build();
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout((int) Duration.ofSeconds(10).toMillis());
+        requestFactory.setReadTimeout((int) Duration.ofMinutes(4).toMillis());
+
+        this.restClient = restClientBuilder
+                .requestFactory(requestFactory)
+                .build();
         this.advisoryUrl = advisoryUrl;
     }
 

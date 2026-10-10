@@ -16,7 +16,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(current_dir))
 
 from src.ingestion import generate_embedding, KnowledgeIngestor
-from src.weather_client import WeatherClient
+from src.weather_client import WeatherClient, extract_location_from_text
 
 PORT = int(os.getenv("RETRIEVAL_PORT", 8083))
 SIMILARITY_THRESHOLD = float(os.getenv("SIMILARITY_THRESHOLD", 0.38))

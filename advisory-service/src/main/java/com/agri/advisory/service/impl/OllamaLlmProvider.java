@@ -17,7 +17,7 @@ public class OllamaLlmProvider implements LlmProvider {
 
     public OllamaLlmProvider(WebClient.Builder webClientBuilder,
                              @Value("${ollama.url:http://localhost:11434}") String ollamaUrl,
-                             @Value("${ollama.model:gemma4:e4b}") String model) {
+                             @Value("${ollama.model:qwen2.5:7b-instruct-q4_K_M}") String model) {
         this.webClient = webClientBuilder.baseUrl(ollamaUrl).build();
         this.model = model;
     }
@@ -27,7 +27,8 @@ public class OllamaLlmProvider implements LlmProvider {
         Map<String, Object> requestBody = Map.of(
             "model", this.model,
             "prompt", prompt,
-            "stream", false
+            "stream", false,
+            "options", Map.of("num_predict", 200)
         );
 
         try {
@@ -36,11 +37,17 @@ public class OllamaLlmProvider implements LlmProvider {
                     .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(Map.class)
-                    .timeout(java.time.Duration.ofSeconds(60))
+                    .timeout(java.time.Duration.ofMinutes(4))
                     .block();
             
-            if (response != null && response.containsKey("response")) {
-                return (String) response.get("response");
+            if (response != null) {
+                String answer = (String) response.get("response");
+                if (answer == null || answer.trim().isEmpty()) {
+                    answer = (String) response.get("thinking");
+                }
+                if (answer != null && !answer.trim().isEmpty()) {
+                    return answer.trim();
+                }
             }
             throw new IllegalStateException("Ollama returned an empty response.");
         } catch (Exception e) {
