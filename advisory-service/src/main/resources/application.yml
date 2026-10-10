@@ -6,3 +6,11 @@ management:
     web:
       exposure:
         include: health
+
+ai:
+  provider: gemini
+
+gemini:
+  model: gemma4:e4b
+  api:
+    key: "PASTE_YOUR_API_KEY_HERE"
