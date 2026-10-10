@@ -6,3 +6,10 @@ management:
     web:
       exposure:
         include: health
+
+ai:
+  provider: ollama
+
+ollama:
+  url: http://localhost:11434
+  model: gemma4:e4b
