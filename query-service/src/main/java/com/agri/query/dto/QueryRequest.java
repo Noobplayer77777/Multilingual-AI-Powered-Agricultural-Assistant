@@ -10,6 +10,7 @@ public class QueryRequest {
     private String crop;
     private String location;
     private String season;
+    private Double acres;
 
     public String getQuestion() { return question; }
     public void setQuestion(String question) { this.question = question; }
@@ -28,4 +29,7 @@ public class QueryRequest {
 
     public String getSeason() { return season; }
     public void setSeason(String season) { this.season = season; }
+
+    public Double getAcres() { return acres; }
+    public void setAcres(Double acres) { this.acres = acres; }
 }

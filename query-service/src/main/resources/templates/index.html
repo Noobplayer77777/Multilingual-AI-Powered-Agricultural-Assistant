@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/i18n.css}" href="/css/i18n.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23059669'%3E%3Cpath d='M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z'/%3E%3Cpath d='M12 2v20' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E">
     <style>
         :root {
             --primary-950: #022c22;
@@ -48,12 +49,22 @@
             padding: 0;
         }
 
+        html {
+            overflow-x: hidden;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 100%;
+        }
+
         body {
             font-family: 'Public Sans', 'Noto Sans Tamil', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
             background: linear-gradient(180deg, #ecfdf5 0%, #fafaf9 320px, #f5f5f4 100%);
             color: var(--earth-800);
             min-height: 100vh;
             min-height: 100dvh;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             line-height: 1.6;
@@ -62,6 +73,7 @@
             padding-right: env(safe-area-inset-right);
             -webkit-text-size-adjust: 100%;
             touch-action: manipulation;
+            box-sizing: border-box;
         }
 
         /* App Shell */
@@ -75,6 +87,9 @@
             flex: 1;
             height: 100vh;
             height: 100dvh;
+            min-width: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         /* Focus Ring Standard */
@@ -88,9 +103,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
             padding-bottom: 14px;
             border-bottom: 1px solid rgba(6, 78, 59, 0.12);
             flex-shrink: 0;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .brand-title-group {
+            min-width: 0;
         }
 
         .brand-badge {
@@ -150,7 +173,10 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-width: 0;
+            max-width: 100%;
         }
 
         .btn-header {
@@ -192,10 +218,10 @@
 
         /* Context Toolbar (Top of Chat) */
         .context-bar {
-            display: grid;
-            grid-template-columns: 2.2fr 0.9fr 1.1fr 1.2fr 1fr;
-            gap: 10px;
-            padding: 8px 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            padding: 10px 14px;
             background: #ffffff;
             border: 1px solid var(--earth-200);
             border-radius: var(--radius-md);
@@ -205,11 +231,17 @@
             align-items: center;
         }
 
+        .context-group-wide {
+            flex: 2 1 280px;
+            min-width: 220px;
+        }
+
         .context-group {
             display: flex;
             align-items: center;
             gap: 6px;
-            min-width: 0;
+            flex: 1 1 130px;
+            min-width: 120px;
         }
 
         .context-label {
@@ -394,18 +426,26 @@
             overflow: hidden;
             position: relative;
             min-height: 0;
-            contain: layout;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         /* Chat Messages Stream */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 24px;
+            overflow-x: hidden;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 20px;
             scroll-behavior: smooth;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         /* Custom Scrollbar */
@@ -424,11 +464,11 @@
         .msg-row {
             display: flex;
             gap: 12px;
-            max-width: 88%;
+            max-width: min(88%, 100%);
+            width: fit-content;
+            min-width: 0;
+            box-sizing: border-box;
             animation: msgFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            contain: layout style;
-            content-visibility: auto;
-            contain-intrinsic-size: 0 80px;
         }
 
         @keyframes msgFadeIn {
@@ -439,10 +479,13 @@
         .msg-user {
             align-self: flex-end;
             flex-direction: row-reverse;
+            max-width: min(85%, calc(100% - 10px));
         }
 
         .msg-bot {
             align-self: flex-start;
+            max-width: 100%;
+            width: 100%;
         }
 
         /* Avatars */
@@ -472,6 +515,11 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            min-width: 0;
+            max-width: 100%;
+            flex: 1;
+            overflow: hidden;
+            box-sizing: border-box;
         }
 
         .bubble-content {
@@ -479,6 +527,10 @@
             font-size: 1rem;
             line-height: 1.6;
             word-break: break-word;
+            overflow-wrap: break-word;
+            min-width: 0;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .msg-user .bubble-content {
@@ -542,6 +594,10 @@
             padding: 14px 16px;
             margin-bottom: 14px;
             box-shadow: var(--shadow-subtle);
+            min-width: 0;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .weather-live-header {
@@ -551,6 +607,9 @@
             margin-bottom: 10px;
             padding-bottom: 8px;
             border-bottom: 1px solid rgba(6, 78, 59, 0.1);
+            flex-wrap: wrap;
+            gap: 6px;
+            min-width: 0;
         }
 
         .weather-live-loc {
@@ -560,6 +619,7 @@
             font-size: 1rem;
             color: var(--primary-900);
             font-weight: 700;
+            min-width: 0;
         }
 
         .weather-cond-badge {
@@ -575,19 +635,16 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            flex-shrink: 0;
         }
 
         .weather-live-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
             gap: 10px;
             margin-bottom: 10px;
-        }
-
-        @media (max-width: 580px) {
-            .weather-live-grid {
-                grid-template-columns: 1fr;
-            }
+            min-width: 0;
+            max-width: 100%;
         }
 
         .weather-stat-box {
@@ -598,6 +655,9 @@
             padding: 10px 12px;
             border-radius: var(--radius-sm);
             border: 1px solid rgba(6, 78, 59, 0.08);
+            min-width: 0;
+            box-sizing: border-box;
+            overflow: hidden;
         }
 
         .stat-ico {
@@ -605,6 +665,7 @@
             align-items: center;
             justify-content: center;
             color: var(--primary-700);
+            flex-shrink: 0;
         }
 
         .stat-num {
@@ -612,6 +673,7 @@
             font-weight: 800;
             color: var(--earth-900);
             line-height: 1.1;
+            white-space: nowrap;
         }
 
         .stat-lbl {
@@ -648,6 +710,8 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            min-width: 0;
+            max-width: 100%;
         }
 
         .sources-title {
@@ -665,6 +729,8 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            min-width: 0;
+            max-width: 100%;
         }
 
         .source-item {
@@ -677,6 +743,9 @@
             border-radius: var(--radius-sm);
             font-size: 0.75rem;
             gap: 8px;
+            min-width: 0;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .source-name-box {
@@ -685,6 +754,7 @@
             gap: 8px;
             flex: 1;
             min-width: 0;
+            overflow: hidden;
         }
 
         .source-name {
@@ -693,6 +763,8 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            min-width: 0;
+            flex: 1;
         }
 
         .source-badge-tag {
@@ -951,17 +1023,33 @@
 
         /* Responsive Layout Adaptations */
         @media (max-width: 920px) {
-            .context-bar {
-                grid-template-columns: repeat(4, 1fr);
+            .app-shell {
+                padding: 12px 10px;
+            }
+            .header-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
             }
             .context-group-wide {
-                grid-column: 1 / -1;
+                flex: 1 1 100%;
+            }
+            .chat-messages {
+                padding: 16px 12px;
+                gap: 16px;
+            }
+            .msg-row {
+                max-width: 94%;
             }
         }
 
         @media (max-width: 640px) {
             .app-shell {
-                padding: 10px 8px;
+                padding: 8px 6px;
             }
             .header-bar {
                 flex-direction: column;
@@ -976,13 +1064,18 @@
                 gap: 6px;
             }
             .context-bar {
-                grid-template-columns: 1fr 1fr;
+                display: flex;
+                flex-wrap: wrap;
                 gap: 8px;
                 padding: 10px;
                 margin: 6px 0;
             }
             .context-group-wide {
-                grid-column: 1 / -1;
+                flex: 1 1 100%;
+            }
+            .context-group {
+                flex: 1 1 calc(50% - 8px);
+                min-width: 110px;
             }
             .parcel-selector-group {
                 width: 100%;
@@ -992,14 +1085,19 @@
                 max-width: 100%;
             }
             .msg-row {
-                max-width: 96%;
+                max-width: 98%;
+                gap: 8px;
+            }
+            .msg-avatar {
+                width: 32px;
+                height: 32px;
             }
             .chat-messages {
-                padding: 14px 10px;
-                gap: 14px;
+                padding: 12px 8px;
+                gap: 12px;
             }
             .chat-input-bar {
-                padding: 10px 12px;
+                padding: 10px 10px;
             }
             .btn-send {
                 padding: 0 16px;
@@ -1102,8 +1200,13 @@
                 font-size: clamp(1rem, 5vw, 1.2rem);
             }
             .context-bar {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: stretch;
                 gap: 6px;
+            }
+            .context-group {
+                flex: 1 1 100%;
+                width: 100%;
             }
             .btn-header {
                 font-size: 0.75rem;
@@ -1390,43 +1493,43 @@
                     </div>
                     <div class="msg-bubble">
                         <div class="bubble-content">
-                            <p><strong>Vanakkam &amp; Namaste! Welcome to Kisan AI Assistant.</strong></p>
-                            <p style="margin-top: 6px;">
+                            <p><strong data-i18n="welcome_title">Vanakkam &amp; Namaste! Welcome to Kisan AI Assistant.</strong></p>
+                            <p style="margin-top: 6px;" data-i18n="welcome_desc">
                                 I am your upgraded full-stack agricultural decision assistant. I provide deterministic calculations for budget crop planning, low-cost farming optimizations, CIBRC pesticide label safety checks, and government scheme eligibility in <strong>English</strong>, <strong>தமிழ் (Tamil)</strong>, and <strong>हिंदी (Hindi)</strong>.
                             </p>
-                            <p style="margin-top: 6px; font-size: 0.75rem; color: var(--earth-700);">
+                            <p style="margin-top: 6px; font-size: 0.75rem; color: var(--earth-700);" data-i18n="welcome_grounded">
                                 Grounded in official <strong>CIBRC</strong>, <strong>ICAR</strong>, <strong>TNAU</strong> agronomic guidelines and real-time <strong>WeatherAPI.com</strong> agromet feeds.
                             </p>
 
-                            <div class="welcome-chips-title">Select an Integrated Feature Scenario:</div>
+                            <div class="welcome-chips-title" data-i18n="welcome_scenario_title">Select an Integrated Feature Scenario:</div>
                             <div class="welcome-chips">
                                 <button type="button" class="chip-btn" onclick="sendQuickFeature('What is the recommended pesticide dosage for blast in paddy for 2 acres?', 'PESTICIDE_SAFETY', 'paddy', 'Thanjavur')">
                                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                    <span>🔬 CIBRC Mancozeb Dose (2 ac)</span>
+                                    <span data-i18n="chip_scenario_pesticide">🔬 CIBRC Mancozeb Dose (2 ac)</span>
                                 </button>
                                 <button type="button" class="chip-btn" onclick="sendQuickFeature('Can I spray Coragen Chlorantraniliprole on mango trees?', 'PESTICIDE_SAFETY', 'mango', 'Madurai')">
                                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                                    <span>⚠️ Test Off-Label Safety Refusal</span>
+                                    <span data-i18n="chip_scenario_offlabel">⚠️ Test Off-Label Safety Refusal</span>
                                 </button>
                                 <button type="button" class="chip-btn" onclick="sendQuickFeature('What is the itemized budget and cost of cultivation for 2 acres of paddy with Rs 30000 budget?', 'BUDGET_PLANNING', 'paddy', 'Thanjavur')">
                                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                                    <span>💰 Budget Feasibility Check</span>
+                                    <span data-i18n="chip_scenario_budget">💰 Budget Feasibility Check</span>
                                 </button>
                                 <button type="button" class="chip-btn" onclick="sendQuickFeature('How can I reduce expenses in rice farming using sustainable low-cost practices?', 'LOW_COST_FARMING', 'paddy', 'Thanjavur')">
                                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                                    <span>🌾 Low-Cost AWD &amp; Soil-Test Plan</span>
+                                    <span data-i18n="chip_scenario_lowcost">🌾 Low-Cost AWD &amp; Soil-Test Plan</span>
                                 </button>
                                 <button type="button" class="chip-btn" onclick="sendQuickFeature('Am I eligible for PM-KISAN and PMFBY crop insurance in Thanjavur district for paddy?', 'GOVERNMENT_SCHEME', 'paddy', 'Thanjavur')">
                                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/></svg>
-                                    <span>🏛️ PM-KISAN &amp; PMFBY Eligibility</span>
+                                    <span data-i18n="chip_scenario_scheme">🏛️ PM-KISAN &amp; PMFBY Eligibility</span>
                                 </button>
                                 <button type="button" class="chip-btn" onclick="sendQuickFeature('Heavy rain of 45 mm is forecasted. Should I sow paddy seeds today in Thanjavur?', 'WEATHER_RISK', 'paddy', 'Thanjavur')">
                                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-                                    <span>🌦️ Sowing Window Weather Alert</span>
+                                    <span data-i18n="chip_scenario_weather">🌦️ Sowing Window Weather Alert</span>
                                 </button>
                                 <button type="button" class="chip-btn" onclick="sendQuickFeature('My paddy plants have yellow leaves at the bottom with a V-shape pattern. What is the cause?', 'PROBLEM_TRIAGE', 'paddy', 'Thanjavur')">
                                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
-                                    <span>🔍 Uncertainty-Aware Problem Triage</span>
+                                    <span data-i18n="chip_scenario_triage">🔍 Uncertainty-Aware Problem Triage</span>
                                 </button>
                             </div>
                         </div>
@@ -1557,11 +1660,14 @@
             document.getElementById('chatForm').requestSubmit();
         }
 
+        let pendingCropOverride = null;
+
         function sendQuickFeature(question, category, crop, location) {
             chatInput.value = question;
             const catElem = document.getElementById('chatCategory');
             if (catElem && category) catElem.value = category;
             if (location) chatLocation.value = location;
+            if (crop) pendingCropOverride = crop;
             document.getElementById('chatForm').requestSubmit();
         }
 
@@ -1970,7 +2076,11 @@
 
             const catElem = document.getElementById('chatCategory');
             const categoryVal = catElem ? catElem.value : 'GENERAL';
-            const cropVal = selectedPlotData && selectedPlotData.crop ? selectedPlotData.crop : '';
+            const cropVal = pendingCropOverride || (selectedPlotData && selectedPlotData.crop ? selectedPlotData.crop : '');
+            pendingCropOverride = null;
+
+            const acresInput = document.getElementById('chatAcres');
+            const acresVal = acresInput && acresInput.value ? parseFloat(acresInput.value) : (selectedPlotData && selectedPlotData.acres ? parseFloat(selectedPlotData.acres) : null);
 
             const requestBody = {
                 question: questionText,
@@ -1978,7 +2088,8 @@
                 location: locationVal,
                 season: seasonVal,
                 category: categoryVal,
-                crop: cropVal
+                crop: cropVal,
+                acres: acresVal
             };
 
             try {

@@ -83,7 +83,9 @@ public class AdvisoryServiceImpl implements AdvisoryService {
         String category = request.getCategory() != null ? request.getCategory().trim().toUpperCase() : "";
         String language = multilingualFormatter.detectLanguage(question, request.getLanguage());
 
-        Double acres = extractAcres(question);
+        Double extractedAcres = extractAcres(question);
+        Double acres = (extractedAcres != null && extractedAcres > 0) ? extractedAcres :
+                ((request.getAcres() != null && request.getAcres() > 0) ? request.getAcres() : null);
         Double budget = extractBudget(question);
 
         // 2. FEATURE 6: Pesticide Safety & Off-Label Check (Zero Hallucination Priority)
