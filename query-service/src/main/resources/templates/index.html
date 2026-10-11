@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Kisan AI — Multilingual Agricultural Assistant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,6 +57,11 @@
             display: flex;
             flex-direction: column;
             line-height: 1.6;
+            padding-top: env(safe-area-inset-top);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
         }
 
         /* App Shell */
@@ -842,7 +847,7 @@
 
         /* Bottom Chat Input Bar */
         .chat-input-bar {
-            padding: 16px 20px;
+            padding: 16px 20px max(16px, calc(10px + env(safe-area-inset-bottom)));
             background: #ffffff;
             border-top: 1px solid var(--earth-200);
             display: flex;
@@ -1000,10 +1005,210 @@
                 padding: 0 16px;
             }
         }
+
+        /* Coarse pointer optimization for touchscreens */
+        @media (pointer: coarse) {
+            .btn-header {
+                min-height: 44px;
+                padding: 10px 14px;
+            }
+            .chip-btn {
+                min-height: 44px;
+                padding: 10px 14px;
+            }
+            .engine-select, .param-input, .parcel-select {
+                min-height: 44px;
+            }
+            .btn-send {
+                min-height: 48px;
+            }
+            .chat-textarea {
+                font-size: 1rem;
+            }
+        }
+
+        /* Hover vs Touch Active States */
+        @media (hover: none) {
+            .btn-header:hover, .btn-send:hover, .chip-btn:hover {
+                transform: none;
+            }
+            .btn-header:active, .btn-send:active, .chip-btn:active {
+                transform: scale(0.97);
+            }
+        }
+
+        /* Landscape Orientation / Low-Height Devices */
+        @media (max-height: 520px) and (orientation: landscape) {
+            .app-shell {
+                padding: 4px 8px;
+            }
+            .header-bar {
+                padding-bottom: 4px;
+                gap: 6px;
+            }
+            .brand-logo-icon {
+                width: 32px;
+                height: 32px;
+            }
+            .brand-title-group h1 {
+                font-size: 1.2rem;
+            }
+            .brand-subtitle {
+                display: none;
+            }
+            .context-bar {
+                padding: 4px 8px;
+                margin: 4px 0;
+                gap: 6px;
+                grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            }
+            .context-group label {
+                font-size: 0.75rem;
+                margin-bottom: 2px;
+            }
+            .parcel-bar {
+                padding: 4px 8px;
+                margin-bottom: 4px;
+                font-size: 0.75rem;
+            }
+            .chat-messages {
+                padding: 8px 10px;
+                gap: 8px;
+            }
+            .chat-input-bar {
+                padding: 6px 12px max(6px, env(safe-area-inset-bottom));
+                gap: 4px;
+            }
+            .chat-textarea {
+                min-height: 40px;
+                max-height: 68px;
+                padding: 8px 12px;
+                font-size: 0.9375rem;
+            }
+            .btn-send {
+                height: 40px;
+                min-height: 40px;
+                padding: 0 16px;
+                font-size: 0.9375rem;
+            }
+            .input-hint-row {
+                display: none;
+            }
+        }
+
+        /* Micro-Screen Support (e.g. 320px-360px budget phones) */
+        @media (max-width: 360px) {
+            .brand-title-group h1 {
+                font-size: clamp(1rem, 5vw, 1.2rem);
+            }
+            .context-bar {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .btn-header {
+                font-size: 0.75rem;
+                padding: 6px 8px;
+            }
+            .header-actions {
+                gap: 4px;
+            }
+        }
+
+        /* Motion Reduction */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Print Adaptation */
+        .print-header {
+            display: none;
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: var(--earth-900) !important;
+                min-height: auto;
+                height: auto;
+                padding: 0;
+            }
+            .app-shell {
+                max-width: 100%;
+                height: auto;
+                min-height: auto;
+                padding: 0;
+            }
+            .header-bar,
+            .context-bar,
+            .parcel-bar,
+            .chat-input-bar,
+            .welcome-card,
+            .btn-header,
+            .status-dot {
+                display: none !important;
+            }
+            .print-header {
+                display: block;
+                margin-bottom: 20px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--primary-700);
+            }
+            .print-header h2 {
+                font-size: 1.5rem;
+                color: var(--primary-900);
+                margin-bottom: 4px;
+            }
+            .print-header p {
+                font-size: 0.75rem;
+                color: var(--earth-700);
+            }
+            .chat-messages {
+                overflow: visible !important;
+                height: auto !important;
+                padding: 0;
+                gap: 16px;
+            }
+            .msg-row {
+                max-width: 100% !important;
+                margin-bottom: 16px;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .msg-bubble {
+                box-shadow: none !important;
+                border: 1px solid var(--earth-300) !important;
+                background: #ffffff !important;
+                color: var(--earth-900) !important;
+            }
+            .msg-user .msg-bubble {
+                background: #f5f5f4 !important;
+                color: var(--earth-900) !important;
+                border-color: #d6d3d1 !important;
+            }
+            .msg-assistant .msg-bubble {
+                border-color: var(--primary-600) !important;
+            }
+            .bubble-sources {
+                border-top: 1px solid #d6d3d1 !important;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="app-shell">
+        <!-- Printable Header (Visible only when printed) -->
+        <div class="print-header" aria-hidden="true">
+            <div class="print-brand">
+                <h2>KISAN AI — Multilingual Agricultural Assistant</h2>
+                <p>Agronomic Advisory &amp; Field Recommendations &bull; Grounded in ICAR, TNAU &amp; CIBRC</p>
+            </div>
+            <div class="print-meta" style="font-size:0.75rem; color:var(--earth-600); margin-top:4px;">Official Agronomic Advisory Record</div>
+        </div>
         <!-- Top Navigation -->
         <header class="header-bar">
             <a href="/" class="brand-badge">

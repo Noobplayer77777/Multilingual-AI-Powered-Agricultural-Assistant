@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Farmer Registration — Kisan AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px 16px;
+            padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
         }
 
         .auth-card {
@@ -154,6 +156,35 @@
 
         .bottom-switch a { color: var(--primary-700); font-weight: 700; text-decoration: none; }
         .bottom-switch a:hover { text-decoration: underline; }
+
+        /* Coarse pointer optimization for touchscreens */
+        @media (pointer: coarse) {
+            input[type="email"], input[type="password"], input[type="text"] {
+                min-height: 48px;
+            }
+            .btn-submit {
+                min-height: 48px;
+            }
+        }
+
+        /* Hover vs Touch Active States */
+        @media (hover: none) {
+            .btn-submit:hover {
+                transform: none;
+                box-shadow: var(--shadow-sm);
+            }
+            .btn-submit:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Motion Reduction */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>

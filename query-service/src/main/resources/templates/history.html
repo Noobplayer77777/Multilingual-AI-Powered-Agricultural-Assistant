@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Query History — Kisan AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,8 +54,10 @@
             background: linear-gradient(180deg, #ecfdf5 0%, #fafaf9 320px, #f5f5f4 100%);
             color: var(--earth-800);
             min-height: 100vh;
-            padding: 24px 16px 48px;
+            padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
             line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
         }
 
         .app-shell {
@@ -649,16 +651,97 @@
             }
         }
 
+        /* Coarse pointer optimization for touchscreens */
+        @media (pointer: coarse) {
+            .back-chat-btn, .btn-export, .btn-clear-history, .btn-reset-filters {
+                min-height: 44px;
+            }
+            .filter-input, .filter-select {
+                min-height: 44px;
+            }
+            .filter-btn {
+                min-height: 44px;
+                padding: 10px 16px;
+            }
+            .copy-card-btn {
+                min-height: 44px;
+                padding: 8px 16px;
+            }
+        }
+
+        /* Hover vs Touch Active States */
+        @media (hover: none) {
+            .back-chat-btn:hover, .btn-export:hover, .btn-clear-history:hover, .filter-btn:hover {
+                transform: none;
+            }
+            .back-chat-btn:active, .btn-export:active, .btn-clear-history:active, .filter-btn:active {
+                transform: scale(0.97);
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
                 transition-duration: 0.01ms !important;
             }
         }
+
+        /* Print Adaptation */
+        .print-header {
+            display: none;
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: var(--earth-900) !important;
+                padding: 0 !important;
+            }
+            .header-bar, .filter-row, .back-chat-btn, .copy-card-btn, .kisan-lang-container, .btn-reset-filters, .pagination-bar {
+                display: none !important;
+            }
+            .print-header {
+                display: block;
+                margin-bottom: 24px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--primary-700);
+            }
+            .print-header h2 {
+                font-size: 1.5rem;
+                color: var(--primary-900);
+                margin-bottom: 4px;
+            }
+            .print-header p {
+                font-size: 0.75rem;
+                color: var(--earth-700);
+            }
+            .history-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid var(--earth-300) !important;
+                box-shadow: none !important;
+                margin-bottom: 20px;
+                background: #ffffff !important;
+            }
+            .query-answer {
+                background: transparent !important;
+                border: 1px solid var(--earth-200) !important;
+                color: var(--earth-900) !important;
+                padding: 12px !important;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="app-shell">
+        <!-- Printable Header (Visible only when printed) -->
+        <div class="print-header" aria-hidden="true">
+            <div class="print-brand">
+                <h2>KISAN AI — Query History &amp; Advisory Archive</h2>
+                <p>Permanent Agronomic Records &bull; Grounded in ICAR, TNAU &amp; CIBRC</p>
+            </div>
+            <div class="print-meta" style="font-size:0.75rem; color:var(--earth-600); margin-top:4px;">Field Consultation Archive</div>
+        </div>
         <!-- Header -->
         <header class="header-bar">
             <a href="/" class="brand-badge" title="Return to Assistant">

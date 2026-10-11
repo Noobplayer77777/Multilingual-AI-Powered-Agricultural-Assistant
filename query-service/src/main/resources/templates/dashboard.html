@@ -429,10 +429,92 @@
                 padding: 10px 16px;
             }
         }
+
+        /* Hover vs Touch Active States */
+        @media (hover: none) {
+            .btn-nav:hover, .btn-card:hover, .btn-delete:hover, .btn-toggle:hover {
+                transform: none;
+            }
+            .btn-nav:active, .btn-card:active, .btn-delete:active, .btn-toggle:active {
+                transform: scale(0.97);
+            }
+        }
+
+        /* Landscape Orientation / Low-Height Devices */
+        @media (max-height: 520px) and (orientation: landscape) {
+            .header-bar {
+                padding: 8px 14px;
+                margin-bottom: 14px;
+            }
+            .brand-icon {
+                width: 32px;
+                height: 32px;
+            }
+            .card {
+                padding: 14px;
+                margin-bottom: 14px;
+            }
+        }
+
+        /* Print Adaptation */
+        .print-header {
+            display: none;
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: var(--earth-900) !important;
+                padding: 0 !important;
+            }
+            .header-bar, .alert, .btn-delete, .btn-toggle, form[th\\:action*="plots"], form[th\\:action*="reminders"] {
+                display: none !important;
+            }
+            .card:has(form) {
+                display: none !important;
+            }
+            .print-header {
+                display: block;
+                margin-bottom: 24px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid var(--primary-700);
+            }
+            .print-header h2 {
+                font-size: 1.5rem;
+                color: var(--primary-900);
+                margin-bottom: 4px;
+            }
+            .print-header p {
+                font-size: 0.75rem;
+                color: var(--earth-700);
+            }
+            .card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid var(--earth-300) !important;
+                box-shadow: none !important;
+                margin-bottom: 20px;
+                background: #ffffff !important;
+            }
+            .plot-item, .reminder-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid var(--earth-200) !important;
+                background: #ffffff !important;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Printable Header (Visible only when printed) -->
+        <div class="print-header" aria-hidden="true">
+            <div class="print-brand">
+                <h2>KISAN AI — Farm Memory &amp; Field Records</h2>
+                <p>Field Parcels, Soil Profile &amp; Agronomic Task Calendar &bull; Grounded in ICAR &amp; TNAU</p>
+            </div>
+            <div class="print-meta" style="font-size:0.75rem; color:var(--earth-600); margin-top:4px;">Official Farmer Land Records Sheet</div>
+        </div>
         <!-- Header -->
         <header class="header-bar">
             <a th:href="@{/}" class="brand-group" aria-label="Kisan AI Farm Memory Home">
