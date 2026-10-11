@@ -53,6 +53,7 @@
             background: linear-gradient(180deg, #ecfdf5 0%, #fafaf9 320px, #f5f5f4 100%);
             color: var(--earth-800);
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             line-height: 1.6;
@@ -63,11 +64,12 @@
             width: 100%;
             max-width: 960px;
             margin: 0 auto;
-            padding: 20px 16px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             flex: 1;
             height: 100vh;
+            height: 100dvh;
         }
 
         /* Focus Ring Standard */
@@ -185,25 +187,24 @@
 
         /* Context Toolbar (Top of Chat) */
         .context-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 2.2fr 0.9fr 1.1fr 1.2fr 1fr;
             gap: 10px;
-            padding: 10px 14px;
+            padding: 8px 14px;
             background: #ffffff;
             border: 1px solid var(--earth-200);
             border-radius: var(--radius-md);
-            margin: 12px 0;
+            margin: 8px 0;
             box-shadow: var(--shadow-subtle);
             flex-shrink: 0;
-            flex-wrap: wrap;
+            align-items: center;
         }
 
         .context-group {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 6px;
+            min-width: 0;
         }
 
         .context-label {
@@ -214,11 +215,15 @@
             color: var(--earth-700);
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .context-select, .context-input {
-            padding: 6px 10px;
+            width: 100%;
+            min-width: 0;
+            padding: 6px 8px;
             font-family: inherit;
             font-size: 0.9375rem;
             font-weight: 600;
@@ -233,10 +238,6 @@
         .context-select:focus, .context-input:focus {
             border-color: var(--primary-600);
             background-color: #ffffff;
-        }
-
-        .context-input {
-            width: 140px;
         }
 
         /* Parcel Memory Toolbar (Logged-in Farmer) */
@@ -943,7 +944,16 @@
             stroke-linejoin: round;
         }
 
-        /* Mobile Adjustments */
+        /* Responsive Layout Adaptations */
+        @media (max-width: 920px) {
+            .context-bar {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .context-group-wide {
+                grid-column: 1 / -1;
+            }
+        }
+
         @media (max-width: 640px) {
             .app-shell {
                 padding: 10px 8px;
@@ -955,14 +965,36 @@
             }
             .header-actions {
                 width: 100%;
-                justify-content: space-between;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 6px;
             }
             .context-bar {
-                flex-direction: column;
-                align-items: stretch;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                padding: 10px;
+                margin: 6px 0;
+            }
+            .context-group-wide {
+                grid-column: 1 / -1;
+            }
+            .parcel-selector-group {
+                width: 100%;
+                justify-content: stretch;
+            }
+            .parcel-select {
+                max-width: 100%;
             }
             .msg-row {
-                max-width: 95%;
+                max-width: 96%;
+            }
+            .chat-messages {
+                padding: 14px 10px;
+                gap: 14px;
+            }
+            .chat-input-bar {
+                padding: 10px 12px;
             }
             .btn-send {
                 padding: 0 16px;
@@ -1068,7 +1100,7 @@
 
         <!-- Context & Agricultural Setting Toolbar -->
         <section class="context-bar">
-            <div class="context-group">
+            <div class="context-group context-group-wide">
                 <label for="chatCategory" class="context-label">
                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                     <span data-i18n="chat_engine_label">Engine:</span>
