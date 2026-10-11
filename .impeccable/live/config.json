@@ -1,0 +1,8 @@
+{
+  "files": [
+    "query-service/src/main/resources/templates/*.html"
+  ],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true
+}
