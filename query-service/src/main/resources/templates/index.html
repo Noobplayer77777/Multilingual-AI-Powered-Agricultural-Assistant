@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kisan AI — Agricultural Chatbot</title>
+    <title>Kisan AI — Multilingual Agricultural Assistant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
@@ -54,7 +54,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         /* App Shell */
@@ -67,6 +67,12 @@
             flex-direction: column;
             flex: 1;
             height: 100vh;
+        }
+
+        /* Focus Ring Standard */
+        a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--primary-600);
         }
 
         /* Header Bar */
@@ -96,16 +102,16 @@
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 24px;
-            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.25);
+            box-shadow: var(--shadow-subtle);
+            flex-shrink: 0;
         }
 
         .brand-title-group h1 {
-            font-size: 1.35rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             color: var(--primary-900);
-            line-height: 1.15;
+            line-height: 1.2;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -118,18 +124,18 @@
             border-radius: 50%;
             display: inline-block;
             box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
-            animation: pulse-dot 2s infinite ease-in-out;
+            animation: pulse-dot 2s infinite cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes pulse-dot {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+            0% { transform: scale(0.95); opacity: 0.9; }
+            50% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.9; }
         }
 
         .brand-subtitle {
-            font-size: 0.8rem;
-            color: var(--earth-600);
+            font-size: 0.75rem;
+            color: var(--earth-700);
             font-weight: 500;
         }
 
@@ -142,13 +148,13 @@
         .btn-header {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
             padding: 8px 14px;
             border-radius: var(--radius-md);
-            font-size: 0.85rem;
+            font-size: 0.9375rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
         }
 
@@ -167,7 +173,7 @@
 
         .btn-clear {
             background-color: transparent;
-            color: var(--earth-600);
+            color: var(--earth-700);
             border: 1px solid var(--earth-300);
         }
 
@@ -200,24 +206,27 @@
         }
 
         .context-label {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            color: var(--earth-600);
+            color: var(--earth-700);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .context-select, .context-input {
             padding: 6px 10px;
             font-family: inherit;
-            font-size: 0.84rem;
+            font-size: 0.9375rem;
             font-weight: 600;
-            color: var(--earth-800);
+            color: var(--earth-900);
             background-color: var(--earth-50);
             border: 1px solid var(--earth-200);
             border-radius: var(--radius-sm);
             outline: none;
-            transition: border-color 0.15s ease;
+            transition: border-color 0.15s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .context-select:focus, .context-input:focus {
@@ -227,6 +236,143 @@
 
         .context-input {
             width: 140px;
+        }
+
+        /* Parcel Memory Toolbar (Logged-in Farmer) */
+        .parcel-bar {
+            background: linear-gradient(135deg, var(--primary-50) 0%, #ffffff 100%);
+            border: 1.5px solid var(--primary-200);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            margin: 10px 0 4px;
+            box-shadow: var(--shadow-subtle);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .parcel-bar-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .parcel-bar-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--primary-900);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .parcel-selector-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 260px;
+            justify-content: flex-end;
+        }
+
+        .parcel-select {
+            width: 100%;
+            max-width: 480px;
+            border-color: var(--primary-600);
+            background-color: #ffffff;
+        }
+
+        .btn-clear-plot {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--earth-700);
+            background: transparent;
+            border: 1px solid var(--earth-200);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-clear-plot:hover {
+            background: var(--earth-100);
+            color: var(--earth-900);
+        }
+
+        .active-plot-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(6, 78, 59, 0.12);
+        }
+
+        .active-plot-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            color: var(--primary-900);
+            border: 1px solid var(--primary-200);
+            padding: 4px 10px;
+            border-radius: var(--radius-xl);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            box-shadow: var(--shadow-subtle);
+            width: fit-content;
+        }
+
+        .plot-action-chips {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .plot-action-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--earth-700);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .plot-chip-btn {
+            background: #ffffff;
+            border: 1px solid var(--primary-200);
+            color: var(--primary-800);
+            padding: 5px 10px;
+            border-radius: var(--radius-xl);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .plot-chip-btn:hover {
+            background: var(--primary-50);
+            color: var(--primary-900);
+            border-color: var(--primary-600);
+            transform: translateY(-1px);
+        }
+
+        .parcel-bar-hint {
+            background: var(--earth-50);
+            border: 1px dashed var(--earth-200);
+            border-radius: var(--radius-md);
+            padding: 8px 12px;
+            margin: 6px 0 2px;
+            font-size: 0.75rem;
+            color: var(--earth-700);
         }
 
         /* Main Chat Container */
@@ -271,7 +417,7 @@
             display: flex;
             gap: 12px;
             max-width: 88%;
-            animation: msgFadeIn 0.25s ease-out;
+            animation: msgFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes msgFadeIn {
@@ -296,7 +442,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 19px;
             flex-shrink: 0;
             box-shadow: var(--shadow-subtle);
         }
@@ -320,7 +465,7 @@
 
         .bubble-content {
             padding: 16px 18px;
-            font-size: 0.96rem;
+            font-size: 1rem;
             line-height: 1.6;
             word-break: break-word;
         }
@@ -328,15 +473,15 @@
         .msg-user .bubble-content {
             background: linear-gradient(135deg, var(--primary-800), var(--primary-900));
             color: #ffffff;
-            border-radius: 18px 18px 4px 18px;
-            box-shadow: 0 4px 10px rgba(6, 78, 59, 0.15);
+            border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-lg);
+            box-shadow: var(--shadow-subtle);
         }
 
         .msg-bot .bubble-content {
             background-color: #ffffff;
             color: var(--earth-900);
             border: 1px solid var(--earth-200);
-            border-radius: 18px 18px 18px 4px;
+            border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-sm);
             box-shadow: var(--shadow-subtle);
         }
 
@@ -350,25 +495,26 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.76rem;
-            color: var(--earth-600);
+            font-size: 0.75rem;
+            color: var(--earth-700);
             padding: 0 4px;
         }
 
         .msg-user .bubble-meta {
             justify-content: flex-end;
+            color: var(--primary-100);
         }
 
         .meta-pill {
             display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
             padding: 2px 8px;
             background-color: var(--earth-100);
-            border-radius: 12px;
+            border-radius: var(--radius-xl);
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             letter-spacing: 0.03em;
         }
 
@@ -377,9 +523,115 @@
             color: var(--primary-900);
         }
 
+        /* Live Weather Details Card */
+        .weather-live-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            border: 1.5px solid var(--primary-500);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .weather-live-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(6, 78, 59, 0.1);
+        }
+
+        .weather-live-loc {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1rem;
+            color: var(--primary-900);
+            font-weight: 700;
+        }
+
+        .weather-cond-badge {
+            background: #ffffff;
+            color: var(--primary-800);
+            border: 1px solid var(--primary-200);
+            padding: 3px 10px;
+            border-radius: var(--radius-xl);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .weather-live-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 580px) {
+            .weather-live-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .weather-stat-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(6, 78, 59, 0.08);
+        }
+
+        .stat-ico {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-700);
+        }
+
+        .stat-num {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--earth-900);
+            line-height: 1.1;
+        }
+
+        .stat-lbl {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--earth-700);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .weather-live-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-900);
+            letter-spacing: 0.02em;
+        }
+
+        .weather-live-link {
+            color: var(--primary-700);
+            text-decoration: underline;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
         /* Sources inside Assistant Bubble */
         .bubble-sources {
-            margin-top: 12px;
+            margin-top: 14px;
             padding-top: 12px;
             border-top: 1px solid var(--earth-200);
             display: flex;
@@ -388,14 +640,14 @@
         }
 
         .sources-title {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            color: var(--earth-600);
+            color: var(--earth-700);
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
 
         .sources-list {
@@ -412,14 +664,14 @@
             background-color: var(--earth-50);
             border: 1px solid var(--earth-200);
             border-radius: var(--radius-sm);
-            font-size: 0.82rem;
+            font-size: 0.75rem;
             gap: 8px;
         }
 
         .source-name-box {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             flex: 1;
             min-width: 0;
         }
@@ -433,17 +685,20 @@
         }
 
         .source-badge-tag {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 2px 7px;
+            border-radius: var(--radius-sm);
             text-transform: uppercase;
             flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .tag-doc {
-            background-color: #e0f2fe;
-            color: #0369a1;
+            background-color: var(--primary-100);
+            color: var(--primary-900);
         }
 
         .tag-weather {
@@ -458,10 +713,13 @@
             padding: 4px 8px;
             background: #ffffff;
             border: 1px solid var(--earth-200);
-            border-radius: 4px;
-            font-size: 0.78rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
             white-space: nowrap;
-            transition: all 0.15s ease;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
         }
 
         .source-link:hover {
@@ -475,22 +733,22 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .btn-bubble-action {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
+            gap: 5px;
+            padding: 5px 11px;
             background: #ffffff;
             border: 1px solid var(--earth-200);
             border-radius: var(--radius-sm);
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--earth-700);
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .btn-bubble-action:hover {
@@ -502,11 +760,11 @@
         .typing-indicator {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             padding: 14px 18px;
             background-color: #ffffff;
             border: 1px solid var(--earth-200);
-            border-radius: 18px 18px 18px 4px;
+            border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-sm);
             box-shadow: var(--shadow-subtle);
         }
 
@@ -532,18 +790,18 @@
         }
 
         .typing-text {
-            font-size: 0.84rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--earth-600);
+            color: var(--earth-700);
         }
 
-        /* Quick Prompt Chips (Welcome state) */
+        /* Quick Prompt Chips */
         .welcome-chips-title {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--earth-600);
+            color: var(--earth-700);
             margin: 14px 0 8px;
         }
 
@@ -557,13 +815,16 @@
             background: var(--earth-50);
             border: 1px solid var(--earth-200);
             padding: 7px 12px;
-            border-radius: 20px;
-            font-size: 0.82rem;
+            border-radius: var(--radius-xl);
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--earth-700);
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             text-align: left;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .chip-btn:hover {
@@ -601,7 +862,7 @@
             max-height: 140px;
             padding: 14px 16px;
             font-family: inherit;
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--earth-900);
             background-color: var(--earth-50);
             border: 1.5px solid var(--earth-200);
@@ -609,7 +870,7 @@
             resize: none;
             line-height: 1.5;
             outline: none;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            transition: border-color 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .chat-textarea:focus {
@@ -628,19 +889,19 @@
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.25);
+            box-shadow: var(--shadow-card);
             flex-shrink: 0;
         }
 
         .btn-send:hover {
             background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(6, 78, 59, 0.35);
+            box-shadow: var(--shadow-float);
         }
 
         .btn-send:disabled {
@@ -655,8 +916,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.78rem;
-            color: var(--earth-600);
+            font-size: 0.75rem;
+            color: var(--earth-700);
             padding: 0 4px;
         }
 
@@ -664,6 +925,17 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+        }
+
+        /* SVG Icon Utilities */
+        .icon-svg {
+            display: inline-block;
+            vertical-align: middle;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         /* Mobile Adjustments */
@@ -698,29 +970,130 @@
         <!-- Top Navigation -->
         <header class="header-bar">
             <a href="/" class="brand-badge">
-                <div class="brand-logo-icon">🌱</div>
+                <div class="brand-logo-icon">
+                    <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/>
+                        <path d="M12 2v20"/>
+                    </svg>
+                </div>
                 <div class="brand-title-group">
                     <h1>
                         KISAN AI 
-                        <span class="status-dot" title="Assistant is online & ready"></span>
+                        <span class="status-dot" title="Assistant is online and ready"></span>
                     </h1>
                     <div class="brand-subtitle">Multilingual Agricultural Chatbot &bull; ICAR &amp; TNAU Grounded</div>
                 </div>
             </a>
             <div class="header-actions">
+                <a href="/dashboard" class="btn-header" style="background:var(--primary-800); color:#ffffff; border-color:var(--primary-800);">
+                    <span>🌾 Farm Memory</span>
+                </a>
                 <button type="button" class="btn-header btn-clear" onclick="resetChat()" title="Start new conversation">
-                    <span>🔄</span> Clear Chat
+                    <svg class="icon-svg" width="15" height="15" viewBox="0 0 24 24">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    <span>Clear</span>
                 </button>
                 <a href="/history" class="btn-header btn-history">
-                    <span>📜</span> View History
+                    <svg class="icon-svg" width="15" height="15" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span>History</span>
                 </a>
-            </div>
+                <span sec:authorize="isAuthenticated()" style="display:inline-flex; align-items:center; gap:6px;">
+                    <a href="/dashboard" class="btn-header" style="background:var(--primary-50); color:var(--primary-900); border-color:var(--primary-200); font-weight:700;" sec:authentication="name">User</a>
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn-header" style="border-color:var(--error-border); color:var(--error-red);">Sign Out</button>
+                    </form>
+                </span>
+                <span sec:authorize="isAnonymous()" style="display:inline-flex; align-items:center; gap:6px;">
+                    <a href="/login" class="btn-header" style="background:var(--earth-100); color:var(--earth-900);">Sign In</a>
+                    <a href="/register" class="btn-header" style="background:var(--primary-700); color:#ffffff; border-color:var(--primary-700);">Register</a>
+                </span>
         </header>
+
+        <!-- Farm Parcel Memory Bar (Logged-in Farmer) -->
+        <section class="parcel-bar" sec:authorize="isAuthenticated()" th:if="${plots != null and !plots.isEmpty()}">
+            <div class="parcel-bar-top">
+                <div class="parcel-bar-title">
+                    <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/><path d="M12 2v20"/></svg>
+                    <span>Farm Parcels (Farm Memory):</span>
+                </div>
+                <div class="parcel-selector-group">
+                    <select id="activePlotSelect" class="context-select parcel-select" onchange="selectPlot(this.value)" aria-label="Select Land Parcel to Auto-Populate Details">
+                        <option value="">-- Choose a Parcel to Auto-fill Location &amp; Crop --</option>
+                        <option th:each="plot : ${plots}" 
+                                th:value="${plot.id}"
+                                th:data-name="${plot.plotName}"
+                                th:data-acres="${plot.areaAcres}"
+                                th:data-crop="${plot.currentCrop}"
+                                th:data-stage="${plot.cropStage}"
+                                th:data-location="${plot.location}"
+                                th:data-ph="${plot.soilTestPh}"
+                                th:data-oc="${plot.soilOrganicCarbon}"
+                                th:text="${plot.plotName + ' (' + (plot.currentCrop != null ? plot.currentCrop + ', ' : '') + plot.areaAcres + ' ac' + (plot.location != null ? ', ' + plot.location : '') + ')'}">
+                            North Acre (Paddy, 1.5 ac, Thanjavur)
+                        </option>
+                    </select>
+                    <button type="button" id="clearPlotBtn" class="btn-clear-plot" style="display:none;" onclick="clearPlotSelection()">Clear</button>
+                </div>
+            </div>
+            <!-- Active Plot Detail Chips -->
+            <div id="activePlotDetails" class="active-plot-details" style="display:none;">
+                <div class="active-plot-badge" id="activePlotBadge"></div>
+                <div class="plot-action-chips">
+                    <span class="plot-action-label">Quick Parcel Inquiries:</span>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('dosage')">🧪 Safe Pesticide &amp; Fertilizer</button>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('sowing')">🌦️ Weather &amp; Sowing Risk</button>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('budget')">💰 Budget Crop Plan</button>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('lowcost')">🌿 Low-Cost Farming</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Informative hint if logged in but no parcels yet -->
+        <div class="parcel-bar-hint" sec:authorize="isAuthenticated()" th:if="${plots == null or plots.isEmpty()}">
+            <span>🌾 <strong>Tip:</strong> You haven't recorded any land parcels yet. <a href="/dashboard" style="color:var(--primary-700); font-weight:700;">Add your parcels in Farm Memory</a> to auto-load location, crop stage, and soil pH into the Assistant.</span>
+        </div>
 
         <!-- Context & Agricultural Setting Toolbar -->
         <section class="context-bar">
             <div class="context-group">
-                <span class="context-label">🌐 Language:</span>
+                <label for="chatCategory" class="context-label">
+                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    Engine:
+                </label>
+                <select id="chatCategory" class="context-select">
+                    <option value="GENERAL_DECISION">1. Risk-Aware Decision Assistant</option>
+                    <option value="WEATHER_RISK">2. Weather &amp; Sowing Risk Advisory</option>
+                    <option value="BUDGET_PLANNING">3. Budget-Aware Crop Planner</option>
+                    <option value="LOW_COST_FARMING">4. Low-Cost Farming Planner</option>
+                    <option value="GOVERNMENT_SCHEME">5. Govt Scheme Navigator</option>
+                    <option value="PESTICIDE_SAFETY">6. Safe Pesticide Guidance (CIBRC)</option>
+                    <option value="PROBLEM_TRIAGE">7. Crop Problem Triage</option>
+                </select>
+            </div>
+
+            <div class="context-group">
+                <label for="chatAcres" class="context-label">
+                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+                    Acres:
+                </label>
+                <input type="number" step="0.1" id="chatAcres" class="context-input" style="width: 80px;" placeholder="Acres" value="2.0">
+            </div>
+
+            <div class="context-group">
+                <label for="chatLanguage" class="context-label">
+                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" y1="12" x2="22" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    Language:
+                </label>
                 <select id="chatLanguage" class="context-select">
                     <option value="auto">Auto-detect</option>
                     <option value="en">English (English)</option>
@@ -730,12 +1103,26 @@
             </div>
 
             <div class="context-group">
-                <span class="context-label">📍 Location:</span>
-                <input type="text" id="chatLocation" class="context-input" placeholder="e.g. Chennai" value="Chennai">
+                <label for="chatLocation" class="context-label">
+                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    Location:
+                </label>
+                <input type="text" id="chatLocation" class="context-input" placeholder="e.g. Thanjavur" value="Thanjavur">
             </div>
 
             <div class="context-group">
-                <span class="context-label">🗓️ Season:</span>
+                <label for="chatSeason" class="context-label">
+                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Season:
+                </label>
                 <select id="chatSeason" class="context-select">
                     <option value="Auto">Auto</option>
                     <option value="Kharif">Kharif</option>
@@ -751,33 +1138,51 @@
             <div class="chat-messages" id="chatMessages">
                 <!-- Welcome Bot Message -->
                 <div class="msg-row msg-bot">
-                    <div class="msg-avatar avatar-bot">🌱</div>
+                    <div class="msg-avatar avatar-bot">
+                        <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/>
+                            <path d="M12 2v20"/>
+                        </svg>
+                    </div>
                     <div class="msg-bubble">
                         <div class="bubble-content">
-                            <p><strong>Vanakkam &amp; Namaste! Welcome to Kisan AI.</strong></p>
+                            <p><strong>Vanakkam &amp; Namaste! Welcome to Kisan AI Assistant.</strong></p>
                             <p style="margin-top: 6px;">
-                                I am your intelligent agricultural assistant. Ask me questions about crop cultivation, pest identification, disease management, and irrigation in <strong>English</strong>, <strong>தமிழ் (Tamil)</strong>, or <strong>हिंदी (Hindi)</strong>.
+                                I am your upgraded full-stack agricultural decision assistant. I provide deterministic calculations for budget crop planning, low-cost farming optimizations, CIBRC pesticide label safety checks, and government scheme eligibility in <strong>English</strong>, <strong>தமிழ் (Tamil)</strong>, and <strong>हिंदी (Hindi)</strong>.
                             </p>
-                            <p style="margin-top: 6px; font-size: 0.88rem; color: var(--earth-700);">
-                                🔬 Every advisory is strictly grounded in official <strong>ICAR</strong> and <strong>TNAU</strong> guidelines and dynamic <strong>Open-Meteo weather</strong> for your location.
+                            <p style="margin-top: 6px; font-size: 0.75rem; color: var(--earth-700);">
+                                Grounded in official <strong>CIBRC</strong>, <strong>ICAR</strong>, <strong>TNAU</strong> agronomic guidelines and real-time <strong>WeatherAPI.com</strong> agromet feeds.
                             </p>
 
-                            <div class="welcome-chips-title">Suggested Quick Questions:</div>
+                            <div class="welcome-chips-title">Select an Integrated Feature Scenario:</div>
                             <div class="welcome-chips">
-                                <button type="button" class="chip-btn" onclick="sendQuickPrompt('How to manage early blight in tomato crops?', 'en', 'Chennai', 'Kharif')">
-                                    🍅 Early Blight in Tomatoes (EN)
+                                <button type="button" class="chip-btn" onclick="sendQuickFeature('What is the recommended pesticide dosage for blast in paddy for 2 acres?', 'PESTICIDE_SAFETY', 'paddy', 'Thanjavur')">
+                                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                    <span>🔬 CIBRC Mancozeb Dose (2 ac)</span>
                                 </button>
-                                <button type="button" class="chip-btn" onclick="sendQuickPrompt('கோடையில் தக்காளி சாகுபடி சிறந்த நடைமுறைகள் என்ன?', 'ta', 'Madurai', 'Summer')">
-                                    🌱 கோடையில் தக்காளி சாகுபடி (TA)
+                                <button type="button" class="chip-btn" onclick="sendQuickFeature('Can I spray Coragen Chlorantraniliprole on mango trees?', 'PESTICIDE_SAFETY', 'mango', 'Madurai')">
+                                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                    <span>⚠️ Test Off-Label Safety Refusal</span>
                                 </button>
-                                <button type="button" class="chip-btn" onclick="sendQuickPrompt('நெல் தண்டு துளைப்பான் பூச்சி கட்டுப்பாடு முறைகள் என்ன?', 'ta', 'Thanjavur', 'Kharif')">
-                                    🌾 நெல் தண்டு துளைப்பான் கட்டுப்பாடு (TA)
+                                <button type="button" class="chip-btn" onclick="sendQuickFeature('What is the itemized budget and cost of cultivation for 2 acres of paddy with Rs 30000 budget?', 'BUDGET_PLANNING', 'paddy', 'Thanjavur')">
+                                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                    <span>💰 Budget Feasibility Check</span>
                                 </button>
-                                <button type="button" class="chip-btn" onclick="sendQuickPrompt('गर्मियों में टमाटर की खेती और कीट नियंत्रण के उपाय क्या हैं?', 'hi', 'Lucknow', 'Zaid')">
-                                    🍅 टमाटर की वैज्ञानिक खेती और कीट (HI)
+                                <button type="button" class="chip-btn" onclick="sendQuickFeature('How can I reduce expenses in rice farming using sustainable low-cost practices?', 'LOW_COST_FARMING', 'paddy', 'Thanjavur')">
+                                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                    <span>🌾 Low-Cost AWD &amp; Soil-Test Plan</span>
                                 </button>
-                                <button type="button" class="chip-btn" onclick="sendQuickPrompt('What are water management rules for drip irrigation in maize?', 'en', 'Coimbatore', 'Rabi')">
-                                    🌽 Maize Drip Irrigation (EN)
+                                <button type="button" class="chip-btn" onclick="sendQuickFeature('Am I eligible for PM-KISAN and PMFBY crop insurance in Thanjavur district for paddy?', 'GOVERNMENT_SCHEME', 'paddy', 'Thanjavur')">
+                                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/></svg>
+                                    <span>🏛️ PM-KISAN &amp; PMFBY Eligibility</span>
+                                </button>
+                                <button type="button" class="chip-btn" onclick="sendQuickFeature('Heavy rain of 45 mm is forecasted. Should I sow paddy seeds today in Thanjavur?', 'WEATHER_RISK', 'paddy', 'Thanjavur')">
+                                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                                    <span>🌦️ Sowing Window Weather Alert</span>
+                                </button>
+                                <button type="button" class="chip-btn" onclick="sendQuickFeature('My paddy plants have yellow leaves at the bottom with a V-shape pattern. What is the cause?', 'PROBLEM_TRIAGE', 'paddy', 'Thanjavur')">
+                                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                                    <span>🔍 Uncertainty-Aware Problem Triage</span>
                                 </button>
                             </div>
                         </div>
@@ -805,14 +1210,18 @@
                         </div>
                         <button type="submit" class="btn-send" id="btnSend">
                             <span>Send</span>
-                            <span>&rarr;</span>
+                            <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            </svg>
                         </button>
                     </div>
                     <div class="input-hint-row">
                         <span class="disclaimer-badge">
-                            <span>✓</span> Grounded with ICAR/TNAU science &bull; Real-time weather integration
+                            <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>Grounded with ICAR/TNAU science &bull; Real-time weather integration</span>
                         </span>
-                        <span>Shift + Enter for new line</span>
+                        <span>Enter ↵ to send &bull; Shift + Enter for newline</span>
                     </div>
                 </form>
             </footer>
@@ -827,20 +1236,52 @@
         const chatLocation = document.getElementById('chatLocation');
         const chatSeason = document.getElementById('chatSeason');
 
-        // Step messages for animated typing indicator
         const stepTexts = [
             "Analyzing agricultural query & intent...",
             "Searching pgvector knowledge base for ICAR/TNAU research...",
-            "Fetching live Open-Meteo weather observation...",
+            "Fetching live WeatherAPI meteorological observation...",
             "Synthesizing verified multilingual advisory..."
         ];
 
         let typingInterval = null;
 
-        // Auto-resize textarea
+        function updateLanguageUi(lang) {
+            const placeholders = {
+                'ta': 'விவசாய கேள்வியைக் கேளுங்கள்... (எ.கா: நெல் பயிரில் பூச்சி தாக்குதலை தடுப்பது எப்படி?) — அனுப்ப Enter அழுத்தவும்',
+                'hi': 'अपना कृषि प्रश्न पूछें... (उदा: धान में कीट नियंत्रण और खाद की सही मात्रा क्या है?) — भेजने के लिए Enter दबाएं',
+                'en': 'Ask your agricultural question... (e.g. How to prevent pest damage in rice?) — Press Enter to send',
+                'auto': 'Ask your agricultural question in English, தமிழ் or हिंदी... — Press Enter to send'
+            };
+            if (chatInput && placeholders[lang]) {
+                chatInput.placeholder = placeholders[lang];
+            }
+        }
+
+        if (chatLanguage) {
+            chatLanguage.addEventListener('change', function() {
+                updateLanguageUi(this.value);
+            });
+        }
+
+        // Auto-resize textarea & script auto-detect
         chatInput.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 140) + 'px';
+
+            if (chatLanguage && (chatLanguage.value === 'auto' || !chatLanguage.value)) {
+                for (let i = 0; i < this.value.length; i++) {
+                    const code = this.value.charCodeAt(i);
+                    if (code >= 0x0B80 && code <= 0x0BFF) {
+                        chatLanguage.value = 'ta';
+                        updateLanguageUi('ta');
+                        break;
+                    } else if (code >= 0x0900 && code <= 0x097F) {
+                        chatLanguage.value = 'hi';
+                        updateLanguageUi('hi');
+                        break;
+                    }
+                }
+            }
         });
 
         function handleKeyDown(event) {
@@ -859,7 +1300,6 @@
             return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         }
 
-        // Send a quick prompt from the suggestion chips
         function sendQuickPrompt(question, lang, location, season) {
             chatInput.value = question;
             if (lang) chatLanguage.value = lang;
@@ -868,7 +1308,14 @@
             document.getElementById('chatForm').requestSubmit();
         }
 
-        // Reset the chat
+        function sendQuickFeature(question, category, crop, location) {
+            chatInput.value = question;
+            const catElem = document.getElementById('chatCategory');
+            if (catElem && category) catElem.value = category;
+            if (location) chatLocation.value = location;
+            document.getElementById('chatForm').requestSubmit();
+        }
+
         function resetChat() {
             if (confirm('Start a fresh conversation? Current chat will be cleared.')) {
                 sessionStorage.removeItem('kisan_chat_history');
@@ -876,18 +1323,16 @@
             }
         }
 
-        // Copy text to clipboard
         function copyText(button, text) {
             navigator.clipboard.writeText(text).then(() => {
                 const original = button.innerHTML;
-                button.innerHTML = '<span>✓</span> Copied!';
+                button.innerHTML = '<svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
                 setTimeout(() => { button.innerHTML = original; }, 1800);
             }).catch(() => {
                 alert('Could not copy text to clipboard.');
             });
         }
 
-        // Text-to-Speech (Voice Playback)
         function speakText(text, lang) {
             if (!('speechSynthesis' in window)) {
                 alert('Text-to-speech is not supported in this browser.');
@@ -896,7 +1341,6 @@
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             
-            // Map language code to standard locale
             if (lang === 'ta') {
                 utterance.lang = 'ta-IN';
             } else if (lang === 'hi') {
@@ -908,14 +1352,18 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // Append User Message to Stream
         function appendUserMessage(text, meta) {
             const row = document.createElement('div');
             row.className = 'msg-row msg-user';
 
             const avatar = document.createElement('div');
             avatar.className = 'msg-avatar avatar-user';
-            avatar.textContent = '🧑‍🌾';
+            avatar.innerHTML = `
+                <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            `;
 
             const bubble = document.createElement('div');
             bubble.className = 'msg-bubble';
@@ -928,8 +1376,8 @@
             metaBar.className = 'bubble-meta';
             
             let metaHtml = `<span>${getCurrentTime()}</span>`;
-            if (meta.location) metaHtml += `<span class="meta-pill">📍 ${escapeHtml(meta.location)}</span>`;
-            if (meta.language && meta.language !== 'auto') metaHtml += `<span class="meta-pill">🌐 ${meta.language.toUpperCase()}</span>`;
+            if (meta.location) metaHtml += `<span class="meta-pill"><svg class="icon-svg" width="11" height="11" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${escapeHtml(meta.location)}</span>`;
+            if (meta.language && meta.language !== 'auto') metaHtml += `<span class="meta-pill"><svg class="icon-svg" width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> ${meta.language.toUpperCase()}</span>`;
             metaBar.innerHTML = metaHtml;
 
             bubble.appendChild(content);
@@ -941,7 +1389,6 @@
             scrollToBottom();
         }
 
-        // Append Typing Indicator
         function showTypingIndicator() {
             const row = document.createElement('div');
             row.className = 'msg-row msg-bot';
@@ -949,7 +1396,12 @@
 
             const avatar = document.createElement('div');
             avatar.className = 'msg-avatar avatar-bot';
-            avatar.textContent = '🌱';
+            avatar.innerHTML = `
+                <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/>
+                    <path d="M12 2v20"/>
+                </svg>
+            `;
 
             const bubble = document.createElement('div');
             bubble.className = 'msg-bubble';
@@ -980,7 +1432,6 @@
             }, 1400);
         }
 
-        // Remove Typing Indicator
         function removeTypingIndicator() {
             if (typingInterval) {
                 clearInterval(typingInterval);
@@ -992,14 +1443,35 @@
             }
         }
 
-        // Append Assistant Response Bubble
+        function parseWeatherDetails(sourceName, sourceUrl) {
+            if (!sourceName) return null;
+            const m = sourceName.match(/(WeatherAPI\.com|Open-Meteo)\s*—\s*([^:]+):\s*([0-9.]+\s*°C)[^,]*,\s*([0-9.]+\s*%)[^,]*,\s*([0-9.]+\s*mm)[^()]*\(([^)]+)\)/i);
+            if (m) {
+                return {
+                    provider: m[1],
+                    location: m[2].trim(),
+                    temperature: m[3].trim(),
+                    humidity: m[4].trim(),
+                    rainfall: m[5].trim(),
+                    condition: m[6].trim(),
+                    url: sourceUrl || '#'
+                };
+            }
+            return null;
+        }
+
         function appendBotMessage(data) {
             const row = document.createElement('div');
             row.className = 'msg-row msg-bot';
 
             const avatar = document.createElement('div');
             avatar.className = 'msg-avatar avatar-bot';
-            avatar.textContent = '🌱';
+            avatar.innerHTML = `
+                <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/>
+                    <path d="M12 2v20"/>
+                </svg>
+            `;
 
             const bubble = document.createElement('div');
             bubble.className = 'msg-bubble';
@@ -1007,7 +1479,68 @@
             const content = document.createElement('div');
             content.className = 'bubble-content';
 
-            // Format paragraphs and bullets
+            // Live Weather Card Rendering
+            if (data.sources && data.sources.length > 0) {
+                const weatherSource = data.sources.find(s => s.type === 'API');
+                if (weatherSource) {
+                    const weather = parseWeatherDetails(weatherSource.name, weatherSource.url);
+                    if (weather) {
+                        const weatherCard = document.createElement('div');
+                        weatherCard.className = 'weather-live-card';
+                        weatherCard.innerHTML = `
+                            <div class="weather-live-header">
+                                <div class="weather-live-loc">
+                                    <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <span>${escapeHtml(weather.location)}</span>
+                                </div>
+                                <span class="weather-cond-badge">
+                                    <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                                    <span>${escapeHtml(weather.condition)}</span>
+                                </span>
+                            </div>
+                            <div class="weather-live-grid">
+                                <div class="weather-stat-box">
+                                    <span class="stat-ico">
+                                        <svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+                                    </span>
+                                    <div>
+                                        <div class="stat-num">${escapeHtml(weather.temperature)}</div>
+                                        <div class="stat-lbl">Temperature</div>
+                                    </div>
+                                </div>
+                                <div class="weather-stat-box">
+                                    <span class="stat-ico">
+                                        <svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                    </span>
+                                    <div>
+                                        <div class="stat-num">${escapeHtml(weather.humidity)}</div>
+                                        <div class="stat-lbl">Humidity</div>
+                                    </div>
+                                </div>
+                                <div class="weather-stat-box">
+                                    <span class="stat-ico">
+                                        <svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><line x1="8" y1="19" x2="6" y2="22"/><line x1="12" y1="19" x2="10" y2="22"/><line x1="16" y1="19" x2="14" y2="22"/></svg>
+                                    </span>
+                                    <div>
+                                        <div class="stat-num">${escapeHtml(weather.rainfall)}</div>
+                                        <div class="stat-lbl">Rainfall</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weather-live-footer">
+                                <span>Live observation via ${escapeHtml(weather.provider)} API</span>
+                                <a href="${escapeHtml(weather.url)}" target="_blank" rel="noopener noreferrer" class="weather-live-link">
+                                    <span>Radar</span>
+                                    <svg class="icon-svg" width="11" height="11" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                                </a>
+                            </div>
+                        `;
+                        content.appendChild(weatherCard);
+                    }
+                }
+            }
+
+            // Paragraphs and bullets
             const textParagraphs = data.answer.split('\n\n');
             textParagraphs.forEach(para => {
                 const p = document.createElement('p');
@@ -1023,7 +1556,10 @@
 
                 const title = document.createElement('div');
                 title.className = 'sources-title';
-                title.innerHTML = '<span>📚</span> Verified Research &amp; Data Sources';
+                title.innerHTML = `
+                    <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <span>Verified Research &amp; Data Sources</span>
+                `;
                 sourcesBox.appendChild(title);
 
                 const list = document.createElement('div');
@@ -1038,7 +1574,9 @@
 
                     const tag = document.createElement('span');
                     tag.className = 'source-badge-tag ' + (s.type === 'API' ? 'tag-weather' : 'tag-doc');
-                    tag.textContent = s.type === 'API' ? 'Weather API' : 'Research Doc';
+                    tag.innerHTML = s.type === 'API' 
+                        ? `<svg class="icon-svg" width="10" height="10" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Weather API`
+                        : `<svg class="icon-svg" width="10" height="10" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Research Doc`;
 
                     const name = document.createElement('span');
                     name.className = 'source-name';
@@ -1055,7 +1593,7 @@
                         link.href = s.url;
                         link.target = '_blank';
                         link.rel = 'noopener noreferrer';
-                        link.textContent = 'View Reference ↗';
+                        link.innerHTML = `<span>View Reference</span> <svg class="icon-svg" width="10" height="10" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>`;
                         item.appendChild(link);
                     }
 
@@ -1073,14 +1611,14 @@
             const copyBtn = document.createElement('button');
             copyBtn.type = 'button';
             copyBtn.className = 'btn-bubble-action';
-            copyBtn.innerHTML = '<span>📋</span> Copy';
+            copyBtn.innerHTML = `<svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> <span>Copy</span>`;
             copyBtn.onclick = function() { copyText(this, data.answer); };
             actionsRow.appendChild(copyBtn);
 
             const voiceBtn = document.createElement('button');
             voiceBtn.type = 'button';
             voiceBtn.className = 'btn-bubble-action';
-            voiceBtn.innerHTML = '<span>🔊</span> Listen';
+            voiceBtn.innerHTML = `<svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> <span>Listen</span>`;
             voiceBtn.onclick = function() { speakText(data.answer, data.language); };
             actionsRow.appendChild(voiceBtn);
 
@@ -1092,7 +1630,7 @@
             const langCode = (data.language || 'en').toUpperCase();
             metaBar.innerHTML = `
                 <span class="meta-pill meta-pill-accent">Kisan AI</span>
-                <span class="meta-pill">🌐 ${langCode}</span>
+                <span class="meta-pill"><svg class="icon-svg" width="11" height="11" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> ${langCode}</span>
                 <span>${getCurrentTime()}</span>
             `;
 
@@ -1105,14 +1643,13 @@
             scrollToBottom();
         }
 
-        // Append Error Bubble
         function appendErrorMessage(errorText, status) {
             const row = document.createElement('div');
             row.className = 'msg-row msg-bot msg-error';
 
             const avatar = document.createElement('div');
             avatar.className = 'msg-avatar avatar-bot';
-            avatar.textContent = '⚠️';
+            avatar.innerHTML = `<svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
 
             const bubble = document.createElement('div');
             bubble.className = 'msg-bubble';
@@ -1127,7 +1664,7 @@
             const metaBar = document.createElement('div');
             metaBar.className = 'bubble-meta';
             metaBar.innerHTML = `
-                <span class="meta-pill" style="background:#fee2e2; color:#b91c1c;">HTTP ${status || 'Error'}</span>
+                <span class="meta-pill" style="background:var(--error-bg); color:var(--error-red);">HTTP ${status || 'Error'}</span>
                 <span>${getCurrentTime()}</span>
             `;
 
@@ -1140,7 +1677,6 @@
             scrollToBottom();
         }
 
-        // Handle Chat Form Submission
         async function handleChatSubmit(e) {
             e.preventDefault();
 
@@ -1148,30 +1684,52 @@
             if (!questionText) return;
 
             const selectedLang = chatLanguage.value;
-            const locationVal = chatLocation.value.trim();
+            let locationVal = chatLocation.value.trim();
             const seasonVal = chatSeason.value.trim();
+
+            // Auto-detect city mentioned in question (English, Tamil, Hindi)
+            const locMatches = {
+                'chennai': 'Chennai', 'சென்னை': 'Chennai', 'चेन्नई': 'Chennai',
+                'madurai': 'Madurai', 'மதுரை': 'Madurai', 'मदुरै': 'Madurai',
+                'coimbatore': 'Coimbatore', 'கோயம்புத்தூர்': 'Coimbatore', 'कोयंबटूर': 'Coimbatore',
+                'thanjavur': 'Thanjavur', 'தஞ்சாவூர்': 'Thanjavur', 'तंजाவूर': 'Thanjavur',
+                'lucknow': 'Lucknow', 'லக்னோ': 'Lucknow', 'लखनऊ': 'Lucknow',
+                'delhi': 'Delhi', 'தில்லி': 'Delhi', 'दिल्ली': 'Delhi'
+            };
+            const lowerQ = questionText.toLowerCase();
+            for (const [key, val] of Object.entries(locMatches)) {
+                if (questionText.includes(key) || lowerQ.includes(key)) {
+                    locationVal = val;
+                    chatLocation.value = val;
+                    break;
+                }
+            }
 
             // Clear input and reset height
             chatInput.value = '';
             chatInput.style.height = 'auto';
 
-            // 1. Render User Message
+            // Render User Message
             appendUserMessage(questionText, {
                 language: selectedLang,
                 location: locationVal,
                 season: seasonVal
             });
 
-            // 2. Lock UI & show typing indicator
             btnSend.disabled = true;
             showTypingIndicator();
+
+            const catElem = document.getElementById('chatCategory');
+            const categoryVal = catElem ? catElem.value : 'GENERAL';
+            const cropVal = selectedPlotData && selectedPlotData.crop ? selectedPlotData.crop : '';
 
             const requestBody = {
                 question: questionText,
                 language: selectedLang,
                 location: locationVal,
                 season: seasonVal,
-                category: 'GENERAL'
+                category: categoryVal,
+                crop: cropVal
             };
 
             try {
@@ -1207,7 +1765,146 @@
             }
         }
 
-        // Helper escape function
+        // --- Land Parcel (Farm Memory) Assistant Integration ---
+        let selectedPlotData = null;
+
+        function selectPlot(plotId) {
+            const select = document.getElementById('activePlotSelect');
+            if (!plotId) {
+                clearPlotSelection();
+                return;
+            }
+            const opt = select.options[select.selectedIndex];
+            selectedPlotData = {
+                id: plotId,
+                name: opt.getAttribute('data-name') || '',
+                acres: opt.getAttribute('data-acres') || '',
+                crop: opt.getAttribute('data-crop') || '',
+                stage: opt.getAttribute('data-stage') || '',
+                location: opt.getAttribute('data-location') || '',
+                ph: opt.getAttribute('data-ph') || '',
+                oc: opt.getAttribute('data-oc') || ''
+            };
+
+            // Auto-fill context toolbar
+            if (selectedPlotData.acres) {
+                const acresInput = document.getElementById('chatAcres');
+                if (acresInput) acresInput.value = selectedPlotData.acres;
+            }
+            if (selectedPlotData.location) {
+                const locInput = document.getElementById('chatLocation');
+                if (locInput) locInput.value = selectedPlotData.location;
+            }
+
+            // Display Active Plot Badge & Quick Actions
+            const badge = document.getElementById('activePlotBadge');
+            const clearBtn = document.getElementById('clearPlotBtn');
+            const detailsBox = document.getElementById('activePlotDetails');
+
+            if (badge) {
+                let badgeHtml = `<span>🌾 <strong>${escapeHtml(selectedPlotData.name)}</strong></span>`;
+                if (selectedPlotData.location) badgeHtml += `<span> · 📍 ${escapeHtml(selectedPlotData.location)}</span>`;
+                if (selectedPlotData.crop) badgeHtml += `<span> · ${escapeHtml(selectedPlotData.crop)}</span>`;
+                if (selectedPlotData.acres) badgeHtml += `<span> (${selectedPlotData.acres} ac)</span>`;
+                if (selectedPlotData.stage) badgeHtml += `<span> · ${escapeHtml(selectedPlotData.stage)}</span>`;
+                if (selectedPlotData.ph) badgeHtml += `<span> · pH ${selectedPlotData.ph}</span>`;
+                badge.innerHTML = badgeHtml;
+            }
+            if (clearBtn) clearBtn.style.display = 'inline-flex';
+            if (detailsBox) detailsBox.style.display = 'flex';
+        }
+
+        function clearPlotSelection() {
+            selectedPlotData = null;
+            const select = document.getElementById('activePlotSelect');
+            if (select) select.value = '';
+            const clearBtn = document.getElementById('clearPlotBtn');
+            if (clearBtn) clearBtn.style.display = 'none';
+            const detailsBox = document.getElementById('activePlotDetails');
+            if (detailsBox) detailsBox.style.display = 'none';
+        }
+
+        function askPlotQuestion(type) {
+            if (!selectedPlotData) return;
+            const plotName = selectedPlotData.name;
+            const crop = selectedPlotData.crop || 'crop';
+            const acres = selectedPlotData.acres || document.getElementById('chatAcres').value || '1.0';
+            const loc = selectedPlotData.location || document.getElementById('chatLocation').value || 'Thanjavur';
+            const stage = selectedPlotData.stage ? ` at ${selectedPlotData.stage} stage` : '';
+            const ph = selectedPlotData.ph ? ` (soil pH: ${selectedPlotData.ph})` : '';
+
+            const lang = (chatLanguage && chatLanguage.value) ? chatLanguage.value : 'auto';
+
+            let question = '';
+            let category = 'GENERAL_DECISION';
+
+            if (lang === 'ta') {
+                if (type === 'dosage') {
+                    category = 'PESTICIDE_SAFETY';
+                    question = `நிலம் "${plotName}" (${crop}${stage}, ${loc}-ல் ${acres} ஏக்கர்${ph}) பயிருக்கு பாதுகாப்பான CIBRC பதிவு செய்யப்பட்ட பூச்சிக்கொல்லி மருந்து மற்றும் மருந்தளவு வழிகாட்டலை வழங்கவும்.`;
+                } else if (type === 'sowing') {
+                    category = 'WEATHER_RISK';
+                    question = `நிலம் "${plotName}"-க்கு (${crop}, ${loc}) தற்போதைய வானிலை இடர் மற்றும் விதைப்பு சாளர வழிகாட்டுதல் என்ன?`;
+                } else if (type === 'budget') {
+                    category = 'BUDGET_PLANNING';
+                    question = `நிலம் "${plotName}"-க்கு (${crop}, ${acres} ஏக்கர், ${loc}) சாகுபடி செலவு மற்றும் வரவு செலவு திட்ட வழிகாட்டியை வழங்கவும்.`;
+                } else if (type === 'lowcost') {
+                    category = 'LOW_COST_FARMING';
+                    question = `நிலம் "${plotName}"-ல் (${crop}, ${loc}${ph}) செலவை குறைக்கும் இயற்கை மற்றும் உகந்த சாகுபடி முறைகள் (AWD, STCR) என்ன?`;
+                }
+            } else if (lang === 'hi') {
+                if (type === 'dosage') {
+                    category = 'PESTICIDE_SAFETY';
+                    question = `भूखंड "${plotName}" (${crop}${stage}, ${loc} में ${acres} एकड़${ph}) के लिए CIBRC अनुमोदित सुरक्षित कीटनाशक एवं सही खुराक क्या है?`;
+                } else if (type === 'sowing') {
+                    category = 'WEATHER_RISK';
+                    question = `भूखंड "${plotName}" (${crop}, ${loc}) के लिए वर्तमान मौसम जोखिम एवं बुवाई उपयुक्तता सलाह क्या है?`;
+                } else if (type === 'budget') {
+                    category = 'BUDGET_PLANNING';
+                    question = `भूखंड "${plotName}" (${crop}, ${acres} एकड़, ${loc}) के लिए लागत एवं बजट आधारित कृषि उत्पादन योजना प्रदान करें।`;
+                } else if (type === 'lowcost') {
+                    category = 'LOW_COST_FARMING';
+                    question = `भूखंड "${plotName}" (${crop}, ${loc}${ph}) में खर्च कम करने वाली कम लागत कृषि तकनीकें (AWD, IPM) क्या हैं?`;
+                }
+            } else {
+                if (type === 'dosage') {
+                    category = 'PESTICIDE_SAFETY';
+                    question = `What is the safe CIBRC pesticide and fertilizer recommendation for parcel "${plotName}" (${crop}${stage}, ${acres} acres in ${loc}${ph})?`;
+                } else if (type === 'sowing') {
+                    category = 'WEATHER_RISK';
+                    question = `What is the sowing window and weather risk advisory for parcel "${plotName}" in ${loc} for ${crop}?`;
+                } else if (type === 'budget') {
+                    category = 'BUDGET_PLANNING';
+                    question = `Provide a budget-aware crop feasibility plan for parcel "${plotName}" (${crop}, ${acres} acres in ${loc}).`;
+                } else if (type === 'lowcost') {
+                    category = 'LOW_COST_FARMING';
+                    question = `What are the low-cost farming optimizations and IPM techniques for parcel "${plotName}" (${crop} in ${loc}${ph})?`;
+                }
+            }
+
+            const catElem = document.getElementById('chatCategory');
+            if (catElem) catElem.value = category;
+
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.value = question;
+                chatInput.focus();
+            }
+        }
+
+        // Auto-select plot from ?plotId=... if present
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const plotId = urlParams.get('plotId');
+            if (plotId) {
+                const select = document.getElementById('activePlotSelect');
+                if (select) {
+                    select.value = plotId;
+                    selectPlot(plotId);
+                }
+            }
+        });
+
         function escapeHtml(text) {
             if (!text) return '';
             return text.replace(/[&<>"']/g, function(m) {

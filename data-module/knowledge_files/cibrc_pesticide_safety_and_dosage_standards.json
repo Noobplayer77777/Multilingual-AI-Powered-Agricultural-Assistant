@@ -1,0 +1,67 @@
+{
+  "title": "CIBRC Official Pesticide Safety, Crop Label Registrations, and Waiting Periods",
+  "source_organization": "Central Insecticides Board & Registration Committee (CIBRC), Ministry of Agriculture",
+  "url": "https://cibrc.gov.in/registered-pesticides-major-crops-2025",
+  "guidelines": [
+    {
+      "crop": "Tomato",
+      "pest_target": "Early Blight and Late Blight",
+      "chemical_name": "Mancozeb 75% WP",
+      "approved_dosage": "1.5 to 2.0 kg/ha (2.0 to 2.5 g/L water)",
+      "water_volume": "500-750 L/ha",
+      "phi_days": 3,
+      "rei_hours": 24,
+      "max_sprays_season": 3,
+      "safety_instructions": "Wear chemical-resistant gloves and face shield. Do not spray during windy conditions (>15 km/h) or under midday heat."
+    },
+    {
+      "crop": "Tomato",
+      "pest_target": "Fruit Borer (Helicoverpa armigera)",
+      "chemical_name": "Chlorantraniliprole 18.5% SC (Coragen)",
+      "approved_dosage": "150 ml/ha (0.3 ml/L water)",
+      "water_volume": "500 L/ha",
+      "phi_days": 3,
+      "rei_hours": 12,
+      "max_sprays_season": 2,
+      "safety_instructions": "Rotate with different IRAC mode-of-action groups to prevent pest resistance buildup. Observe 3 days pre-harvest waiting interval strictly."
+    },
+    {
+      "crop": "Rice / Paddy",
+      "pest_target": "Yellow Stem Borer and Leaf Folder",
+      "chemical_name": "Cartap Hydrochloride 50% SP",
+      "approved_dosage": "1.0 kg/ha (2.0 g/L water)",
+      "water_volume": "500 L/ha",
+      "phi_days": 21,
+      "rei_hours": 24,
+      "max_sprays_season": 2,
+      "safety_instructions": "Highly toxic to fish and aquatic life; prevent runoff into drainage canals and fish ponds. Wear protective boots and mask."
+    },
+    {
+      "crop": "Cotton",
+      "pest_target": "Pink Bollworm and American Bollworm",
+      "chemical_name": "Emamectin Benzoate 5% SG",
+      "approved_dosage": "220 g/ha (0.44 g/L water)",
+      "water_volume": "500 L/ha",
+      "phi_days": 14,
+      "rei_hours": 24,
+      "max_sprays_season": 2,
+      "safety_instructions": "Spray during evening hours when adult bollworm moths are active. Do not exceed recommended concentrations."
+    },
+    {
+      "crop": "Any Crop",
+      "pest_target": "General Sucking Pests (Whiteflies, Aphids, Mites)",
+      "chemical_name": "Cold-pressed Neem Oil 1500 ppm",
+      "approved_dosage": "1.0 to 1.5 L/ha (2 to 3 ml/L water with organic emulsifier)",
+      "water_volume": "500 L/ha",
+      "phi_days": 0,
+      "rei_hours": 4,
+      "max_sprays_season": 6,
+      "safety_instructions": "Organic safe bio-pesticide. Zero chemical residue hazard. Best applied proactively at first sign of sucking pest nymphs."
+    }
+  ],
+  "banned_substances_warning": [
+    "Monocrotophos is banned for vegetables and horticultural crops due to neurotoxicity.",
+    "Endosulfan is completely prohibited under international environmental agreements.",
+    "Phorate 10G is strictly restricted and prohibited on edible leafy vegetables."
+  ]
+}

@@ -32,12 +32,19 @@ public class GeminiLlmProvider implements LlmProvider {
             throw new IllegalStateException("Gemini API key is not configured.");
         }
 
+        String targetPrompt = prompt;
+        if ("ta".equalsIgnoreCase(language)) {
+            targetPrompt = "CRITICAL INSTRUCTION: You MUST write your entire response strictly in Tamil (தமிழ்) language using Tamil script. Do not write in English.\n\n" + prompt;
+        } else if ("hi".equalsIgnoreCase(language)) {
+            targetPrompt = "CRITICAL INSTRUCTION: You MUST write your entire response strictly in Hindi (हिंदी) language using Devanagari script. Do not write in English.\n\n" + prompt;
+        }
+
         String uri = this.model + ":generateContent?key=" + this.apiKey;
         
         Map<String, Object> requestBody = Map.of(
             "contents", List.of(
                 Map.of("parts", List.of(
-                    Map.of("text", prompt)
+                    Map.of("text", targetPrompt)
                 ))
             )
         );

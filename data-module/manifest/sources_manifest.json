@@ -1,0 +1,77 @@
+{
+  "corpus_version": "2.0.0",
+  "updated_at": "2026-10-10",
+  "authoritative_sources": [
+    {
+      "source_id": "TNAU_CPG_2025",
+      "title": "TNAU Crop Production Guide - Agriculture & Horticulture",
+      "publisher": "Tamil Nadu Agricultural University (TNAU) & Department of Agriculture, Govt of Tamil Nadu",
+      "official_url": "https://agritech.tnau.ac.in",
+      "scope": [
+        "Paddy / Rice agronomy, seed rate, spacing, water management (AWD)",
+        "Millets and Pulses package of practices",
+        "Commercial crops (Sugarcane, Cotton) and Vegetables (Tomato, Chilli, Brinjal)",
+        "Soil Test Crop Response (STCR) targeted fertilizer recommendations"
+      ],
+      "embedding_model": "nomic-embed-text:latest",
+      "dimension": 768
+    },
+    {
+      "source_id": "CIBRC_REGISTRY_2026",
+      "title": "Major Uses of Pesticides Registered Under the Insecticides Act, 1968",
+      "publisher": "Central Insecticides Board & Registration Committee (CIBRC), Directorate of Plant Protection, Quarantine & Storage (PPQS)",
+      "official_url": "https://ppqs.gov.in",
+      "scope": [
+        "Approved chemical label claims (active ingredient, formulation, approved crops)",
+        "Dosage per hectare and per acre",
+        "Pre-Harvest Intervals (PHI) in days",
+        "Re-entry Intervals (REI) and Toxicity Triangle Classification",
+        "Target pests, insects, and fungal pathogens"
+      ],
+      "embedding_model": "nomic-embed-text:latest",
+      "dimension": 768
+    },
+    {
+      "source_id": "ICAR_IPM_PACKAGES",
+      "title": "ICAR National Research Centre for Integrated Pest Management",
+      "publisher": "Indian Council of Agricultural Research (ICAR-NCIPM), New Delhi",
+      "official_url": "https://ncipm.icar.gov.in",
+      "scope": [
+        "Economic Threshold Levels (ETL) for key crop insect pests",
+        "Pheromone trap installation protocols and monitoring schedules",
+        "Bio-control agents (Trichogramma, Chrysoperla, Trichoderma)",
+        "Botanical sprays (Neem Oil / Azadirachtin formulations)"
+      ],
+      "embedding_model": "nomic-embed-text:latest",
+      "dimension": 768
+    },
+    {
+      "source_id": "IMD_GKMS_BULLETINS",
+      "title": "Gramin Krishi Mausam Sewa (GKMS) Agromet Advisory Guidelines",
+      "publisher": "India Meteorological Department (IMD), Ministry of Earth Sciences",
+      "official_url": "https://imdagrimet.gov.in",
+      "scope": [
+        "District-level 5-day weather forecast interpretation",
+        "Extreme event alerts: heavy precipitation, high wind spray hazards, heat stress",
+        "Bi-weekly crop-specific agrometeorological advisories"
+      ],
+      "embedding_model": "nomic-embed-text:latest",
+      "dimension": 768
+    },
+    {
+      "source_id": "GOI_MYSCHEME_AGRI",
+      "title": "myScheme National Platform for Agricultural Welfare Schemes",
+      "publisher": "Ministry of Agriculture & Farmers Welfare, Government of India & State Agriculture Departments",
+      "official_url": "https://myscheme.gov.in",
+      "scope": [
+        "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi) eligibility and eKYC rules",
+        "PMFBY (Pradhan Mantri Fasal Bima Yojana) premium rates and cut-off deadlines",
+        "PMKSY (Per Drop More Crop - Micro Irrigation) subsidy tiers (55% / 45%)",
+        "Kisan Credit Card (KCC) 4% subsidized interest rate guidelines",
+        "Kalaignarin All Village Integrated Agriculture Development Programme (KAVIADP)"
+      ],
+      "embedding_model": "nomic-embed-text:latest",
+      "dimension": 768
+    }
+  ]
+}

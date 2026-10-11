@@ -6,9 +6,29 @@ Write-Host "=====================================================" -ForegroundCo
 Write-Host " Starting Kisan AI Agricultural Assistant Pipeline..." -ForegroundColor Green
 Write-Host "=====================================================" -ForegroundColor Green
 
-# 1. Start PostgreSQL with pgvector container
-Write-Host "`n[1/5] Checking Docker & starting PostgreSQL/pgvector (Port 5433)..." -ForegroundColor Cyan
-docker compose up -d
+# 1. Database Check (Local Docker or Cloud Neon)
+$isNeon = $false
+if ($env:DATABASE_URL -match "neon\.tech") {
+    $isNeon = $true
+} elseif (Test-Path ".env") {
+    $envRaw = Get-Content ".env" -Raw
+    if ($envRaw -match "DATABASE_URL\s*=\s*.*neon\.tech") {
+        $isNeon = $true
+    }
+}
+
+if ($isNeon) {
+    Write-Host "`n[1/5] Using Cloud Neon PostgreSQL database (configured in .env)." -ForegroundColor Green
+    Write-Host "  Skipping local Docker container startup." -ForegroundColor DarkGray
+} else {
+    Write-Host "`n[1/5] Checking Docker & starting local PostgreSQL/pgvector (Port 5433)..." -ForegroundColor Cyan
+    try {
+        docker compose up -d
+    } catch {
+        Write-Host "  Warning: Docker compose failed or Docker is not running." -ForegroundColor Yellow
+        Write-Host "  If using Neon, add DATABASE_URL=... to your .env file." -ForegroundColor Yellow
+    }
+}
 
 # 2. Check Ollama
 Write-Host "`n[2/5] Checking Ollama Engine (Port 11434)..." -ForegroundColor Cyan

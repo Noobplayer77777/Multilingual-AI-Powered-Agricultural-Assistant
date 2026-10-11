@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice — Kisan AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-900: #064e3b;
+            --primary-800: #065f46;
+            --primary-700: #047857;
+            --earth-900: #1c1917;
+            --earth-700: #44403c;
+            --earth-200: #e7e5e4;
+            --radius-lg: 16px;
+            --shadow-card: 0 10px 25px -5px rgba(6, 78, 59, 0.12);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Public Sans', system-ui, sans-serif;
+            background: linear-gradient(180deg, #ecfdf5 0%, #fafaf9 360px, #f5f5f4 100%);
+            color: var(--earth-900);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+        .error-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--earth-200);
+            box-shadow: var(--shadow-card);
+            padding: 40px 32px;
+            text-align: center;
+        }
+        .icon-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #fef3c7;
+            color: #d97706;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--earth-900);
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 0.95rem;
+            color: var(--earth-700);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-700), var(--primary-900));
+            color: #ffffff;
+        }
+        .btn-secondary {
+            background: #f5f5f4;
+            color: var(--earth-900);
+            border: 1px solid var(--earth-200);
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-card">
+        <div class="icon-circle">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+        </div>
+        <h1 th:text="${status == 404 ? 'Page Not Found' : (status == 403 ? 'Access Restricted' : 'Notice')}">Notice</h1>
+        <p th:text="${message != null and !message.isEmpty() ? message : 'We could not complete your request. Please return to the farm dashboard or agricultural assistant.'}">We could not complete your request. Please return to the farm dashboard or agricultural assistant.</p>
+        <div class="btn-group">
+            <a th:href="@{/dashboard}" class="btn btn-primary">Go to Farm Dashboard</a>
+            <a th:href="@{/}" class="btn btn-secondary">Return to Agricultural Assistant</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -14,6 +14,8 @@ import com.agri.query.repository.SourceRepository;
 import com.agri.query.repository.UserRepository;
 import com.agri.query.service.LanguageDetectionService;
 import com.agri.query.service.QueryProcessingService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,22 +55,31 @@ public class QueryProcessingServiceImpl implements QueryProcessingService {
             request.setLanguage(languageDetectionService.detectLanguage(request.getQuestion()));
         }
 
-        // 2. Fetch or create a default user
-        User user = userRepository.findByUsername("farmer_1").orElseGet(() -> {
-            User newUser = new User();
-            newUser.setUsername("farmer_1");
-            return userRepository.save(newUser);
-        });
+        // 2. Resolve current user (authenticated farmer or fallback guest)
+        User user = resolveCurrentUser();
 
         // 3. Call Advisory Service FIRST
         QueryResponse advisoryResponse = advisoryClient.getAdvisory(request);
 
-        // 4. Save Query to DB
+        // 4. Save Query to DB (resolve location from weather source if omitted)
+        String effectiveLocation = request.getLocation();
+        if ((effectiveLocation == null || effectiveLocation.trim().isEmpty()) && advisoryResponse.getSources() != null) {
+            for (Source s : advisoryResponse.getSources()) {
+                if ("API".equalsIgnoreCase(s.getType()) && s.getName() != null && s.getName().contains("—")) {
+                    String[] parts = s.getName().split("—");
+                    if (parts.length > 1) {
+                        effectiveLocation = parts[1].split(":")[0].trim();
+                        break;
+                    }
+                }
+            }
+        }
+
         QueryEntity queryEntity = new QueryEntity();
         queryEntity.setUser(user);
         queryEntity.setQuestion(request.getQuestion());
         queryEntity.setLanguage(request.getLanguage());
-        queryEntity.setLocation(request.getLocation());
+        queryEntity.setLocation(effectiveLocation);
         queryEntity.setSeason(request.getSeason());
         queryEntity = queryRepository.save(queryEntity);
 
@@ -101,7 +112,20 @@ public class QueryProcessingServiceImpl implements QueryProcessingService {
     @Override
     @Transactional(readOnly = true)
     public List<QueryResponse> getHistory() {
-        List<QueryEntity> queries = queryRepository.findAllByOrderByCreatedAtDesc();
+        List<QueryEntity> queries;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
+            String email = auth.getName();
+            Optional<User> userOpt = userRepository.findByEmailIgnoreCase(email);
+            if (userOpt.isPresent()) {
+                queries = queryRepository.findByUserIdOrderByCreatedAtDesc(userOpt.get().getId());
+            } else {
+                queries = new ArrayList<>();
+            }
+        } else {
+            queries = queryRepository.findAllByOrderByCreatedAtDesc();
+        }
+
         List<QueryResponse> history = new ArrayList<>();
         for (QueryEntity q : queries) {
             QueryResponse item = new QueryResponse();
@@ -130,5 +154,22 @@ public class QueryProcessingServiceImpl implements QueryProcessingService {
             history.add(item);
         }
         return history;
+    }
+
+    private User resolveCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
+            String email = auth.getName();
+            Optional<User> userOpt = userRepository.findByEmailIgnoreCase(email);
+            if (userOpt.isPresent()) {
+                return userOpt.get();
+            }
+        }
+        // Fallback default farmer account for public/unauthenticated queries
+        return userRepository.findByEmailIgnoreCase("farmer_1@kisan.local").orElseGet(() -> {
+            User guest = new User("farmer_1@kisan.local", "$2a$12$N.zMDJ4W7ODYdpm8K7LqeuuY9Nn9P7zYI.c0e8Oa8F5m7Q1wZl6Ie", "Kisan Farmer");
+            guest.setRole("ROLE_FARMER");
+            return userRepository.save(guest);
+        });
     }
 }

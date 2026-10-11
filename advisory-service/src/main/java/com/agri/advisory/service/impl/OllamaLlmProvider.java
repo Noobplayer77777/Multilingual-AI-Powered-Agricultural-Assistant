@@ -24,11 +24,19 @@ public class OllamaLlmProvider implements LlmProvider {
 
     @Override
     public String generateResponse(String prompt, String language) {
+        String systemPrompt = "You are Kisan AI, an expert agricultural decision assistant. Provide concise, authoritative advice grounded in ICAR/TNAU science.";
+        if ("ta".equalsIgnoreCase(language)) {
+            systemPrompt = "You are Kisan AI, an expert agricultural decision assistant for Indian farmers. You MUST write your complete response strictly in Tamil (தமிழ்) language using Tamil script. Never respond in English. Provide clear, practical, authoritative agronomic guidance.";
+        } else if ("hi".equalsIgnoreCase(language)) {
+            systemPrompt = "You are Kisan AI, an expert agricultural decision assistant for Indian farmers. You MUST write your complete response strictly in Hindi (हिंदी) language using Devanagari script. Never respond in English. Provide clear, practical, authoritative agronomic guidance.";
+        }
+
         Map<String, Object> requestBody = Map.of(
             "model", this.model,
             "prompt", prompt,
+            "system", systemPrompt,
             "stream", false,
-            "options", Map.of("num_predict", 200)
+            "options", Map.of("num_predict", 300)
         );
 
         try {

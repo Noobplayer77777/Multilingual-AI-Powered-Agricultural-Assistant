@@ -1,0 +1,35 @@
+ICAR Indian Institute of Horticultural Research - Tomato Cultivation & Disease Guide
+Source Organization: Indian Council of Agricultural Research (ICAR-IIHR)
+Document Reference: ICAR-IIHR-TOMATO-2025-V2
+
+1. Climate and Soil:
+Tomato requires warm climate with temperatures between 21°C and 28°C for optimal fruit set. Night temperatures above 25°C or below 10°C cause flower drop. Requires well-drained fertile sandy loam to clay loam soil rich in organic matter, with pH 6.0 to 7.0.
+
+2. Nursery and Seed Rate:
+- Open-pollinated varieties: 400 to 500 g/ha.
+- Hybrid varieties (e.g., Arka Rakshak, Arka Abhed): 120 to 150 g/ha.
+- Raised nursery beds of 1 meter width and 15 cm height should be prepared. Drench nursery with Trichoderma harzianum @ 20 g/m2 to prevent damping-off disease.
+- Seedlings are ready for transplanting 25 to 30 days after sowing.
+
+3. Spacing and Transplanting:
+- Determinant varieties: 60 cm x 45 cm.
+- Indeterminant hybrids: 90 cm x 60 cm on raised beds with drip irrigation and plastic mulching.
+- Staking: Provide bamboo or eucalyptus staking 20 to 25 days after transplanting for indeterminant hybrids to prevent fruit rotting from soil contact and improve pesticide coverage.
+
+4. Fertilizer and Drip Fertigation:
+- Basal application: 25 tonnes FYM/ha + 60 kg N, 100 kg P2O5, 60 kg K2O/ha.
+- Drip Fertigation schedule: Apply water-soluble fertilizers 19-19-19 @ 3 kg/acre twice weekly during vegetative stage (days 15-45). Shift to 0-52-34 and Potassium Nitrate 13-0-45 @ 4 kg/acre during flowering and fruit development stage (days 45-90). Calcium Nitrate foliar spray @ 5 g/L prevents blossom end rot.
+
+5. Critical Diseases and Management:
+- Early Blight (Alternaria solani):
+  Symptoms: Dark brown concentric target-like rings on older leaves, progressing upwards with yellow halo.
+  Control: Spray Mancozeb 75% WP @ 2.5 g/L or Azoxystrobin 23% SC @ 1 ml/L. Observe 3 days pre-harvest interval (PHI).
+- Tomato Leaf Curl Virus (ToLCV):
+  Transmitted by whitefly (Bemisia tabaci). Symptoms: Upward curling, thickening, and puckering of leaves, stunting of plants.
+  Control: Install yellow sticky traps @ 15 per acre. Spray Neem oil (1500 ppm) @ 3 ml/L or Thiamethoxam 25% WG @ 0.3 g/L during early stage.
+- Fruit Borer (Helicoverpa armigera):
+  Circular holes bored on tomato fruits with larvae feeding inside.
+  Control: Plant African Marigold as trap crop (1 row of marigold for every 16 rows of tomato). Spray Bacillus thuringiensis (Bt) @ 2 g/L or Emamectin Benzoate 5% SG @ 0.4 g/L.
+
+6. Harvesting and Yield:
+Harvest at breaker stage for distant markets and at red ripe stage for local processing. Average yield under good management is 35 to 45 tonnes/ha for open-pollinated varieties and 70 to 90 tonnes/ha for triple-resistant hybrids (Arka Rakshak).

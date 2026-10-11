@@ -9,28 +9,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            --primary-950: #022c22;
             --primary-900: #064e3b;
             --primary-800: #065f46;
             --primary-700: #047857;
             --primary-600: #059669;
             --primary-500: #10b981;
+            --primary-200: #a7f3d0;
             --primary-100: #d1fae5;
             --primary-50: #ecfdf5;
             --earth-900: #1c1917;
             --earth-800: #292524;
             --earth-700: #44403c;
             --earth-600: #57534e;
+            --earth-400: #a8a29e;
             --earth-300: #d6d3d1;
             --earth-200: #e7e5e4;
             --earth-100: #f5f5f4;
             --earth-50: #fafaf9;
             --accent-amber: #d97706;
             --accent-amber-light: #fef3c7;
+            --accent-sky: #0284c7;
+            --accent-sky-light: #e0f2fe;
+            --radius-xl: 20px;
             --radius-lg: 16px;
             --radius-md: 10px;
             --radius-sm: 6px;
-            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
-            --shadow-card: 0 8px 20px -4px rgba(6, 78, 59, 0.08);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 8px 24px -4px rgba(6, 78, 59, 0.08), 0 4px 8px -2px rgba(6, 78, 59, 0.03);
+            --shadow-float: 0 12px 28px -6px rgba(6, 78, 59, 0.18);
         }
 
         * {
@@ -41,16 +48,37 @@
 
         body {
             font-family: 'Public Sans', 'Noto Sans Tamil', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(180deg, #f0fdf4 0%, #fafaf9 300px, #f5f5f4 100%);
+            background: linear-gradient(180deg, #ecfdf5 0%, #fafaf9 320px, #f5f5f4 100%);
             color: var(--earth-800);
             min-height: 100vh;
-            padding: 32px 16px;
+            padding: 24px 16px 48px;
             line-height: 1.6;
         }
 
         .app-shell {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
+        }
+
+        /* SVG Icon Utilities */
+        .icon-svg {
+            display: inline-block;
+            vertical-align: middle;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        /* Focus rings */
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--primary-600);
+            outline-offset: 2px;
         }
 
         /* Header */
@@ -59,41 +87,46 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
-            padding-bottom: 16px;
+            padding-bottom: 18px;
             border-bottom: 1px solid rgba(6, 78, 59, 0.12);
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .brand-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
             color: var(--primary-900);
         }
 
         .brand-logo-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--primary-700), var(--primary-900));
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-700), var(--primary-950));
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(6, 78, 59, 0.25);
         }
 
         .brand-title-group h1 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             color: var(--primary-900);
             line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .brand-subtitle {
             font-size: 0.82rem;
-            color: var(--earth-600);
+            color: var(--earth-700);
             font-weight: 500;
         }
 
@@ -101,27 +134,28 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 16px;
+            padding: 10px 18px;
             background-color: var(--primary-800);
             color: #ffffff;
             border-radius: var(--radius-md);
             text-decoration: none;
             font-size: 0.88rem;
             font-weight: 700;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 2px 6px rgba(6, 78, 59, 0.2);
         }
 
         .back-chat-btn:hover {
             background-color: var(--primary-700);
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
         }
 
         /* Stats Bar */
         .stats-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
             margin-bottom: 24px;
         }
 
@@ -131,52 +165,185 @@
             border-radius: var(--radius-md);
             padding: 16px 20px;
             box-shadow: var(--shadow-subtle);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--primary-50);
+            color: var(--primary-800);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--primary-200);
+            flex-shrink: 0;
+        }
+
+        .stat-content {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
         }
 
         .stat-label {
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--earth-600);
-            margin-bottom: 4px;
+            color: var(--earth-700);
+            margin-bottom: 2px;
         }
 
         .stat-value {
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 800;
             color: var(--primary-900);
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
         }
 
-        /* Filter Controls */
-        .filter-bar {
+        .stat-desc {
+            font-size: 0.82rem;
+            color: var(--earth-700);
+            font-weight: 600;
+        }
+
+        /* Search and Filter Toolbar */
+        .toolbar-panel {
+            background: #ffffff;
+            border: 1px solid var(--earth-200);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 24px;
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input-wrap {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon-inline {
+            position: absolute;
+            left: 14px;
+            color: var(--earth-600);
+            pointer-events: none;
         }
 
         .search-box {
-            flex: 1;
-            min-width: 240px;
-            padding: 10px 14px;
-            border: 1.5px solid var(--earth-200);
+            width: 100%;
+            padding: 11px 40px 11px 42px;
+            border: 1.5px solid var(--earth-300);
             border-radius: var(--radius-md);
             font-family: inherit;
-            font-size: 0.9rem;
-            background: #ffffff;
+            font-size: 0.92rem;
+            background: var(--earth-50);
+            color: var(--earth-900);
+            transition: all 0.15s ease;
         }
 
         .search-box:focus {
-            outline: none;
+            background: #ffffff;
             border-color: var(--primary-600);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+        }
+
+        .search-clear-btn {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--earth-600);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-clear-btn:hover {
+            color: var(--earth-900);
+            background: var(--earth-200);
+        }
+
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .filter-pill-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--earth-700);
+            margin-right: 4px;
+        }
+
+        .filter-pill {
+            padding: 6px 14px;
+            background: var(--earth-100);
+            border: 1px solid var(--earth-200);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--earth-700);
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-pill:hover {
+            background: var(--earth-200);
+            color: var(--earth-900);
+        }
+
+        .filter-pill.active {
+            background: var(--primary-800);
+            color: #ffffff;
+            border-color: var(--primary-800);
+            box-shadow: 0 2px 6px rgba(6, 78, 59, 0.2);
+        }
+
+        .filter-count-badge {
+            font-size: 0.82rem;
+            color: var(--earth-700);
+            font-weight: 600;
         }
 
         /* History Cards List */
         .history-list {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 20px;
         }
 
         .history-card {
@@ -185,11 +352,13 @@
             border-radius: var(--radius-lg);
             padding: 24px;
             box-shadow: var(--shadow-card);
-            transition: all 0.15s ease;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
         .history-card:hover {
             border-color: var(--primary-500);
+            box-shadow: var(--shadow-float);
         }
 
         .card-header {
@@ -200,6 +369,7 @@
             margin-bottom: 14px;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--earth-100);
+            flex-wrap: wrap;
         }
 
         .badges-group {
@@ -212,10 +382,10 @@
         .pill {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            padding: 3px 10px;
+            gap: 6px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             font-weight: 700;
             letter-spacing: 0.03em;
             text-transform: uppercase;
@@ -224,22 +394,28 @@
         .pill-lang {
             background-color: var(--primary-100);
             color: var(--primary-900);
+            border: 1px solid var(--primary-200);
         }
 
         .pill-loc {
             background-color: var(--earth-100);
             color: var(--earth-700);
+            border: 1px solid var(--earth-200);
         }
 
         .pill-season {
             background-color: var(--accent-amber-light);
             color: #92400e;
+            border: 1px solid #fde68a;
         }
 
         .timestamp {
             font-size: 0.8rem;
-            color: var(--earth-600);
-            font-weight: 500;
+            color: var(--earth-700);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             white-space: nowrap;
         }
 
@@ -249,27 +425,73 @@
             color: var(--earth-900);
             margin-bottom: 12px;
             line-height: 1.4;
+            letter-spacing: -0.01em;
+        }
+
+        .query-answer-wrap {
+            position: relative;
+            margin-bottom: 16px;
         }
 
         .query-answer {
-            font-size: 0.95rem;
-            color: var(--earth-800);
-            line-height: 1.6;
+            font-size: 0.94rem;
+            color: var(--earth-900);
+            line-height: 1.65;
             background-color: var(--earth-50);
-            padding: 16px 18px;
+            padding: 16px 18px 46px;
             border-radius: var(--radius-md);
             border: 1px solid var(--earth-200);
             white-space: pre-wrap;
-            margin-bottom: 14px;
+            word-break: break-word;
+        }
+
+        .copy-card-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            background: #ffffff;
+            border: 1px solid var(--earth-300);
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--earth-700);
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .copy-card-btn:hover {
+            background: var(--primary-50);
+            color: var(--primary-900);
+            border-color: var(--primary-500);
+        }
+
+        .copy-card-btn.copied {
+            background: var(--primary-100);
+            color: var(--primary-900);
+            border-color: var(--primary-600);
+        }
+
+        /* Sources Section */
+        .sources-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .sources-label {
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--earth-600);
-            margin-bottom: 8px;
+            color: var(--earth-700);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .sources-chips {
@@ -282,12 +504,12 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 10px;
+            padding: 6px 12px;
             background: #ffffff;
             border: 1px solid var(--earth-200);
             border-radius: var(--radius-sm);
             font-size: 0.8rem;
-            color: var(--earth-700);
+            color: var(--earth-800);
             text-decoration: none;
             transition: all 0.15s ease;
         }
@@ -296,32 +518,120 @@
             border-color: var(--primary-600);
             color: var(--primary-900);
             background-color: var(--primary-50);
+            transform: translateY(-1px);
         }
 
+        .source-tag {
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .source-tag-api {
+            background: var(--accent-amber-light);
+            color: #92400e;
+        }
+
+        .source-tag-doc {
+            background: var(--accent-sky-light);
+            color: #0369a1;
+        }
+
+        /* Empty State */
         .empty-history {
             background: #ffffff;
             border: 1.5px dashed var(--earth-300);
             border-radius: var(--radius-lg);
-            padding: 48px 24px;
+            padding: 56px 24px;
             text-align: center;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .empty-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
+        .empty-icon-wrap {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--primary-50);
+            color: var(--primary-800);
+            border: 1px solid var(--primary-200);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
         }
 
         .empty-title {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
-            color: var(--earth-800);
+            color: var(--earth-900);
             margin-bottom: 8px;
         }
 
         .empty-text {
             font-size: 0.92rem;
-            color: var(--earth-600);
-            margin-bottom: 20px;
+            color: var(--earth-700);
+            margin-bottom: 24px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* No Results from Filter */
+        .no-filter-results {
+            display: none;
+            background: #ffffff;
+            border: 1px solid var(--earth-200);
+            border-radius: var(--radius-lg);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .no-filter-results.visible {
+            display: block;
+        }
+
+        .btn-reset-filters {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: var(--earth-100);
+            border: 1px solid var(--earth-300);
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--earth-800);
+            cursor: pointer;
+        }
+
+        .btn-reset-filters:hover {
+            background: var(--earth-200);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .back-chat-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .filter-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .history-card {
+                padding: 16px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -329,77 +639,361 @@
     <div class="app-shell">
         <!-- Header -->
         <header class="header-bar">
-            <a href="/" class="brand-badge">
-                <div class="brand-logo-icon">🌱</div>
+            <a href="/" class="brand-badge" title="Return to Assistant">
+                <div class="brand-logo-icon">
+                    <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/>
+                        <path d="M12 2v20"/>
+                    </svg>
+                </div>
                 <div class="brand-title-group">
                     <h1>KISAN AI</h1>
-                    <div class="brand-subtitle">Archived Farmer Queries &amp; Recommendations</div>
+                    <div class="brand-subtitle">Archived Farmer Queries &amp; Grounded Recommendations</div>
                 </div>
             </a>
-            <a href="/" class="back-chat-btn">
-                <span>&larr;</span> Back to Assistant
-            </a>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <a href="/dashboard" class="back-chat-btn" style="background:#047857;">
+                    <span>🌾 Farm Dashboard</span>
+                </a>
+                <a href="/" class="back-chat-btn">
+                    <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                    <span>Back to Assistant</span>
+                </a>
+            </div>
         </header>
 
         <!-- Stats Bar -->
-        <div class="stats-bar">
+        <section class="stats-bar" aria-label="System Statistics">
             <div class="stat-card">
-                <div class="stat-label">Total Queries</div>
-                <div class="stat-value" th:text="${queries != null ? queries.size() : 0}">0</div>
+                <div class="stat-icon-wrap">
+                    <svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Total Queries</div>
+                    <div class="stat-value" id="statTotalQueries" th:text="${queries != null ? queries.size() : 0}">0</div>
+                </div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Storage Backend</div>
-                <div class="stat-value" style="font-size: 1.15rem; margin-top: 4px;">PostgreSQL / pgvector</div>
+                <div class="stat-icon-wrap">
+                    <svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Storage Backend</div>
+                    <div class="stat-desc">PostgreSQL / pgvector</div>
+                </div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Supported Languages</div>
-                <div class="stat-value" style="font-size: 1.15rem; margin-top: 4px;">English &bull; தமிழ் &bull; हिंदी</div>
+                <div class="stat-icon-wrap">
+                    <svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="2" x2="22" y1="12" y2="12"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Supported Languages</div>
+                    <div class="stat-desc">English &bull; தமிழ் &bull; हिंदी</div>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Empty State -->
+        <!-- Empty State (No records in DB) -->
         <div class="empty-history" th:if="${queries == null or queries.empty}">
-            <div class="empty-icon">🌾</div>
+            <div class="empty-icon-wrap">
+                <svg class="icon-svg" width="32" height="32" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/>
+                    <path d="M12 2v20"/>
+                </svg>
+            </div>
             <h2 class="empty-title">No Queries Recorded Yet</h2>
-            <p class="empty-text">Submitted agricultural questions and grounded recommendations will appear here automatically.</p>
-            <a href="/" class="back-chat-btn">Ask Your First Question &rarr;</a>
+            <p class="empty-text">Submitted agricultural questions, weather context, and grounded recommendations will appear here automatically.</p>
+            <a href="/" class="back-chat-btn">
+                <span>Ask Your First Question</span>
+                <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m9 18 6-6-6-6"/>
+                </svg>
+            </a>
         </div>
 
-        <!-- Queries List -->
-        <div class="history-list" th:unless="${queries == null or queries.empty}">
-            <div class="history-card" th:each="query : ${queries}">
-                <div class="card-header">
-                    <div class="badges-group">
-                        <span class="pill pill-lang" th:text="'LANG: ' + ${query.language != null ? query.language.toUpperCase() : 'EN'}"></span>
-                        <span class="pill pill-loc" th:if="${query.location != null and !query.location.isEmpty()}" th:text="'📍 ' + ${query.location}"></span>
-                        <span class="pill pill-season" th:if="${query.season != null and !query.season.isEmpty()}" th:text="'🗓️ ' + ${query.season}"></span>
+        <!-- Queries Area (Present when records exist) -->
+        <main th:unless="${queries == null or queries.empty}">
+            <!-- Interactive Search & Filter Toolbar -->
+            <div class="toolbar-panel">
+                <div class="search-row">
+                    <div class="search-input-wrap">
+                        <svg class="icon-svg search-icon-inline" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" x2="16.65" y1="21" y2="16.65"/>
+                        </svg>
+                        <input type="text" id="historySearch" class="search-box" placeholder="Search questions, crops, locations, or advisory text..." aria-label="Search advisory history">
+                        <button type="button" id="clearSearchBtn" class="search-clear-btn" aria-label="Clear search input">
+                            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+                                <line x1="18" x2="6" y1="6" y2="18"/>
+                                <line x1="6" x2="18" y1="6" y2="18"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="timestamp" th:text="${query.createdAt != null ? #temporals.format(query.createdAt, 'yyyy-MM-dd HH:mm') : 'Recent'}"></div>
                 </div>
 
-                <h3 class="query-question" th:text="${query.question}"></h3>
+                <div class="filter-row">
+                    <div class="filter-pills" id="filterPills" role="radiogroup" aria-label="Filter by language or sources">
+                        <span class="filter-pill-label">Filter:</span>
+                        <button type="button" class="filter-pill active" data-filter="all" role="radio" aria-checked="true">All</button>
+                        <button type="button" class="filter-pill" data-filter="en" role="radio" aria-checked="false">English</button>
+                        <button type="button" class="filter-pill" data-filter="ta" role="radio" aria-checked="false">தமிழ் (Tamil)</button>
+                        <button type="button" class="filter-pill" data-filter="hi" role="radio" aria-checked="false">हिंदी (Hindi)</button>
+                        <button type="button" class="filter-pill" data-filter="sources" role="radio" aria-checked="false">
+                            <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                <path d="M22 3h-6a4 4 0 0 1-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+                            <span>With Sources</span>
+                        </button>
+                    </div>
 
-                <div class="query-answer" th:if="${query.answer != null and !query.answer.isEmpty()}" th:text="${query.answer}"></div>
-
-                <div th:if="${query.sources != null and !query.sources.empty}">
-                    <div class="sources-label">Sources &amp; Evidence:</div>
-                    <div class="sources-chips">
-                        <span th:each="source : ${query.sources}">
-                            <a th:if="${source.url != null and !source.url.isEmpty() and source.url.startsWith('http')}"
-                               th:href="${source.url}" target="_blank" rel="noopener noreferrer" class="source-chip">
-                                <span th:text="${source.type == 'API' ? '⚡ ' : '📖 '}"></span>
-                                <span th:text="${source.name}"></span>
-                                <span>↗</span>
-                            </a>
-                            <span th:unless="${source.url != null and !source.url.isEmpty() and source.url.startsWith('http')}" class="source-chip">
-                                <span th:text="${source.type == 'API' ? '⚡ ' : '📖 '}"></span>
-                                <span th:text="${source.name}"></span>
-                            </span>
-                        </span>
+                    <div class="filter-count-badge">
+                        Showing <strong id="visibleCount" th:text="${queries.size()}">0</strong> of <strong th:text="${queries.size()}">0</strong>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Empty results from filter -->
+            <div id="noFilterResults" class="no-filter-results" role="alert">
+                <svg class="icon-svg" width="36" height="36" viewBox="0 0 24 24" style="color: var(--earth-400); margin-bottom: 10px;" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" x2="16.65" y1="21" y2="16.65"/>
+                </svg>
+                <h3 style="font-size: 1.1rem; color: var(--earth-800); margin-bottom: 4px;">No matching advisories found</h3>
+                <p style="font-size: 0.88rem; color: var(--earth-600);">Try searching for a different keyword or resetting your filter criteria.</p>
+                <button type="button" class="btn-reset-filters" onclick="resetFilters()">Reset Search &amp; Filters</button>
+            </div>
+
+            <!-- History Cards List -->
+            <div class="history-list" id="historyList">
+                <article class="history-card" th:each="query : ${queries}"
+                         th:data-lang="${query.language != null ? query.language.toLowerCase() : 'en'}"
+                         th:data-has-sources="${query.sources != null and !query.sources.empty}">
+                    <div class="card-header">
+                        <div class="badges-group">
+                            <span class="pill pill-lang">
+                                <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="2" x2="22" y1="12" y2="12"/>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                </svg>
+                                <span th:text="${query.language != null ? query.language.toUpperCase() : 'EN'}">EN</span>
+                            </span>
+                            <span class="pill pill-loc" th:if="${query.location != null and !query.location.isEmpty()}">
+                                <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <span th:text="${query.location}">Location</span>
+                            </span>
+                            <span class="pill pill-season" th:if="${query.season != null and !query.season.isEmpty()}">
+                                <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                    <line x1="16" x2="16" y1="2" y2="6"/>
+                                    <line x1="8" x2="8" y1="2" y2="6"/>
+                                    <line x1="3" x2="21" y1="10" y2="10"/>
+                                </svg>
+                                <span th:text="${query.season}">Season</span>
+                            </span>
+                        </div>
+                        <div class="timestamp">
+                            <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span th:text="${query.createdAt != null ? #temporals.format(query.createdAt, 'yyyy-MM-dd HH:mm') : 'Recent'}">Recent</span>
+                        </div>
+                    </div>
+
+                    <h2 class="query-question" th:text="${query.question}">Farmer question goes here</h2>
+
+                    <div class="query-answer-wrap" th:if="${query.answer != null and !query.answer.isEmpty()}">
+                        <div class="query-answer" th:text="${query.answer}">AI recommendation text goes here</div>
+                        <button type="button" class="copy-card-btn" onclick="copyCardAnswer(this)" title="Copy recommendation to clipboard">
+                            <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
+                                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                            </svg>
+                            <span>Copy Advisory</span>
+                        </button>
+                    </div>
+
+                    <div class="sources-section" th:if="${query.sources != null and !query.sources.empty}">
+                        <div class="sources-label">
+                            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                <path d="M22 3h-6a4 4 0 0 1-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+                            <span>Verified Sources &amp; Evidence:</span>
+                        </div>
+                        <div class="sources-chips">
+                            <span th:each="source : ${query.sources}">
+                                <a th:if="${source.url != null and !source.url.isEmpty() and source.url.startsWith('http')}"
+                                   th:href="${source.url}" target="_blank" rel="noopener noreferrer" class="source-chip"
+                                   th:title="'Open external source: ' + ${source.name}">
+                                    <span class="source-tag" th:classappend="${source.type == 'API' ? 'source-tag-api' : 'source-tag-doc'}"
+                                          th:text="${source.type == 'API' ? 'LIVE DATA' : 'KB DOC'}">DOC</span>
+                                    <span th:text="${source.name}">Source Name</span>
+                                    <svg class="icon-svg" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+                                        <line x1="7" x2="17" y1="17" y2="7"/>
+                                        <polyline points="7 7 17 7 17 17"/>
+                                    </svg>
+                                </a>
+                                <span th:unless="${source.url != null and !source.url.isEmpty() and source.url.startsWith('http')}" class="source-chip">
+                                    <span class="source-tag" th:classappend="${source.type == 'API' ? 'source-tag-api' : 'source-tag-doc'}"
+                                          th:text="${source.type == 'API' ? 'LIVE DATA' : 'KB DOC'}">DOC</span>
+                                    <span th:text="${source.name}">Source Name</span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
     </div>
+
+    <!-- Client-side Interactive Filter Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('historySearch');
+            const clearBtn = document.getElementById('clearSearchBtn');
+            const filterPills = document.querySelectorAll('.filter-pill');
+            const cards = document.querySelectorAll('.history-card');
+            const visibleCountSpan = document.getElementById('visibleCount');
+            const noResults = document.getElementById('noFilterResults');
+
+            if (!cards || cards.length === 0) return;
+
+            let currentFilter = 'all';
+
+            function applyFilter() {
+                const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+                let matchCount = 0;
+
+                cards.forEach(card => {
+                    const cardLang = card.getAttribute('data-lang') || 'en';
+                    const hasSources = card.getAttribute('data-has-sources') === 'true';
+                    const textContent = card.textContent.toLowerCase();
+
+                    // Language / Category criteria
+                    let matchesFilterCategory = false;
+                    if (currentFilter === 'all') {
+                        matchesFilterCategory = true;
+                    } else if (currentFilter === 'sources') {
+                        matchesFilterCategory = hasSources;
+                    } else if (currentFilter === cardLang) {
+                        matchesFilterCategory = true;
+                    }
+
+                    // Search query criteria
+                    const matchesSearch = query === '' || textContent.includes(query);
+
+                    if (matchesFilterCategory && matchesSearch) {
+                        card.style.display = '';
+                        matchCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (visibleCountSpan) {
+                    visibleCountSpan.textContent = matchCount;
+                }
+
+                if (noResults) {
+                    if (matchCount === 0) {
+                        noResults.classList.add('visible');
+                    } else {
+                        noResults.classList.remove('visible');
+                    }
+                }
+
+                if (clearBtn) {
+                    clearBtn.style.display = query.length > 0 ? 'inline-flex' : 'none';
+                }
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', applyFilter);
+            }
+
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    searchInput.value = '';
+                    clearBtn.style.display = 'none';
+                    searchInput.focus();
+                    applyFilter();
+                });
+            }
+
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    filterPills.forEach(p => {
+                        p.classList.remove('active');
+                        p.setAttribute('aria-checked', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-checked', 'true');
+                    currentFilter = this.getAttribute('data-filter') || 'all';
+                    applyFilter();
+                });
+            });
+
+            window.resetFilters = function() {
+                if (searchInput) searchInput.value = '';
+                if (clearBtn) clearBtn.style.display = 'none';
+                filterPills.forEach(p => {
+                    if (p.getAttribute('data-filter') === 'all') {
+                        p.classList.add('active');
+                        p.setAttribute('aria-checked', 'true');
+                    } else {
+                        p.classList.remove('active');
+                        p.setAttribute('aria-checked', 'false');
+                    }
+                });
+                currentFilter = 'all';
+                applyFilter();
+            };
+        });
+
+        // Copy advisory answer to clipboard
+        function copyCardAnswer(btn) {
+            const wrap = btn.closest('.query-answer-wrap');
+            if (!wrap) return;
+            const answerEl = wrap.querySelector('.query-answer');
+            if (!answerEl) return;
+
+            const text = answerEl.textContent || answerEl.innerText || '';
+            navigator.clipboard.writeText(text).then(function() {
+                const origHtml = btn.innerHTML;
+                btn.classList.add('copied');
+                btn.innerHTML = `
+                    <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span>Copied!</span>
+                `;
+                setTimeout(() => {
+                    btn.innerHTML = origHtml;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Failed to copy text', err);
+            });
+        }
+    </script>
 </body>
 </html>

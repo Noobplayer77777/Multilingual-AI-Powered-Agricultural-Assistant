@@ -1,5 +1,12 @@
 server:
   port: 8081
+  servlet:
+    session:
+      timeout: 2h
+      cookie:
+        http-only: true
+        same-site: lax
+        name: KISAN_SESSIONID
 
 management:
   endpoints:
@@ -9,12 +16,17 @@ management:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:agridb}
-    username: ${DB_USER:agriuser}
-    password: ${DB_PASSWORD:agripass}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://ep-plain-frog-b39dr6yj-pooler.c-4.ap-southeast-1.aws.neon.tech:5432/neondb?sslmode=require}
+    username: ${DB_USER:neondb_owner}
+    password: ${DB_PASSWORD:npg_EW6noMA1mbzZ}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: ${HIBERNATE_DDL_AUTO:validate}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -26,3 +38,7 @@ spring:
 
 advisory-service:
   url: ${ADVISORY_URL:http://localhost:8082}
+
+internal:
+  service:
+    secret: ${INTERNAL_SERVICE_SECRET:kisan-agri-secure-internal-secret-key-2026}

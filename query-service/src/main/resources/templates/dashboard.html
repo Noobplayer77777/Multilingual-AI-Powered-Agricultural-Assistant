@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Farm Memory &amp; Management Dashboard — Kisan AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-950: #022c22;
+            --primary-900: #064e3b;
+            --primary-800: #065f46;
+            --primary-700: #047857;
+            --primary-600: #059669;
+            --primary-500: #10b981;
+            --primary-100: #d1fae5;
+            --primary-50: #ecfdf5;
+            --earth-900: #1c1917;
+            --earth-800: #292524;
+            --earth-700: #44403c;
+            --earth-300: #d6d3d1;
+            --earth-200: #e7e5e4;
+            --earth-100: #f5f5f4;
+            --earth-50: #fafaf9;
+            --accent-amber: #d97706;
+            --accent-amber-light: #fef3c7;
+            --error-red: #b91c1c;
+            --error-bg: #fef2f2;
+            --error-border: #fecaca;
+            --radius-xl: 20px;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 10px 25px -5px rgba(6, 78, 59, 0.08), 0 8px 10px -6px rgba(6, 78, 59, 0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Public Sans', 'Noto Sans Tamil', 'Noto Sans Devanagari', system-ui, sans-serif;
+            background: linear-gradient(180deg, #ecfdf5 0%, #fafaf9 320px, #f5f5f4 100%);
+            color: var(--earth-800);
+            min-height: 100vh;
+            padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Focus Ring Standard */
+        a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--primary-600);
+        }
+
+        /* Motion Reduction */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header Bar */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--earth-200);
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary-900);
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-700), var(--primary-900));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            min-height: 44px;
+            padding: 9px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid var(--earth-200);
+            background: #ffffff;
+            color: var(--earth-800);
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-nav:hover { background: var(--earth-100); }
+        .btn-nav:active { transform: scale(0.98); }
+        .btn-primary { background: var(--primary-700); color: #ffffff; border-color: var(--primary-700); }
+        .btn-primary:hover { background: var(--primary-800); }
+
+        .user-tag {
+            background: var(--primary-50);
+            color: var(--primary-900);
+            border: 1px solid var(--primary-100);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        /* Flash Alerts */
+        .alert {
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            font-size: 0.9375rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .alert-success { background: var(--primary-100); color: var(--primary-900); border: 1px solid #a7f3d0; }
+        .alert-error { background: var(--error-bg); color: var(--error-red); border: 1px solid var(--error-border); }
+
+        /* Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 860px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 580px) {
+            .header-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 14px 16px;
+            }
+            .nav-actions {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 8px;
+            }
+            .nav-actions .btn-nav {
+                flex: 1 1 auto;
+                text-align: center;
+            }
+            .form-row {
+                grid-template-columns: 1fr !important;
+            }
+            .plot-item, .reminder-item {
+                flex-direction: column;
+                align-items: stretch !important;
+                gap: 12px;
+            }
+            .plot-actions, .reminder-actions {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+                padding-top: 10px;
+                border-top: 1px dashed var(--earth-200);
+            }
+            .plot-actions .btn-delete, .reminder-actions .btn-delete, .reminder-actions .btn-toggle {
+                flex: 1 1 auto;
+            }
+        }
+
+        @media (max-width: 420px) {
+            body { padding: 12px 10px; }
+            .card { padding: 16px 14px; }
+            .subform-box { padding: 12px 10px; }
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--earth-200);
+            box-shadow: var(--shadow-card);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--earth-100);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-900);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Sub-forms styling */
+        .subform-box {
+            margin-bottom: 20px;
+            background: var(--earth-50);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--earth-300);
+        }
+
+        .subform-heading {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--primary-900);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Form Controls */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--earth-700);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="number"], select, textarea, input[type="date"] {
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 14px;
+            font-family: inherit;
+            font-size: 0.9375rem;
+            color: var(--earth-900);
+            background: var(--earth-50);
+            border: 1.5px solid var(--earth-200);
+            border-radius: var(--radius-md);
+            outline: none;
+            transition: all 0.15s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            background: #ffffff;
+            border-color: var(--primary-600);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+        }
+
+        .btn-card {
+            min-height: 48px;
+            padding: 12px 20px;
+            background: var(--primary-700);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
+        }
+        .btn-card:hover {
+            background: var(--primary-800);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(6, 78, 59, 0.25);
+        }
+        .btn-card:active { transform: scale(0.98); }
+
+        /* Plots & Reminders List */
+        .plot-item, .reminder-item {
+            padding: 14px;
+            background: var(--earth-50);
+            border: 1px solid var(--earth-200);
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .plot-item:hover, .reminder-item:hover {
+            border-color: var(--primary-600);
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.05);
+        }
+
+        .plot-info h4, .reminder-info h4 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--earth-900);
+            margin-bottom: 5px;
+        }
+
+        .plot-meta, .reminder-meta {
+            font-size: 0.75rem;
+            color: var(--earth-700);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .badge-stage {
+            background: var(--primary-100);
+            color: var(--primary-800);
+            padding: 3px 10px;
+            border-radius: var(--radius-xl);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .btn-delete {
+            min-height: 44px;
+            padding: 8px 14px;
+            background: transparent;
+            border: 1px solid var(--error-border);
+            color: var(--error-red);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+        .btn-delete:hover { background: var(--error-bg); }
+        .btn-delete:active { transform: scale(0.97); }
+
+        .btn-toggle {
+            min-height: 44px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+        .btn-toggle:active { transform: scale(0.97); }
+        .btn-toggle-done { background: var(--primary-100); color: var(--primary-900); }
+        .btn-toggle-pending { background: var(--accent-amber-light); color: var(--accent-amber); }
+
+        .empty-state {
+            text-align: center;
+            padding: 24px;
+            color: var(--earth-700);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        /* Coarse pointer optimization for touchscreens */
+        @media (pointer: coarse) {
+            .btn-card, .btn-nav {
+                min-height: 48px;
+            }
+            .btn-delete, .btn-toggle {
+                min-height: 44px;
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header-bar">
+            <a th:href="@{/}" class="brand-group" aria-label="Kisan AI Farm Memory Home">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/>
+                        <path d="M12 2v20"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--primary-900); line-height: 1.2;">Kisan Farm Memory</h2>
+                    <p style="font-size: 0.75rem; color: var(--earth-700);">Personalized Field Records &amp; Agronomic Task Calendar</p>
+                </div>
+            </a>
+
+            <div class="nav-actions">
+                <span class="user-tag" th:text="${user != null ? user.fullName + ' (' + user.email + ')' : 'Farmer'}">Farmer</span>
+                <a th:href="@{/}" class="btn-nav btn-primary" aria-label="Return to Agricultural Assistant Chat">🌾 Agricultural Assistant</a>
+                <a th:href="@{/history}" class="btn-nav" aria-label="View Past Query History">📜 Query History</a>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" class="btn-nav" style="border-color: var(--error-border); color: var(--error-red);" aria-label="Sign Out of Kisan AI">Sign Out</button>
+                </form>
+            </div>
+        </header>
+
+        <!-- Flash Messages -->
+        <div th:if="${successMessage}" class="alert alert-success" role="status" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" role="alert" th:text="${errorMessage}"></div>
+
+        <div class="dashboard-grid">
+            <!-- Left Column: Farmer Profile & Land Details -->
+            <div>
+                <!-- Farmer Profile Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Agronomic Profile
+                        </h3>
+                    </div>
+                    <form th:action="@{/profile}" method="post">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileState">State</label>
+                                <input type="text" id="profileState" name="state" th:value="${profile != null ? profile.state : 'Tamil Nadu'}" placeholder="e.g. Tamil Nadu" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="profileDistrict">District</label>
+                                <input type="text" id="profileDistrict" name="district" th:value="${profile != null ? profile.district : 'Thanjavur'}" placeholder="e.g. Thanjavur" required />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profilePrimaryCrop">Primary Cultivated Crop</label>
+                                <input type="text" id="profilePrimaryCrop" name="primaryCrop" th:value="${profile != null ? profile.primaryCrop : 'Paddy'}" placeholder="e.g. Paddy (CO 51), Cotton, Maize" />
+                            </div>
+                            <div class="form-group">
+                                <label for="profileTotalLandAcres">Total Land Holding (Acres)</label>
+                                <input type="number" step="0.01" id="profileTotalLandAcres" name="totalLandAcres" th:value="${profile != null ? profile.totalLandAcres : 2.5}" placeholder="e.g. 2.50" required />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileSoilType">Predominant Soil Type</label>
+                                <select id="profileSoilType" name="soilType">
+                                    <option value="Clay Loam" th:selected="${profile != null and profile.soilType == 'Clay Loam'}">Clay Loam (Paddy)</option>
+                                    <option value="Red Sandy Loam" th:selected="${profile != null and profile.soilType == 'Red Sandy Loam'}">Red Sandy Loam</option>
+                                    <option value="Black Cotton Soil" th:selected="${profile != null and profile.soilType == 'Black Cotton Soil'}">Black Cotton Soil</option>
+                                    <option value="Alluvial Soil" th:selected="${profile != null and profile.soilType == 'Alluvial Soil'}">Alluvial Soil</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileIrrigationSource">Primary Irrigation Source</label>
+                                <select id="profileIrrigationSource" name="irrigationSource">
+                                    <option value="Borewell" th:selected="${profile != null and profile.irrigationSource == 'Borewell'}">Borewell (Perennial)</option>
+                                    <option value="Canal" th:selected="${profile != null and profile.irrigationSource == 'Canal'}">Canal Water</option>
+                                    <option value="Open Well" th:selected="${profile != null and profile.irrigationSource == 'Open Well'}">Open Well</option>
+                                    <option value="Rainfed" th:selected="${profile != null and profile.irrigationSource == 'Rainfed'}">Rainfed (Tank-fed)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileAnnualBudgetInr">Seasonal Working Budget (₹ INR)</label>
+                                <input type="number" step="100" id="profileAnnualBudgetInr" name="annualBudgetInr" th:value="${profile != null ? profile.annualBudgetInr : 50000}" placeholder="e.g. 50000" />
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePreferredLanguage">Preferred Advisory Language</label>
+                                <select id="profilePreferredLanguage" name="preferredLanguage">
+                                    <option value="en" th:selected="${profile != null and profile.preferredLanguage == 'en'}">English</option>
+                                    <option value="ta" th:selected="${profile != null and profile.preferredLanguage == 'ta'}">Tamil (தமிழ்)</option>
+                                    <option value="hi" th:selected="${profile != null and profile.preferredLanguage == 'hi'}">Hindi (हिंदी)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-card" style="width:100%; margin-top:8px;">Save Agronomic Profile Changes</button>
+                    </form>
+                </div>
+
+                <!-- Land Parcels / Farm Plots -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+                            Land Parcels &amp; Plots (<span th:text="${plots.size()}">0</span>)
+                        </h3>
+                    </div>
+
+                    <!-- Add Plot Form -->
+                    <form th:action="@{/plots}" method="post" class="subform-box">
+                        <h4 class="subform-heading">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                            Record New Field Parcel
+                        </h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="plotName">Parcel Identifier / Name</label>
+                                <input type="text" id="plotName" name="plotName" placeholder="e.g. North Acre or Canal Parcel" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="areaAcres">Parcel Acreage (Acres)</label>
+                                <input type="number" step="0.01" id="areaAcres" name="areaAcres" placeholder="e.g. 1.50" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="currentCrop">Current Crop Variety</label>
+                                <input type="text" id="currentCrop" name="currentCrop" placeholder="e.g. Paddy - CO 51" />
+                            </div>
+                            <div class="form-group">
+                                <label for="cropStage">Crop Growth Stage</label>
+                                <input type="text" id="cropStage" name="cropStage" placeholder="e.g. Tillering / Vegetative" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="plotLocation">Plot Location / Village / District</label>
+                                <input type="text" id="plotLocation" name="location" placeholder="e.g. Thanjavur, Alangudi" />
+                            </div>
+                            <div class="form-group">
+                                <label for="soilTestPh">Soil pH (from soil test)</label>
+                                <input type="number" step="0.1" id="soilTestPh" name="soilTestPh" placeholder="e.g. 6.8" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="soilOrganicCarbon">Organic Carbon (%)</label>
+                                <input type="number" step="0.01" id="soilOrganicCarbon" name="soilOrganicCarbon" placeholder="e.g. 0.55" />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-card" style="padding: 10px 18px; font-size: 0.9375rem;">Save Parcel to Farm Memory</button>
+                    </form>
+
+                    <!-- Plots List -->
+                    <div th:if="${plots.isEmpty()}" class="empty-state">
+                        No land parcels recorded in memory. Record your first field parcel above with soil pH, location, and current crop stage to receive parcel-specific risk alerts.
+                    </div>
+                    <div th:each="plot : ${plots}" class="plot-item">
+                        <div class="plot-info">
+                            <h4 th:text="${plot.plotName}">North Acre</h4>
+                            <div class="plot-meta">
+                                <span>Area: <strong th:text="${plot.areaAcres}">1.5</strong> ac</span>
+                                <span th:if="${plot.location}">📍 <strong th:text="${plot.location}">Thanjavur</strong></span>
+                                <span th:if="${plot.currentCrop}">Crop: <strong th:text="${plot.currentCrop}">Paddy</strong></span>
+                                <span th:if="${plot.cropStage}" class="badge-stage" th:text="${plot.cropStage}">Tillering</span>
+                                <span th:if="${plot.soilTestPh}">pH: <strong th:text="${plot.soilTestPh}">6.8</strong></span>
+                                <span th:if="${plot.soilOrganicCarbon}">OC: <strong th:text="${plot.soilOrganicCarbon}">0.5%</strong></span>
+                            </div>
+                        </div>
+                        <div class="plot-actions" style="display:flex; align-items:center; gap:8px;">
+                            <a th:href="@{/(plotId=${plot.id})}" class="btn-card" style="padding: 6px 12px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" th:aria-label="${'Ask Agricultural Assistant about ' + plot.plotName}">🌾 Ask Assistant</a>
+                            <form th:action="@{'/plots/' + ${plot.id} + '/delete'}" method="post" style="display:inline;">
+                                <button type="submit" class="btn-delete" th:aria-label="${'Remove parcel ' + plot.plotName + ' from farm memory'}" onclick="return confirm('Remove this parcel from farm memory?');">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Reminders & Saved Plans -->
+            <div>
+                <!-- Reminders & Follow-Ups -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            Farm Reminders &amp; Tasks (<span th:text="${reminders.size()}">0</span>)
+                        </h3>
+                    </div>
+
+                    <!-- New Reminder Form -->
+                    <form th:action="@{/reminders}" method="post" class="subform-box">
+                        <h4 class="subform-heading">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                            Schedule Agronomic Task
+                        </h4>
+                        <div class="form-group">
+                            <label for="taskTitle">Task Description</label>
+                            <input type="text" id="taskTitle" name="taskTitle" placeholder="e.g. Apply Basal DAP Top-Dressing (Split 2)" required />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dueDate">Target Completion Date</label>
+                                <input type="date" id="dueDate" name="dueDate" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="plotId">Associated Land Parcel (Optional)</label>
+                                <select id="plotId" name="plotId">
+                                    <option value="">General Farm Activity (No Plot)</option>
+                                    <option th:each="p : ${plots}" th:value="${p.id}" th:text="${p.plotName + ' (' + p.areaAcres + ' ac)'}">Plot 1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-card" style="padding: 10px 18px; font-size: 0.9375rem;">Schedule Task Reminder</button>
+                    </form>
+
+                    <!-- Reminders List -->
+                    <div th:if="${reminders.isEmpty()}" class="empty-state">
+                        No active farm reminders scheduled. Add a seasonal task above (such as basal fertilizer split, irrigation cycle, or pest scouting) to track your field calendar.
+                    </div>
+                    <div th:each="rem : ${reminders}" class="reminder-item">
+                        <div class="reminder-info">
+                            <h4 th:text="${rem.title}" th:style="${rem.completed ? 'text-decoration: line-through; color: var(--earth-700);' : ''}">Task</h4>
+                            <div class="reminder-meta">
+                                <span>Due: <strong th:text="${rem.dueDate}">2026-10-15</strong></span>
+                                <span th:if="${rem.relatedCrop}">Crop: <strong th:text="${rem.relatedCrop}">Paddy</strong></span>
+                            </div>
+                        </div>
+                        <div class="reminder-actions">
+                            <form th:action="@{'/reminders/' + ${rem.id} + '/toggle'}" method="post">
+                                <button type="submit" th:class="'btn-toggle ' + (${rem.completed} ? 'btn-toggle-done' : 'btn-toggle-pending')"
+                                        th:aria-label="${rem.completed ? 'Mark task as pending' : 'Mark task as completed'}"
+                                        th:text="${rem.completed ? '✔ Completed' : '⏳ Pending'}">Status</button>
+                            </form>
+                            <form th:action="@{'/reminders/' + ${rem.id} + '/delete'}" method="post">
+                                <button type="submit" class="btn-delete" th:aria-label="${'Delete reminder: ' + rem.title}" title="Delete reminder">✕ Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved Crop Plans -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            Saved Crop Plans &amp; Feasibility
+                        </h3>
+                    </div>
+                    <div th:if="${cropPlans.isEmpty()}" class="empty-state">
+                        No crop plans saved to memory. Generate budget-aware plans or low-cost farming alternatives in the Agricultural Assistant to compare seasonal financial feasibility here.
+                    </div>
+                    <div th:each="plan : ${cropPlans}" class="plot-item">
+                        <div class="plot-info">
+                            <h4 th:text="${plan.crop}">Paddy Plan</h4>
+                            <div class="plot-meta">
+                                <span>Acres: <strong th:text="${plan.acres}">2.0</strong> ac</span>
+                                <span>Estimated Cost: <strong>₹ <span th:text="${plan.totalCost}">50000</span></strong></span>
+                                <span th:if="${plan.netSavings}">Projected Net Savings: <strong>₹ <span th:text="${plan.netSavings}">6500</span></strong></span>
+                                <span class="badge-stage" th:text="${plan.isFeasible ? '✔ Budget Feasible' : '⚠ Budget Deficit'}">Feasible</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

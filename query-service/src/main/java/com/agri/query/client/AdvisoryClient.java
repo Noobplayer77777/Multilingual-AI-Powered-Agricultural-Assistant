@@ -15,8 +15,11 @@ public class AdvisoryClient {
 
     private final RestClient restClient;
     private final String advisoryUrl;
+    private final String internalKey;
 
-    public AdvisoryClient(RestClient.Builder restClientBuilder, @Value("${advisory-service.url}") String advisoryUrl) {
+    public AdvisoryClient(RestClient.Builder restClientBuilder,
+                          @Value("${advisory-service.url}") String advisoryUrl,
+                          @Value("${advisory.security.internal-key:kisan-agri-secure-internal-secret-key-2026}") String internalKey) {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout((int) Duration.ofSeconds(10).toMillis());
         requestFactory.setReadTimeout((int) Duration.ofMinutes(4).toMillis());
@@ -25,12 +28,14 @@ public class AdvisoryClient {
                 .requestFactory(requestFactory)
                 .build();
         this.advisoryUrl = advisoryUrl;
+        this.internalKey = internalKey;
     }
 
     public QueryResponse getAdvisory(QueryRequest request) {
         try {
             QueryResponse response = restClient.post()
                     .uri(advisoryUrl + "/advise")
+                    .header("X-Internal-Service-Key", internalKey)
                     .body(request)
                     .retrieve()
                     .body(QueryResponse.class);
