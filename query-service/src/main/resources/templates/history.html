@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/i18n.css}" href="/css/i18n.css">
     <style>
         :root {
             --primary-950: #022c22;
@@ -647,19 +648,20 @@
                     </svg>
                 </div>
                 <div class="brand-title-group">
-                    <h1>KISAN AI</h1>
-                    <div class="brand-subtitle">Archived Farmer Queries &amp; Grounded Recommendations</div>
+                    <h1 data-i18n="hist_title">KISAN AI</h1>
+                    <div class="brand-subtitle" data-i18n="hist_subtitle">Archived Farmer Queries &amp; Grounded Recommendations</div>
                 </div>
             </a>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <div class="kisan-lang-container"></div>
                 <a href="/dashboard" class="back-chat-btn" style="background:#047857;">
-                    <span>🌾 Farm Dashboard</span>
+                    <span data-i18n="hist_farm_dashboard">🌾 Farm Dashboard</span>
                 </a>
                 <a href="/" class="back-chat-btn">
                     <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="m15 18-6-6 6-6"/>
                     </svg>
-                    <span>Back to Assistant</span>
+                    <span data-i18n="hist_back_assistant">Back to Assistant</span>
                 </a>
             </div>
         </header>
@@ -674,7 +676,7 @@
                     </svg>
                 </div>
                 <div class="stat-content">
-                    <div class="stat-label">Total Queries</div>
+                    <div class="stat-label" data-i18n="hist_total_queries">Total Queries</div>
                     <div class="stat-value" id="statTotalQueries" th:text="${queries != null ? queries.size() : 0}">0</div>
                 </div>
             </div>
@@ -687,7 +689,7 @@
                     </svg>
                 </div>
                 <div class="stat-content">
-                    <div class="stat-label">Storage Backend</div>
+                    <div class="stat-label" data-i18n="hist_storage_backend">Storage Backend</div>
                     <div class="stat-desc">PostgreSQL / pgvector</div>
                 </div>
             </div>
@@ -700,7 +702,7 @@
                     </svg>
                 </div>
                 <div class="stat-content">
-                    <div class="stat-label">Supported Languages</div>
+                    <div class="stat-label" data-i18n="hist_supported_langs">Supported Languages</div>
                     <div class="stat-desc">English &bull; தமிழ் &bull; हिंदी</div>
                 </div>
             </div>
@@ -714,10 +716,10 @@
                     <path d="M12 2v20"/>
                 </svg>
             </div>
-            <h2 class="empty-title">No Queries Recorded Yet</h2>
-            <p class="empty-text">Submitted agricultural questions, weather context, and grounded recommendations will appear here automatically.</p>
+            <h2 class="empty-title" data-i18n="hist_empty_title">No Queries Recorded Yet</h2>
+            <p class="empty-text" data-i18n="hist_empty_desc">Submitted agricultural questions, weather context, and grounded recommendations will appear here automatically.</p>
             <a href="/" class="back-chat-btn">
-                <span>Ask Your First Question</span>
+                <span data-i18n="hist_ask_first">Ask Your First Question</span>
                 <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m9 18 6-6-6-6"/>
                 </svg>
@@ -734,7 +736,7 @@
                             <circle cx="11" cy="11" r="8"/>
                             <line x1="21" x2="16.65" y1="21" y2="16.65"/>
                         </svg>
-                        <input type="text" id="historySearch" class="search-box" placeholder="Search questions, crops, locations, or advisory text..." aria-label="Search advisory history">
+                        <input type="text" id="historySearch" class="search-box" placeholder="Search questions, crops, locations, or advisory text..." data-i18n-placeholder="hist_search_placeholder" aria-label="Search advisory history">
                         <button type="button" id="clearSearchBtn" class="search-clear-btn" aria-label="Clear search input">
                             <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
                                 <line x1="18" x2="6" y1="6" y2="18"/>
@@ -747,7 +749,7 @@
                 <div class="filter-row">
                     <div class="filter-pills" id="filterPills" role="radiogroup" aria-label="Filter by language or sources">
                         <span class="filter-pill-label">Filter:</span>
-                        <button type="button" class="filter-pill active" data-filter="all" role="radio" aria-checked="true">All</button>
+                        <button type="button" class="filter-pill active" data-filter="all" role="radio" aria-checked="true" data-i18n="hist_filter_all">All</button>
                         <button type="button" class="filter-pill" data-filter="en" role="radio" aria-checked="false">English</button>
                         <button type="button" class="filter-pill" data-filter="ta" role="radio" aria-checked="false">தமிழ் (Tamil)</button>
                         <button type="button" class="filter-pill" data-filter="hi" role="radio" aria-checked="false">हिंदी (Hindi)</button>
@@ -995,5 +997,6 @@
             });
         }
     </script>
+    <script th:src="@{/js/i18n.js}" src="/js/i18n.js"></script>
 </body>
 </html>

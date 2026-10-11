@@ -1,0 +1,67 @@
+/* Kisan AI — Multilingual Support Stylesheet */
+
+.kisan-lang-switcher {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--earth-200, #e7e5e4);
+    border-radius: 9999px;
+    padding: 3px 4px;
+    gap: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.kisan-lang-switcher .lang-globe-icon {
+    font-size: 0.95rem;
+    padding: 0 4px 0 6px;
+    user-select: none;
+    line-height: 1;
+}
+
+.kisan-lang-btn {
+    border: none;
+    background: transparent;
+    color: var(--earth-700, #44403c);
+    font-family: inherit;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 5px 11px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+.kisan-lang-btn:hover {
+    background: var(--earth-100, #f5f5f4);
+    color: var(--earth-900, #1c1917);
+}
+
+.kisan-lang-btn:focus-visible {
+    outline: 2px solid var(--primary-600, #059669);
+    outline-offset: 1px;
+}
+
+.kisan-lang-btn.active {
+    background: var(--primary-700, #047857);
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(6, 78, 59, 0.2);
+}
+
+/* Typography Enhancements for Indic Scripts */
+body.lang-tamil {
+    font-family: 'Noto Sans Tamil', 'Public Sans', system-ui, sans-serif !important;
+}
+
+body.lang-hindi {
+    font-family: 'Noto Sans Devanagari', 'Public Sans', system-ui, sans-serif !important;
+}
+
+@media (pointer: coarse) {
+    .kisan-lang-btn {
+        min-height: 38px;
+        padding: 8px 12px;
+    }
+}

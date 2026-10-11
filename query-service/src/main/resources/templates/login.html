@@ -6,7 +6,8 @@
     <title>Farmer Sign In — Kisan AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/i18n.css}" href="/css/i18n.css">
     <style>
         :root {
             --primary-900: #064e3b;
@@ -168,6 +169,7 @@
 </head>
 <body>
     <div class="auth-card">
+        <div class="kisan-lang-container" style="display:flex; justify-content:center; margin-bottom:16px;"></div>
         <div class="brand-header">
             <div class="brand-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -175,8 +177,8 @@
                     <path d="M12 2v20"/>
                 </svg>
             </div>
-            <h1>Farmer Sign In</h1>
-            <p class="subtitle">Access your personalized plots, reminders, and farm plans</p>
+            <h1 data-i18n="auth_login_title">Farmer Sign In</h1>
+            <p class="subtitle" data-i18n="auth_login_subtitle">Access your personalized plots, reminders, and farm plans</p>
         </div>
 
         <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
@@ -186,26 +188,27 @@
             <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div class="form-group">
-                <label for="email">Registered Email</label>
+                <label for="email" data-i18n="auth_email_label">Registered Email</label>
                 <input type="email" id="email" name="email" placeholder="farmer@kisan.in" required autofocus autocomplete="email" />
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password" data-i18n="auth_password_label">Password</label>
                 <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" />
             </div>
 
             <div class="form-footer-links">
-                <a th:href="@{/forgot-password}">Forgot password?</a>
-                <a th:href="@{/}">Return to Guest Chat</a>
+                <a th:href="@{/forgot-password}" data-i18n="auth_forgot_link">Forgot password?</a>
+                <a th:href="@{/}" data-i18n="auth_guest_chat">Return to Guest Chat</a>
             </div>
 
-            <button type="submit" class="btn-submit">Sign In to Farm Dashboard</button>
+            <button type="submit" class="btn-submit" data-i18n="auth_btn_login">Sign In to Farm Dashboard</button>
         </form>
 
         <div class="bottom-switch">
-            New farmer? <a th:href="@{/register}">Create an account</a>
+            <span data-i18n="auth_no_account">New farmer?</span> <a th:href="@{/register}" data-i18n="auth_register_link">Create an account</a>
         </div>
     </div>
+    <script th:src="@{/js/i18n.js}" src="/js/i18n.js"></script>
 </body>
 </html>

@@ -6,7 +6,8 @@
     <title>Farmer Registration — Kisan AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/i18n.css}" href="/css/i18n.css">
     <style>
         :root {
             --primary-900: #064e3b;
@@ -155,6 +156,7 @@
 </head>
 <body>
     <div class="auth-card">
+        <div class="kisan-lang-container" style="display:flex; justify-content:center; margin-bottom:16px;"></div>
         <div class="brand-header">
             <div class="brand-icon">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -164,8 +166,8 @@
                     <line x1="23" y1="11" x2="17" y2="11"/>
                 </svg>
             </div>
-            <h1>Create Farmer Profile</h1>
-            <p class="subtitle">Store your land parcels, crop history, and personalized advisories</p>
+            <h1 data-i18n="auth_register_title">Create Farmer Profile</h1>
+            <p class="subtitle" data-i18n="auth_register_subtitle">Store your land parcels, crop history, and personalized advisories</p>
         </div>
 
         <div th:if="${errorMessage}" class="alert-error" th:text="${errorMessage}"></div>
@@ -174,38 +176,39 @@
             <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div class="form-group">
-                <label for="fullName">Full Name</label>
+                <label for="fullName" data-i18n="auth_fullname_label">Full Name</label>
                 <input type="text" id="fullName" name="fullName" placeholder="e.g. Ramesh Kumar" required autofocus />
             </div>
 
             <div class="form-group">
-                <label for="email">Email Address</label>
+                <label for="email" data-i18n="auth_email_label">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="ramesh@kisan.in" required />
             </div>
 
             <div class="form-group">
-                <label for="phone">Phone Number (Optional)</label>
+                <label for="phone" data-i18n="auth_phone_label">Phone Number (Optional)</label>
                 <input type="text" id="phone" name="phone" placeholder="+91 9876543210" />
             </div>
 
             <div class="form-group">
-                <label for="password">Password (Minimum 8 Characters)</label>
+                <label for="password" data-i18n="auth_new_password_label">Password (Minimum 8 Characters)</label>
                 <input type="password" id="password" name="password" placeholder="••••••••" required minlength="8" />
             </div>
 
             <div class="checkbox-group">
                 <input type="checkbox" id="consent" name="consentDataRetention" value="true" checked />
-                <label for="consent" style="text-transform: none; font-weight: normal; margin-bottom: 0;">
+                <label for="consent" style="text-transform: none; font-weight: normal; margin-bottom: 0;" data-i18n="auth_consent">
                     I consent to Kisan AI storing my farm parcel data and query history for personalized agronomical follow-ups.
                 </label>
             </div>
 
-            <button type="submit" class="btn-submit">Register Account</button>
+            <button type="submit" class="btn-submit" data-i18n="auth_btn_register">Register Account</button>
         </form>
 
         <div class="bottom-switch">
-            Already registered? <a th:href="@{/login}">Sign In</a> &bull; <a th:href="@{/}">Guest Mode</a>
+            <span data-i18n="auth_has_account">Already registered?</span> <a th:href="@{/login}" data-i18n="nav_login">Sign In</a> &bull; <a th:href="@{/}" data-i18n="auth_guest_mode">Guest Mode</a>
         </div>
     </div>
+    <script th:src="@{/js/i18n.js}" src="/js/i18n.js"></script>
 </body>
 </html>

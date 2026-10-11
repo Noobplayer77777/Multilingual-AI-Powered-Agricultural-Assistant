@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/i18n.css}" href="/css/i18n.css">
     <style>
         :root {
             --primary-950: #022c22;
@@ -437,17 +438,18 @@
                     </svg>
                 </div>
                 <div>
-                    <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--primary-900); line-height: 1.2;">Kisan Farm Memory</h2>
-                    <p style="font-size: 0.75rem; color: var(--earth-700);">Personalized Field Records &amp; Agronomic Task Calendar</p>
+                    <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--primary-900); line-height: 1.2;" data-i18n="dash_title">Kisan Farm Memory</h2>
+                    <p style="font-size: 0.75rem; color: var(--earth-700);" data-i18n="dash_subtitle">Personalized Field Records &amp; Agronomic Task Calendar</p>
                 </div>
             </a>
 
             <div class="nav-actions">
+                <div class="kisan-lang-container"></div>
                 <span class="user-tag" th:text="${user != null ? user.fullName + ' (' + user.email + ')' : 'Farmer'}">Farmer</span>
-                <a th:href="@{/}" class="btn-nav btn-primary" aria-label="Return to Agricultural Assistant Chat">🌾 Agricultural Assistant</a>
-                <a th:href="@{/history}" class="btn-nav" aria-label="View Past Query History">📜 Query History</a>
+                <a th:href="@{/}" class="btn-nav btn-primary" aria-label="Return to Agricultural Assistant Chat" data-i18n="nav_home">🌾 Agricultural Assistant</a>
+                <a th:href="@{/history}" class="btn-nav" aria-label="View Past Query History" data-i18n="nav_history">📜 Query History</a>
                 <form th:action="@{/logout}" method="post" style="display:inline;">
-                    <button type="submit" class="btn-nav" style="border-color: var(--error-border); color: var(--error-red);" aria-label="Sign Out of Kisan AI">Sign Out</button>
+                    <button type="submit" class="btn-nav" style="border-color: var(--error-border); color: var(--error-red);" aria-label="Sign Out of Kisan AI" data-i18n="nav_logout">Sign Out</button>
                 </form>
             </div>
         </header>
@@ -464,35 +466,35 @@
                     <div class="card-header">
                         <h3 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                            Agronomic Profile
+                            <span data-i18n="dash_profile_heading">Agronomic Profile</span>
                         </h3>
                     </div>
                     <form th:action="@{/profile}" method="post">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="profileState">State</label>
+                                <label for="profileState" data-i18n="dash_state_label">State</label>
                                 <input type="text" id="profileState" name="state" th:value="${profile != null ? profile.state : 'Tamil Nadu'}" placeholder="e.g. Tamil Nadu" required />
                             </div>
                             <div class="form-group">
-                                <label for="profileDistrict">District</label>
+                                <label for="profileDistrict" data-i18n="dash_district_label">District</label>
                                 <input type="text" id="profileDistrict" name="district" th:value="${profile != null ? profile.district : 'Thanjavur'}" placeholder="e.g. Thanjavur" required />
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="profilePrimaryCrop">Primary Cultivated Crop</label>
+                                <label for="profilePrimaryCrop" data-i18n="dash_primary_crop_label">Primary Cultivated Crop</label>
                                 <input type="text" id="profilePrimaryCrop" name="primaryCrop" th:value="${profile != null ? profile.primaryCrop : 'Paddy'}" placeholder="e.g. Paddy (CO 51), Cotton, Maize" />
                             </div>
                             <div class="form-group">
-                                <label for="profileTotalLandAcres">Total Land Holding (Acres)</label>
+                                <label for="profileTotalLandAcres" data-i18n="dash_land_acres_label">Total Land Holding (Acres)</label>
                                 <input type="number" step="0.01" id="profileTotalLandAcres" name="totalLandAcres" th:value="${profile != null ? profile.totalLandAcres : 2.5}" placeholder="e.g. 2.50" required />
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="profileSoilType">Predominant Soil Type</label>
+                                <label for="profileSoilType" data-i18n="dash_soil_type_label">Predominant Soil Type</label>
                                 <select id="profileSoilType" name="soilType">
                                     <option value="Clay Loam" th:selected="${profile != null and profile.soilType == 'Clay Loam'}">Clay Loam (Paddy)</option>
                                     <option value="Red Sandy Loam" th:selected="${profile != null and profile.soilType == 'Red Sandy Loam'}">Red Sandy Loam</option>
@@ -501,7 +503,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="profileIrrigationSource">Primary Irrigation Source</label>
+                                <label for="profileIrrigationSource" data-i18n="dash_irrigation_label">Primary Irrigation Source</label>
                                 <select id="profileIrrigationSource" name="irrigationSource">
                                     <option value="Borewell" th:selected="${profile != null and profile.irrigationSource == 'Borewell'}">Borewell (Perennial)</option>
                                     <option value="Canal" th:selected="${profile != null and profile.irrigationSource == 'Canal'}">Canal Water</option>
@@ -513,11 +515,11 @@
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="profileAnnualBudgetInr">Seasonal Working Budget (₹ INR)</label>
+                                <label for="profileAnnualBudgetInr" data-i18n="dash_budget_label">Seasonal Working Budget (₹ INR)</label>
                                 <input type="number" step="100" id="profileAnnualBudgetInr" name="annualBudgetInr" th:value="${profile != null ? profile.annualBudgetInr : 50000}" placeholder="e.g. 50000" />
                             </div>
                             <div class="form-group">
-                                <label for="profilePreferredLanguage">Preferred Advisory Language</label>
+                                <label for="profilePreferredLanguage" data-i18n="dash_language_label">Preferred Advisory Language</label>
                                 <select id="profilePreferredLanguage" name="preferredLanguage">
                                     <option value="en" th:selected="${profile != null and profile.preferredLanguage == 'en'}">English</option>
                                     <option value="ta" th:selected="${profile != null and profile.preferredLanguage == 'ta'}">Tamil (தமிழ்)</option>
@@ -526,7 +528,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-card" style="width:100%; margin-top:8px;">Save Agronomic Profile Changes</button>
+                        <button type="submit" class="btn-card" style="width:100%; margin-top:8px;" data-i18n="dash_btn_save_profile">Save Agronomic Profile Changes</button>
                     </form>
                 </div>
 
@@ -535,7 +537,7 @@
                     <div class="card-header">
                         <h3 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
-                            Land Parcels &amp; Plots (<span th:text="${plots.size()}">0</span>)
+                            <span data-i18n="dash_plots_title">Land Parcels &amp; Plots</span> (<span th:text="${plots.size()}">0</span>)
                         </h3>
                     </div>
 
@@ -543,49 +545,49 @@
                     <form th:action="@{/plots}" method="post" class="subform-box">
                         <h4 class="subform-heading">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-                            Record New Field Parcel
+                            <span data-i18n="dash_new_parcel_heading">Record New Field Parcel</span>
                         </h4>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="plotName">Parcel Identifier / Name</label>
+                                <label for="plotName" data-i18n="dash_plot_name_label">Parcel Identifier / Name</label>
                                 <input type="text" id="plotName" name="plotName" placeholder="e.g. North Acre or Canal Parcel" required />
                             </div>
                             <div class="form-group">
-                                <label for="areaAcres">Parcel Acreage (Acres)</label>
+                                <label for="areaAcres" data-i18n="dash_plot_area_label">Parcel Acreage (Acres)</label>
                                 <input type="number" step="0.01" id="areaAcres" name="areaAcres" placeholder="e.g. 1.50" required />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="currentCrop">Current Crop Variety</label>
+                                <label for="currentCrop" data-i18n="dash_current_crop_label">Current Crop Variety</label>
                                 <input type="text" id="currentCrop" name="currentCrop" placeholder="e.g. Paddy - CO 51" />
                             </div>
                             <div class="form-group">
-                                <label for="cropStage">Crop Growth Stage</label>
+                                <label for="cropStage" data-i18n="dash_crop_stage_label">Crop Growth Stage</label>
                                 <input type="text" id="cropStage" name="cropStage" placeholder="e.g. Tillering / Vegetative" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="plotLocation">Plot Location / Village / District</label>
+                                <label for="plotLocation" data-i18n="dash_plot_location_label">Plot Location / Village / District</label>
                                 <input type="text" id="plotLocation" name="location" placeholder="e.g. Thanjavur, Alangudi" />
                             </div>
                             <div class="form-group">
-                                <label for="soilTestPh">Soil pH (from soil test)</label>
+                                <label for="soilTestPh" data-i18n="dash_soil_ph_label">Soil pH (from soil test)</label>
                                 <input type="number" step="0.1" id="soilTestPh" name="soilTestPh" placeholder="e.g. 6.8" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="soilOrganicCarbon">Organic Carbon (%)</label>
+                                <label for="soilOrganicCarbon" data-i18n="dash_soil_oc_label">Organic Carbon (%)</label>
                                 <input type="number" step="0.01" id="soilOrganicCarbon" name="soilOrganicCarbon" placeholder="e.g. 0.55" />
                             </div>
                         </div>
-                        <button type="submit" class="btn-card" style="padding: 10px 18px; font-size: 0.9375rem;">Save Parcel to Farm Memory</button>
+                        <button type="submit" class="btn-card" style="padding: 10px 18px; font-size: 0.9375rem;" data-i18n="dash_btn_save_parcel">Save Parcel to Farm Memory</button>
                     </form>
 
                     <!-- Plots List -->
-                    <div th:if="${plots.isEmpty()}" class="empty-state">
+                    <div th:if="${plots.isEmpty()}" class="empty-state" data-i18n="dash_empty_plots">
                         No land parcels recorded in memory. Record your first field parcel above with soil pH, location, and current crop stage to receive parcel-specific risk alerts.
                     </div>
                     <div th:each="plot : ${plots}" class="plot-item">
@@ -601,9 +603,9 @@
                             </div>
                         </div>
                         <div class="plot-actions" style="display:flex; align-items:center; gap:8px;">
-                            <a th:href="@{/(plotId=${plot.id})}" class="btn-card" style="padding: 6px 12px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" th:aria-label="${'Ask Agricultural Assistant about ' + plot.plotName}">🌾 Ask Assistant</a>
+                            <a th:href="@{/(plotId=${plot.id})}" class="btn-card" style="padding: 6px 12px; font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" th:aria-label="${'Ask Agricultural Assistant about ' + plot.plotName}" data-i18n="dash_btn_ask_assistant">🌾 Ask Assistant</a>
                             <form th:action="@{'/plots/' + ${plot.id} + '/delete'}" method="post" style="display:inline;">
-                                <button type="submit" class="btn-delete" th:aria-label="${'Remove parcel ' + plot.plotName + ' from farm memory'}" onclick="return confirm('Remove this parcel from farm memory?');">Remove</button>
+                                <button type="submit" class="btn-delete" th:aria-label="${'Remove parcel ' + plot.plotName + ' from farm memory'}" onclick="return confirm('Remove this parcel from farm memory?');" data-i18n="dash_btn_remove">Remove</button>
                             </form>
                         </div>
                     </div>
@@ -617,7 +619,7 @@
                     <div class="card-header">
                         <h3 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            Farm Reminders &amp; Tasks (<span th:text="${reminders.size()}">0</span>)
+                            <span data-i18n="dash_reminders_title">Farm Reminders &amp; Tasks</span> (<span th:text="${reminders.size()}">0</span>)
                         </h3>
                     </div>
 
@@ -648,7 +650,7 @@
                     </form>
 
                     <!-- Reminders List -->
-                    <div th:if="${reminders.isEmpty()}" class="empty-state">
+                    <div th:if="${reminders.isEmpty()}" class="empty-state" data-i18n="dash_empty_reminders">
                         No active farm reminders scheduled. Add a seasonal task above (such as basal fertilizer split, irrigation cycle, or pest scouting) to track your field calendar.
                     </div>
                     <div th:each="rem : ${reminders}" class="reminder-item">
@@ -677,10 +679,10 @@
                     <div class="card-header">
                         <h3 class="card-title">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            Saved Crop Plans &amp; Feasibility
+                            <span data-i18n="dash_saved_plans_title">Saved Crop Plans &amp; Feasibility</span>
                         </h3>
                     </div>
-                    <div th:if="${cropPlans.isEmpty()}" class="empty-state">
+                    <div th:if="${cropPlans.isEmpty()}" class="empty-state" data-i18n="dash_empty_plans">
                         No crop plans saved to memory. Generate budget-aware plans or low-cost farming alternatives in the Agricultural Assistant to compare seasonal financial feasibility here.
                     </div>
                     <div th:each="plan : ${cropPlans}" class="plot-item">
@@ -698,5 +700,6 @@
             </div>
         </div>
     </div>
+    <script th:src="@{/js/i18n.js}" src="/js/i18n.js"></script>
 </body>
 </html>

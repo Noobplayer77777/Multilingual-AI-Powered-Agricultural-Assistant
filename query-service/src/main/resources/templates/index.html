@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/i18n.css}" href="/css/i18n.css">
     <style>
         :root {
             --primary-950: #022c22;
@@ -978,41 +979,43 @@
                 </div>
                 <div class="brand-title-group">
                     <h1>
-                        KISAN AI 
+                        <span data-i18n="brand_title">KISAN AI</span> 
                         <span class="status-dot" title="Assistant is online and ready"></span>
                     </h1>
-                    <div class="brand-subtitle">Multilingual Agricultural Chatbot &bull; ICAR &amp; TNAU Grounded</div>
+                    <div class="brand-subtitle" data-i18n="brand_subtitle">Multilingual Agricultural Chatbot &bull; ICAR &amp; TNAU Grounded</div>
                 </div>
             </a>
             <div class="header-actions">
+                <div class="kisan-lang-container"></div>
                 <a href="/dashboard" class="btn-header" style="background:var(--primary-800); color:#ffffff; border-color:var(--primary-800);">
-                    <span>🌾 Farm Memory</span>
+                    <span data-i18n="nav_dashboard">🌾 Farm Memory</span>
                 </a>
                 <button type="button" class="btn-header btn-clear" onclick="resetChat()" title="Start new conversation">
                     <svg class="icon-svg" width="15" height="15" viewBox="0 0 24 24">
                         <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
                         <path d="M3 3v5h5"/>
                     </svg>
-                    <span>Clear</span>
+                    <span data-i18n="nav_clear">Clear</span>
                 </button>
                 <a href="/history" class="btn-header btn-history">
                     <svg class="icon-svg" width="15" height="15" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"/>
                         <polyline points="12 6 12 12 16 14"/>
                     </svg>
-                    <span>History</span>
+                    <span data-i18n="nav_history">History</span>
                 </a>
                 <span sec:authorize="isAuthenticated()" style="display:inline-flex; align-items:center; gap:6px;">
                     <a href="/dashboard" class="btn-header" style="background:var(--primary-50); color:var(--primary-900); border-color:var(--primary-200); font-weight:700;" sec:authentication="name">User</a>
                     <form th:action="@{/logout}" method="post" style="display:inline;">
                         <input type="hidden" th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="btn-header" style="border-color:var(--error-border); color:var(--error-red);">Sign Out</button>
+                        <button type="submit" class="btn-header" style="border-color:var(--error-border); color:var(--error-red);" data-i18n="nav_logout">Sign Out</button>
                     </form>
                 </span>
                 <span sec:authorize="isAnonymous()" style="display:inline-flex; align-items:center; gap:6px;">
-                    <a href="/login" class="btn-header" style="background:var(--earth-100); color:var(--earth-900);">Sign In</a>
-                    <a href="/register" class="btn-header" style="background:var(--primary-700); color:#ffffff; border-color:var(--primary-700);">Register</a>
+                    <a href="/login" class="btn-header" style="background:var(--earth-100); color:var(--earth-900);" data-i18n="nav_login">Sign In</a>
+                    <a href="/register" class="btn-header" style="background:var(--primary-700); color:#ffffff; border-color:var(--primary-700);" data-i18n="nav_register">Register</a>
                 </span>
+            </div>
         </header>
 
         <!-- Farm Parcel Memory Bar (Logged-in Farmer) -->
@@ -1020,11 +1023,11 @@
             <div class="parcel-bar-top">
                 <div class="parcel-bar-title">
                     <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L8 6c-3 3-4 7-2 11s7 5 11 2c2-2 3-6 2-11L12 2z"/><path d="M12 2v20"/></svg>
-                    <span>Farm Parcels (Farm Memory):</span>
+                    <span data-i18n="parcel_bar_title">Farm Parcels (Farm Memory):</span>
                 </div>
                 <div class="parcel-selector-group">
                     <select id="activePlotSelect" class="context-select parcel-select" onchange="selectPlot(this.value)" aria-label="Select Land Parcel to Auto-Populate Details">
-                        <option value="">-- Choose a Parcel to Auto-fill Location &amp; Crop --</option>
+                        <option value="" data-i18n="parcel_select_default">-- Choose a Parcel to Auto-fill Location &amp; Crop --</option>
                         <option th:each="plot : ${plots}" 
                                 th:value="${plot.id}"
                                 th:data-name="${plot.plotName}"
@@ -1038,18 +1041,18 @@
                             North Acre (Paddy, 1.5 ac, Thanjavur)
                         </option>
                     </select>
-                    <button type="button" id="clearPlotBtn" class="btn-clear-plot" style="display:none;" onclick="clearPlotSelection()">Clear</button>
+                    <button type="button" id="clearPlotBtn" class="btn-clear-plot" style="display:none;" onclick="clearPlotSelection()" data-i18n="btn_clear_plot">Clear</button>
                 </div>
             </div>
             <!-- Active Plot Detail Chips -->
             <div id="activePlotDetails" class="active-plot-details" style="display:none;">
                 <div class="active-plot-badge" id="activePlotBadge"></div>
                 <div class="plot-action-chips">
-                    <span class="plot-action-label">Quick Parcel Inquiries:</span>
-                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('dosage')">🧪 Safe Pesticide &amp; Fertilizer</button>
-                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('sowing')">🌦️ Weather &amp; Sowing Risk</button>
-                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('budget')">💰 Budget Crop Plan</button>
-                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('lowcost')">🌿 Low-Cost Farming</button>
+                    <span class="plot-action-label" data-i18n="quick_parcel_inquiries">Quick Parcel Inquiries:</span>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('dosage')" data-i18n="chip_dosage">🧪 Safe Pesticide &amp; Fertilizer</button>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('sowing')" data-i18n="chip_sowing">🌦️ Weather &amp; Sowing Risk</button>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('budget')" data-i18n="chip_budget">💰 Budget Crop Plan</button>
+                    <button type="button" class="plot-chip-btn" onclick="askPlotQuestion('lowcost')" data-i18n="chip_lowcost">🌿 Low-Cost Farming</button>
                 </div>
             </div>
         </section>
@@ -1064,23 +1067,23 @@
             <div class="context-group">
                 <label for="chatCategory" class="context-label">
                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                    Engine:
+                    <span data-i18n="chat_engine_label">Engine:</span>
                 </label>
                 <select id="chatCategory" class="context-select">
-                    <option value="GENERAL_DECISION">1. Risk-Aware Decision Assistant</option>
-                    <option value="WEATHER_RISK">2. Weather &amp; Sowing Risk Advisory</option>
-                    <option value="BUDGET_PLANNING">3. Budget-Aware Crop Planner</option>
-                    <option value="LOW_COST_FARMING">4. Low-Cost Farming Planner</option>
-                    <option value="GOVERNMENT_SCHEME">5. Govt Scheme Navigator</option>
-                    <option value="PESTICIDE_SAFETY">6. Safe Pesticide Guidance (CIBRC)</option>
-                    <option value="PROBLEM_TRIAGE">7. Crop Problem Triage</option>
+                    <option value="GENERAL_DECISION" data-i18n="chat_engine_general">1. Risk-Aware Decision Assistant</option>
+                    <option value="WEATHER_RISK" data-i18n="chat_engine_weather">2. Weather &amp; Sowing Risk Advisory</option>
+                    <option value="BUDGET_PLANNING" data-i18n="chat_engine_budget">3. Budget-Aware Crop Planner</option>
+                    <option value="LOW_COST_FARMING" data-i18n="chat_engine_low_cost">4. Low-Cost Farming Planner</option>
+                    <option value="GOVERNMENT_SCHEME" data-i18n="chat_engine_scheme">5. Govt Scheme Navigator</option>
+                    <option value="PESTICIDE_SAFETY" data-i18n="chat_engine_pesticide">6. Safe Pesticide Guidance (CIBRC)</option>
+                    <option value="PROBLEM_TRIAGE" data-i18n="chat_engine_triage">7. Crop Problem Triage</option>
                 </select>
             </div>
 
             <div class="context-group">
                 <label for="chatAcres" class="context-label">
                     <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
-                    Acres:
+                    <span data-i18n="chat_acres_label">Acres:</span>
                 </label>
                 <input type="number" step="0.1" id="chatAcres" class="context-input" style="width: 80px;" placeholder="Acres" value="2.0">
             </div>
@@ -1092,13 +1095,13 @@
                         <line x1="2" y1="12" x2="22" y2="12"/>
                         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                     </svg>
-                    Language:
+                    <span data-i18n="chat_language_label">Language:</span>
                 </label>
                 <select id="chatLanguage" class="context-select">
-                    <option value="auto">Auto-detect</option>
-                    <option value="en">English (English)</option>
-                    <option value="ta">Tamil (தமிழ்)</option>
-                    <option value="hi">Hindi (हिंदी)</option>
+                    <option value="auto" data-i18n="chat_lang_auto">Auto-detect</option>
+                    <option value="en" data-i18n="chat_lang_en">English (English)</option>
+                    <option value="ta" data-i18n="chat_lang_ta">Tamil (தமிழ்)</option>
+                    <option value="hi" data-i18n="chat_lang_hi">Hindi (हिंदी)</option>
                 </select>
             </div>
 
@@ -1108,9 +1111,9 @@
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                         <circle cx="12" cy="10" r="3"/>
                     </svg>
-                    Location:
+                    <span data-i18n="chat_location_label">Location:</span>
                 </label>
-                <input type="text" id="chatLocation" class="context-input" placeholder="e.g. Thanjavur" value="Thanjavur">
+                <input type="text" id="chatLocation" class="context-input" placeholder="e.g. Thanjavur" data-i18n-placeholder="chat_location_placeholder" value="Thanjavur">
             </div>
 
             <div class="context-group">
@@ -1121,14 +1124,14 @@
                         <line x1="8" y1="2" x2="8" y2="6"/>
                         <line x1="3" y1="10" x2="21" y2="10"/>
                     </svg>
-                    Season:
+                    <span data-i18n="chat_season_label">Season:</span>
                 </label>
                 <select id="chatSeason" class="context-select">
-                    <option value="Auto">Auto</option>
-                    <option value="Kharif">Kharif</option>
-                    <option value="Rabi">Rabi</option>
-                    <option value="Summer">Summer</option>
-                    <option value="Zaid">Zaid</option>
+                    <option value="Auto" data-i18n="chat_season_auto">Auto</option>
+                    <option value="Kharif" data-i18n="chat_season_kharif">Kharif</option>
+                    <option value="Rabi" data-i18n="chat_season_rabi">Rabi</option>
+                    <option value="Summer" data-i18n="chat_season_summer">Summer</option>
+                    <option value="Zaid" data-i18n="chat_season_zaid">Zaid</option>
                 </select>
             </div>
         </section>
@@ -1209,7 +1212,7 @@
                             ></textarea>
                         </div>
                         <button type="submit" class="btn-send" id="btnSend">
-                            <span>Send</span>
+                            <span data-i18n="chat_send_btn">Send</span>
                             <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24">
                                 <line x1="22" y1="2" x2="11" y2="13"/>
                                 <polygon points="22 2 15 22 11 13 2 9 22 2"/>
@@ -1219,9 +1222,9 @@
                     <div class="input-hint-row">
                         <span class="disclaimer-badge">
                             <svg class="icon-svg" width="13" height="13" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                            <span>Grounded with ICAR/TNAU science &bull; Real-time weather integration</span>
+                            <span data-i18n="disclaimer_grounded">Grounded with ICAR/TNAU science &bull; Real-time weather integration</span>
                         </span>
-                        <span>Enter ↵ to send &bull; Shift + Enter for newline</span>
+                        <span data-i18n="input_hint_enter">Enter ↵ to send &bull; Shift + Enter for newline</span>
                     </div>
                 </form>
             </footer>
@@ -1260,6 +1263,9 @@
         if (chatLanguage) {
             chatLanguage.addEventListener('change', function() {
                 updateLanguageUi(this.value);
+                if (window.KisanI18n && (this.value === 'en' || this.value === 'ta' || this.value === 'hi')) {
+                    window.KisanI18n.setLanguage(this.value);
+                }
             });
         }
 
@@ -1911,6 +1917,16 @@
                 return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
             });
         }
+
+        // Synchronize with KisanI18n language changes
+        window.addEventListener('kisan-language-changed', (e) => {
+            const lang = e.detail.language;
+            if (chatLanguage) {
+                chatLanguage.value = lang;
+            }
+            updateLanguageUi(lang);
+        });
     </script>
+    <script th:src="@{/js/i18n.js}" src="/js/i18n.js"></script>
 </body>
 </html>
