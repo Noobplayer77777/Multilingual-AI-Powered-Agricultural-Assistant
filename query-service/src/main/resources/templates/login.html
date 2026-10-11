@@ -25,7 +25,9 @@
             --success-bg: #d1fae5;
             --radius-lg: 16px;
             --radius-md: 10px;
-            --shadow-card: 0 10px 25px -5px rgba(6, 78, 59, 0.12), 0 8px 10px -6px rgba(6, 78, 59, 0.05);
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -68,18 +70,18 @@
         }
 
         h1 { font-size: 1.5rem; font-weight: 800; color: var(--primary-900); margin-bottom: 6px; }
-        .subtitle { font-size: 0.875rem; color: var(--earth-700); }
+        .subtitle { font-size: 0.9375rem; color: var(--earth-700); }
 
         .alert {
             padding: 12px 14px;
             border-radius: var(--radius-md);
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .alert-error { background: var(--error-bg); color: var(--error-red); border: 1px solid #fecaca; }
+        .alert-error { background: var(--error-bg); color: var(--error-red); border: 1px solid var(--error-border); }
         .alert-success { background: var(--success-bg); color: var(--success-green); border: 1px solid #a7f3d0; }
 
         .form-group {
@@ -88,7 +90,7 @@
 
         label {
             display: block;
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--earth-700);
             margin-bottom: 6px;
@@ -100,7 +102,7 @@
             width: 100%;
             padding: 12px 14px;
             font-family: inherit;
-            font-size: 0.95rem;
+            font-size: 0.9375rem;
             color: var(--earth-900);
             background: var(--earth-100);
             border: 1.5px solid var(--earth-200);
@@ -121,7 +123,7 @@
             align-items: center;
             margin-top: 6px;
             margin-bottom: 22px;
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
         }
 
         .form-footer-links a {
@@ -142,12 +144,12 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
-            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.2);
+            box-shadow: var(--shadow-sm);
         }
 
         .btn-submit:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(6, 78, 59, 0.25);
+            box-shadow: var(--shadow-md);
         }
 
         .bottom-switch {
@@ -155,7 +157,7 @@
             margin-top: 24px;
             padding-top: 20px;
             border-top: 1px solid var(--earth-200);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: var(--earth-700);
         }
 

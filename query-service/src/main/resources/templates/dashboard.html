@@ -222,6 +222,7 @@
             box-shadow: var(--shadow-card);
             padding: 24px;
             margin-bottom: 24px;
+            contain: layout style;
         }
 
         .card-header {
@@ -339,6 +340,9 @@
             gap: 12px;
             flex-wrap: wrap;
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 80px;
+            contain: layout style;
         }
         .plot-item:hover, .reminder-item:hover {
             border-color: var(--primary-600);

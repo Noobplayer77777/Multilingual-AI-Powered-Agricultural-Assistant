@@ -37,8 +37,10 @@
             --radius-md: 10px;
             --radius-sm: 6px;
             --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0 8px 24px -4px rgba(6, 78, 59, 0.08), 0 4px 8px -2px rgba(6, 78, 59, 0.03);
-            --shadow-float: 0 12px 28px -6px rgba(6, 78, 59, 0.18);
+            --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-card: 0 8px 24px -4px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.03);
+            --shadow-float: 0 12px 28px -6px rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -111,11 +113,11 @@
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            box-shadow: 0 4px 10px rgba(6, 78, 59, 0.25);
+            box-shadow: var(--shadow-sm);
         }
 
         .brand-title-group h1 {
-            font-size: 1.35rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             color: var(--primary-900);
@@ -126,7 +128,7 @@
         }
 
         .brand-subtitle {
-            font-size: 0.82rem;
+            font-size: 0.75rem;
             color: var(--earth-700);
             font-weight: 500;
         }
@@ -140,16 +142,16 @@
             color: #ffffff;
             border-radius: var(--radius-md);
             text-decoration: none;
-            font-size: 0.88rem;
+            font-size: 0.75rem;
             font-weight: 700;
             transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 2px 6px rgba(6, 78, 59, 0.2);
+            box-shadow: var(--shadow-sm);
         }
 
         .back-chat-btn:hover {
             background-color: var(--primary-700);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
+            box-shadow: var(--shadow-md);
         }
 
         /* Stats Bar */
@@ -191,7 +193,7 @@
         }
 
         .stat-label {
-            font-size: 0.74rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -200,7 +202,7 @@
         }
 
         .stat-value {
-            font-size: 1.45rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--primary-900);
             font-variant-numeric: tabular-nums;
@@ -208,7 +210,7 @@
         }
 
         .stat-desc {
-            font-size: 0.82rem;
+            font-size: 0.75rem;
             color: var(--earth-700);
             font-weight: 600;
         }
@@ -252,7 +254,7 @@
             border: 1.5px solid var(--earth-300);
             border-radius: var(--radius-md);
             font-family: inherit;
-            font-size: 0.92rem;
+            font-size: 0.9375rem;
             background: var(--earth-50);
             color: var(--earth-900);
             transition: all 0.15s ease;
@@ -299,7 +301,7 @@
         }
 
         .filter-pill-label {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.04em;
@@ -312,7 +314,7 @@
             background: var(--earth-100);
             border: 1px solid var(--earth-200);
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--earth-700);
             cursor: pointer;
@@ -331,11 +333,11 @@
             background: var(--primary-800);
             color: #ffffff;
             border-color: var(--primary-800);
-            box-shadow: 0 2px 6px rgba(6, 78, 59, 0.2);
+            box-shadow: var(--shadow-sm);
         }
 
         .filter-count-badge {
-            font-size: 0.82rem;
+            font-size: 0.75rem;
             color: var(--earth-700);
             font-weight: 600;
         }
@@ -355,6 +357,9 @@
             box-shadow: var(--shadow-card);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 160px;
+            contain: layout style;
         }
 
         .history-card:hover {
@@ -386,7 +391,7 @@
             gap: 6px;
             padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.74rem;
+            font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.03em;
             text-transform: uppercase;
@@ -411,7 +416,7 @@
         }
 
         .timestamp {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--earth-700);
             font-weight: 600;
             display: inline-flex;
@@ -421,7 +426,7 @@
         }
 
         .query-question {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--earth-900);
             margin-bottom: 12px;
@@ -435,7 +440,7 @@
         }
 
         .query-answer {
-            font-size: 0.94rem;
+            font-size: 0.9375rem;
             color: var(--earth-900);
             line-height: 1.65;
             background-color: var(--earth-50);
@@ -457,7 +462,7 @@
             background: #ffffff;
             border: 1px solid var(--earth-300);
             border-radius: var(--radius-sm);
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--earth-700);
             cursor: pointer;
@@ -485,7 +490,7 @@
         }
 
         .sources-label {
-            font-size: 0.74rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -509,7 +514,7 @@
             background: #ffffff;
             border: 1px solid var(--earth-200);
             border-radius: var(--radius-sm);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--earth-800);
             text-decoration: none;
             transition: all 0.15s ease;
@@ -523,10 +528,10 @@
         }
 
         .source-tag {
-            font-size: 0.68rem;
+            font-size: 0.75rem;
             font-weight: 800;
             padding: 2px 6px;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             text-transform: uppercase;
         }
 
@@ -536,8 +541,9 @@
         }
 
         .source-tag-doc {
-            background: var(--accent-sky-light);
-            color: #0369a1;
+            background: var(--primary-50);
+            color: var(--primary-900);
+            border: 1px solid var(--primary-200);
         }
 
         /* Empty State */
@@ -564,14 +570,14 @@
         }
 
         .empty-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: var(--earth-900);
             margin-bottom: 8px;
         }
 
         .empty-text {
-            font-size: 0.92rem;
+            font-size: 0.9375rem;
             color: var(--earth-700);
             margin-bottom: 24px;
             max-width: 480px;
@@ -599,7 +605,7 @@
             background: var(--earth-100);
             border: 1px solid var(--earth-300);
             border-radius: var(--radius-md);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 700;
             color: var(--earth-800);
             cursor: pointer;
@@ -774,8 +780,8 @@
                     <circle cx="11" cy="11" r="8"/>
                     <line x1="21" x2="16.65" y1="21" y2="16.65"/>
                 </svg>
-                <h3 style="font-size: 1.1rem; color: var(--earth-800); margin-bottom: 4px;">No matching advisories found</h3>
-                <p style="font-size: 0.88rem; color: var(--earth-600);">Try searching for a different keyword or resetting your filter criteria.</p>
+                <h3 style="font-size: 1.2rem; color: var(--earth-800); margin-bottom: 4px;">No matching advisories found</h3>
+                <p style="font-size: 0.9375rem; color: var(--earth-600);">Try searching for a different keyword or resetting your filter criteria.</p>
                 <button type="button" class="btn-reset-filters" onclick="resetFilters()">Reset Search &amp; Filters</button>
             </div>
 
@@ -879,6 +885,13 @@
 
             if (!cards || cards.length === 0) return;
 
+            // Pre-index cards for fast filtering without DOM textContent layout thrashing
+            cards.forEach(card => {
+                card._searchIndex = (card.textContent || '').toLowerCase();
+                card._lang = card.getAttribute('data-lang') || 'en';
+                card._hasSources = card.getAttribute('data-has-sources') === 'true';
+            });
+
             let currentFilter = 'all';
 
             function applyFilter() {
@@ -886,9 +899,9 @@
                 let matchCount = 0;
 
                 cards.forEach(card => {
-                    const cardLang = card.getAttribute('data-lang') || 'en';
-                    const hasSources = card.getAttribute('data-has-sources') === 'true';
-                    const textContent = card.textContent.toLowerCase();
+                    const cardLang = card._lang;
+                    const hasSources = card._hasSources;
+                    const textContent = card._searchIndex;
 
                     // Language / Category criteria
                     let matchesFilterCategory = false;
@@ -928,8 +941,12 @@
                 }
             }
 
+            let searchDebounceTimer = null;
             if (searchInput) {
-                searchInput.addEventListener('input', applyFilter);
+                searchInput.addEventListener('input', function() {
+                    clearTimeout(searchDebounceTimer);
+                    searchDebounceTimer = setTimeout(applyFilter, 80);
+                });
             }
 
             if (clearBtn) {

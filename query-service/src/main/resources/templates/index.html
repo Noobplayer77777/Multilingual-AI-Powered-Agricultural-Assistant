@@ -388,6 +388,7 @@
             overflow: hidden;
             position: relative;
             min-height: 0;
+            contain: layout;
         }
 
         /* Chat Messages Stream */
@@ -419,6 +420,9 @@
             gap: 12px;
             max-width: 88%;
             animation: msgFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            contain: layout style;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 80px;
         }
 
         @keyframes msgFadeIn {
@@ -1269,23 +1273,25 @@
             });
         }
 
-        // Auto-resize textarea & script auto-detect
+        // Auto-resize textarea & script auto-detect (debounced with requestAnimationFrame to prevent layout thrashing)
+        let chatResizeRaf = null;
         chatInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 140) + 'px';
+            const inputVal = this.value;
+            if (!chatResizeRaf) {
+                chatResizeRaf = requestAnimationFrame(() => {
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 140) + 'px';
+                    chatResizeRaf = null;
+                });
+            }
 
             if (chatLanguage && (chatLanguage.value === 'auto' || !chatLanguage.value)) {
-                for (let i = 0; i < this.value.length; i++) {
-                    const code = this.value.charCodeAt(i);
-                    if (code >= 0x0B80 && code <= 0x0BFF) {
-                        chatLanguage.value = 'ta';
-                        updateLanguageUi('ta');
-                        break;
-                    } else if (code >= 0x0900 && code <= 0x097F) {
-                        chatLanguage.value = 'hi';
-                        updateLanguageUi('hi');
-                        break;
-                    }
+                if (/[\u0B80-\u0BFF]/.test(inputVal)) {
+                    chatLanguage.value = 'ta';
+                    updateLanguageUi('ta');
+                } else if (/[\u0900-\u097F]/.test(inputVal)) {
+                    chatLanguage.value = 'hi';
+                    updateLanguageUi('hi');
                 }
             }
         });

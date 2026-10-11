@@ -19,12 +19,18 @@
     line-height: 1;
 }
 
+html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .kisan-lang-btn {
     border: none;
     background: transparent;
     color: var(--earth-700, #44403c);
     font-family: inherit;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     font-weight: 700;
     padding: 5px 11px;
     border-radius: 9999px;
@@ -47,7 +53,7 @@
 .kisan-lang-btn.active {
     background: var(--primary-700, #047857);
     color: #ffffff;
-    box-shadow: 0 1px 2px rgba(6, 78, 59, 0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 /* Typography Enhancements for Indic Scripts */
