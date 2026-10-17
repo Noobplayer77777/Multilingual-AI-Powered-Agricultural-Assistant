@@ -4,8 +4,8 @@
 
 > An AI assistant that gives farmers practical, multilingual crop and farming advice, grounded in a local knowledge base (RAG) and live weather data.
 
-![Architecture Diagram](<img width="9556" height="8153" alt="diagram (4)" src="https://github.com/user-attachments/assets/427af361-670b-4e4a-af14-53500525f355" />
-)
+<img width="9556" height="8153" alt="diagram (4)" src="https://github.com/user-attachments/assets/6563ea42-d189-4c22-aa84-9c15a833b54b" />
+
 
 ---
 
