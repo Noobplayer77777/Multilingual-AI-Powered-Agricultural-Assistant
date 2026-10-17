@@ -257,13 +257,16 @@ Contributions are welcome!
 
 ## 📄 License
 
-<!-- TODO: add a LICENSE file (e.g. MIT) and update this line -->
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/Noobplayer77777/Multilingual-AI-Powered-Agricultural-Assistant/blob/main/LICENSE) file for details.
 
 ## 👤 Author
 
 **Vijayendra S**
 GitHub: [@Noobplayer77777](https://github.com/Noobplayer77777)
+**Gnana Guru N**
+Github: [@GnanaGuru-N](https://github.com/GnanaGuru-N)
+**VISHAL D**
+Github: [@V-I-S-HAL](https://github.com/V-I-S-HAL)
 
 ---
 
